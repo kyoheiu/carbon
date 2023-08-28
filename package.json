@@ -32,8 +32,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"js-base64": "^3.7.5",
+		"marked": "^7.0.5",
 		"moment": "^2.29.4",
-		"showdown": "^2.1.0",
+		"nodegit": "^0.27.0",
 		"svelte-french-toast": "^1.2.0"
 	}
 }

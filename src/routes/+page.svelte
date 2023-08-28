@@ -1,21 +1,20 @@
 <script lang="ts">
-  import type { Item } from "$lib/stores";
-  import Header from "$lib/Header.svelte";
-	import ItemComponent from "$lib/ItemComponent.svelte";
-	import type { PageData } from "./$types";
-  
-  interface pageData {
-    result: Item[]
-  }
+	import { DEFAULT_LIST_NUMBER, type Item } from '$lib/types';
+	import ItemComponent from '$lib/ItemComponent.svelte';
+	import type { PageData } from './$types';
 
-  export let data: PageData; 
+	let showAll = false;
+
+	export let data: PageData;
 </script>
 
-<main class="flex min-h-screen flex-col items-center">
-  <Header />
-  <div class="grow">
-    {#each data.result as item}
-    <ItemComponent {item} />
-    {/each}
-    </div>
-</main>
+{#each showAll ? data.result : data.result.slice(0, DEFAULT_LIST_NUMBER) as item}
+	<ItemComponent {item} />
+{/each}
+{#if !showAll}
+	<button
+		class="mt-2 mb-4 rounded border border-further bg-itembackground px-2 py-1 text-xs font-semibold text-basecolor"
+		on:click={() => (showAll = true)}
+		title="show all">Show all</button
+	>
+{/if}
