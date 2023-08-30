@@ -16,13 +16,13 @@
 		<a
 			href="/item"
 			title="add a new file"
-			class="no-underline h-6 rounded bg-basecolor px-2 py-1 text-xs font-semibold text-lightbuttontext"
+			class="no-underline h-6 bg-basecolor px-2 py-1 text-xs font-semibold text-lightbuttontext"
 			>+New</a
 		>
 		&nbsp; &nbsp;
 		<div class="ml-auto">
 			<form id="search" action="/search">
-				<input name="q" placeholder="Search" class="w-32 rounded-full bg-background px-3 py-1" />
+				<input name="q" placeholder="Search" class="w-32 bg-background px-3 py-1" />
 			</form>
 		</div>
 	</div>

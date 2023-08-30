@@ -72,26 +72,26 @@
 				on:keydown={(e) => keyDown(e)}
 			/>
 			<button
-				class="ml-auto mr-2 h-6 w-12 rounded border border-further bg-lightbuttontext px-2 py-1 text-xs font-semibold text-basecolor"
+				class="ml-auto mr-2 h-6 w-12 border border-further bg-lightbuttontext px-2 py-1 text-xs font-semibold text-basecolor"
 				on:click={() => (data.editing = false)}
 				title="back to view">View</button
 			>
 			{#if !data.fileName && !data.content && !edited}
-				<div class="h-6 w-16 rounded bg-further text-center text-xs">...</div>
+				<div class="h-6 w-16 bg-further text-center text-xs">...</div>
 			{:else if edited}
 				<button
-					class="relative h-6 w-16 rounded bg-basecolor px-1 py-1 text-xs font-semibold text-itembackground"
+					class="relative h-6 w-16 bg-basecolor px-1 py-1 text-xs font-semibold text-itembackground"
 					on:click={save}
 					title="click / tap to manually save"
 				>
 					Save
 					<div
-						class="absolute bottom-4 left-14 w-3 h-3 rounded-full bg-warning border-2 border-background"
+						class="rounded-full absolute bottom-4 left-14 w-3 h-3 bg-warning border-2 border-background"
 					/>
 				</button>
 			{:else}
 				<button
-					class="h-6 w-16 rounded bg-basecolor px-1 py-1 text-xs font-semibold text-lightbuttontext"
+					class="h-6 w-16 bg-basecolor px-1 py-1 text-xs font-semibold text-lightbuttontext"
 					title="click / tap to manually save"
 				>
 					Saved &#10003;
@@ -99,7 +99,7 @@
 			{/if}
 		</div>
 		<textarea
-			class="h-120 w-64 flex-grow border border-further p-3 font-mono text-sm shadow-inner outline-none sm:h-144 sm:w-120 md:w-144"
+			class="break-all h-120 w-64 flex-grow border border-further p-3 font-mono text-sm shadow-inner outline-none sm:h-144 sm:w-120 md:w-144"
 			contenteditable="true"
 			bind:value={data.content}
 			placeholder="Write here. Press <C-CR> to save."
@@ -115,7 +115,7 @@
 			</div>
 			<button
 				on:click={() => (data.editing = true)}
-				class="ml-2 h-6 w-12 rounded bg-basecolor px-2 py-1 text-xs font-semibold text-lightbuttontext"
+				class="ml-2 h-6 w-12 bg-basecolor px-2 py-1 text-xs font-semibold text-lightbuttontext"
 				title="edit">Edit</button
 			>
 			<div class="relative ml-4">
@@ -127,13 +127,13 @@
 				>
 				{#if showMenu}
 					<div
-						class="flex flex-col items-end p-2 absolute right-0 top-8 rounded bg-itembackground drop-shadow-xl"
+						class="border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-itembackground drop-shadow-xl"
 					>
 						<div>
 							<a class="text-sm no-underline" href="/api/download?item={data.fileName}">Download</a>
 						</div>
 						<button
-							class="text-sm text-warning mt-2"
+							class="text-sm text-warning mt-3"
 							on:click={() => (showModal = true)}
 							title="delete"
 						>
@@ -148,7 +148,7 @@
 
 	<div class="flex min-h-full flex-col items-center">
 		<div
-			class="mb-6 mt-2 w-64 flex-grow break-words rounded-md bg-itembackground p-3 font-mono text-sm sm:w-120 md:w-144"
+			class="mb-6 mt-2 w-64 flex-grow break-all bg-itembackground p-3 font-mono text-sm sm:w-120 md:w-144"
 		>
 			{#if data.content.length === 0}
 				<i>No contents.</i>

@@ -11,7 +11,7 @@
 </script>
 
 <div class="mt-4 flex flex-col items-center">
-	<div class="flex h-20 w-64 items-center rounded bg-itembackground px-2 shadow sm:w-120 md:w-144">
+	<div class="flex h-20 w-64 items-center bg-itembackground px-2 shadow sm:w-120 md:w-144">
 		<div class="ml-2 flex flex-col items-start">
 			<a
 				href="/item?fn={item.base64}"
@@ -29,7 +29,7 @@
 		<span class="ml-2 w-12 text-right text-xs text-subtle sm:w-20">{toDuration(item.modified)}</span
 		>
 		<button
-			class="ml-4 mr-2 hidden w-12 rounded border border-further px-1 py-1 text-xs text-warning sm:inline"
+			class="ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-xs text-warning sm:inline"
 			on:click={() => (item.showModal = true)}
 			title="delete"
 		>
