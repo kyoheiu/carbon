@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ItemContent } from '$lib/stores';
+	import type { ItemContent } from '$lib/types';
 	import { marked } from 'marked';
 	import DialogToDelete from '$lib/DialogToDelete.svelte';
 	import { toast, Toaster } from 'svelte-french-toast';
@@ -57,6 +57,9 @@
 	};
 </script>
 
+<svelte:head>
+	<title>{data.fileName} | carbon</title>
+</svelte:head>
 {#if data.editing}
 	<Toaster />
 	<div class="mt-2 flex min-h-full flex-col items-center justify-center">
@@ -124,7 +127,7 @@
 				>
 				{#if showMenu}
 					<div
-						class=" flex flex-col items-end p-2 absolute right-0 top-8 rounded bg-itembackground drop-shadow-xl"
+						class="flex flex-col items-end p-2 absolute right-0 top-8 rounded bg-itembackground drop-shadow-xl"
 					>
 						<div>
 							<a class="text-sm no-underline" href="/api/download?item={data.fileName}">Download</a>
@@ -150,6 +153,7 @@
 			{#if data.content.length === 0}
 				<i>No contents.</i>
 			{:else if data.fileName.split('.').pop() === 'md'}
+				<!-- eslint-disable -->
 				{@html marked.parse(data.content)}
 			{:else}
 				{#each data.content.split('\n') as line}

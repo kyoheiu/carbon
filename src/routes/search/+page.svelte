@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { Item } from '$lib/types';
 	import ItemComponent from '$lib/ItemComponent.svelte';
-	import type { PageData } from './$types';
 
-	interface pageData {
+	interface PageData {
 		result: Item[];
 		query: string;
 	}

@@ -5,22 +5,22 @@ import { toItem } from '$lib/toItem';
 export const prerender = false;
 export const csr = false;
 
-export const load = async ({ url }: {url: URL}) => {
+export const load = async ({ url }: { url: URL }) => {
 	const q: string | null = url.searchParams.get('q');
 	if (!q) {
 		return {
 			result: []
 		};
 	}
-	let result: Item[] = [];
+	const result: Item[] = [];
 
 	const subprocess = child.spawnSync('rg', ['-l', q, './data']);
-	const split: string[] = subprocess.stdout
+	const split: (string | null)[] = subprocess.stdout
 		.toString()
 		.split('\n')
 		.filter((x: string) => x.length > 0)
 		.map((x: string) => {
-			return x.split('/').at(-1)!;
+			return x.split('/').at(-1) ?? null;
 		});
 	const items = toItem(split);
 	items.forEach((item) => {

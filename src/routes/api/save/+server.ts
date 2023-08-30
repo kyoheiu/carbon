@@ -42,6 +42,5 @@ const addAndCommit = async (message: string) => {
 	const parent = await repo.getCommit(head); // get the commit for current state
 	const author = git.Signature.now('carbon', 'git@example.com'); // build auth/committer
 	// combine all info into commit and return hash
-	const commitId = await repo.createCommit('HEAD', author, author, message, changes, [parent]);
-	console.log('commitId', commitId);
+	await repo.createCommit('HEAD', author, author, message, changes, [parent]);
 };

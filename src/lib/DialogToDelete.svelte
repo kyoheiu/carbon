@@ -43,7 +43,6 @@
 				Are you sure to delete <b>{item}</b>?<br />
 			</div>
 			<hr class="text-border my-4" />
-			<!-- svelte-ignore a11y-autofocus -->
 			<div class="flex justify-between">
 				<button class="px-1 text-sm" on:click={() => dialog.close()}>Cancel</button>
 				<button

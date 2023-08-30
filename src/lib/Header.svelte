@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { afterNavigate } from "$app/navigation";
+	import { afterNavigate } from '$app/navigation';
 
 	afterNavigate(() => {
 		let form: HTMLFormElement | null = document.forms[0];
 		if (form) {
 			form.reset();
 		}
-	})
+	});
 </script>
 
 <div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground text-sm shadow">

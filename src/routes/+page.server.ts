@@ -8,7 +8,7 @@ export const load = async () => {
 		withFileTypes: true
 	});
 	const names = files.filter((x) => x.isFile()).map((x) => x.name);
-	let result = toItem(names);
+	const result = toItem(names);
 	result.sort((a, b) => b.modified - a.modified);
 	return { result: result };
 };
