@@ -12,4 +12,5 @@ export interface ItemContent {
 	fileName: string;
 	content: string;
 	editing: boolean;
+	err: boolean;
 }

@@ -1,46 +1,86 @@
 import * as fs from 'node:fs/promises';
-import * as git from 'nodegit';
 import type { RequestHandler } from '@sveltejs/kit';
+import pino from 'pino';
+import { addAndCommit } from '$lib/git';
+import { DATA_PATH } from '$lib/env';
 
-export const post: RequestHandler = async (event) => {
+const logger = pino();
+
+const saveFailed = 'Failed to save the change.';
+const commitFailed = 'Change saved, but failed to commit to the Git repository.';
+const createFailed = 'Failed to create new file.';
+
+export const POST: RequestHandler = async (event) => {
 	const req = await event.request.json();
-	console.log(req);
 
 	if (req.original === req.new) {
 		//Simply write new content to the file
-		await fs.writeFile(`./data/${req.new}`, req.content);
-		await addAndCommit('Update');
+		try {
+			await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
+		} catch (e) {
+			logger.error(saveFailed);
+			return new Response(saveFailed, {
+				status: 500
+			});
+		}
+		const message = `Update ${req.new}`;
+		try {
+			await addAndCommit(message);
+		} catch (e) {
+			logger.error(commitFailed);
+			return new Response(commitFailed, {
+				status: 500
+			});
+		}
+		logger.info(message);
 		return new Response(null, {
 			status: 200
 		});
 	} else {
 		if (req.original.length === 0) {
 			//Create new file.
-			await fs.writeFile(`./data/${req.new}`, req.content);
-			await addAndCommit('Create');
+			try {
+				await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
+			} catch (e) {
+				logger.error(createFailed);
+				return new Response(createFailed, {
+					status: 500
+				});
+			}
+			const message = `Create ${req.new}`;
+			try {
+				await addAndCommit(message);
+			} catch (e) {
+				logger.error(commitFailed);
+				return new Response(commitFailed, {
+					status: 500
+				});
+			}
+			logger.info(message);
 			return new Response(null, {
 				status: 201
 			});
 		} else {
-			await fs.rename(`./data/${req.original}`, `./data/${req.new}`);
-			await fs.writeFile(`./data/${req.new}`, req.content);
-			await addAndCommit('Rename');
+			try {
+				await fs.rename(`${DATA_PATH}/${req.original}`, `${DATA_PATH}/${req.new}`);
+				await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
+			} catch (e) {
+				logger.error(saveFailed);
+				return new Response(saveFailed, { status: 500 });
+			}
+			const message = `Rename ${req.original} to ${req.new}`;
+			try {
+				await addAndCommit(message);
+			} catch (e) {
+				logger.error(commitFailed);
+				return new Response(commitFailed, {
+					status: 500
+				});
+			}
+			logger.info(message);
 			return new Response(null, {
 				status: 200
 			});
 		}
 	}
-};
-
-const addAndCommit = async (message: string) => {
-	const repo = await git.Repository.open('./data');
-	const index = await repo.refreshIndex(); // read latest
-	await index.addAll('*');
-	await index.write(); // flush changes to index
-	const changes = await index.writeTree(); // get reference to a set of changes
-	const head = await git.Reference.nameToId(repo, 'HEAD'); // get reference to the current state
-	const parent = await repo.getCommit(head); // get the commit for current state
-	const author = git.Signature.now('carbon', 'git@example.com'); // build auth/committer
-	// combine all info into commit and return hash
-	await repo.createCommit('HEAD', author, author, message, changes, [parent]);
 };
