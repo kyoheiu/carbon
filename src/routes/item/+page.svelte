@@ -9,6 +9,8 @@
 	let edited = false;
 
 	export let data: ItemContent;
+	console.log(data);
+
 	let newName = data.fileName;
 
 	export const save = async () => {
@@ -60,7 +62,12 @@
 <svelte:head>
 	<title>{data.fileName} | carbon</title>
 </svelte:head>
-{#if data.editing}
+{#if data.err}
+	<div class="p-4 text-sm text-center">
+		File with this name does not exist: Possibly renamed.<br />
+		<div class="mt-4"><a class="mt-4" href="/"> Go back home</a></div>
+	</div>
+{:else if data.editing}
 	<Toaster />
 	<div class="mt-2 flex min-h-full flex-col items-center justify-center">
 		<div class="mb-2 flex w-full items-center py-2">
