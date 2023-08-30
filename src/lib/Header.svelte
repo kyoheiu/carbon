@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="sticky z-0 top-0 flex w-full flex-col items-center bg-itembackground text-sm shadow">
+<div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground text-sm shadow">
 	<div class="flex h-12 w-64 items-baseline pt-2 sm:w-120 md:w-144">
 		<a class=" no-underline" href="/">name</a>
 		&nbsp; &nbsp;
