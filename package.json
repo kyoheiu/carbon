@@ -37,6 +37,7 @@
 		"marked": "^7.0.5",
 		"moment": "^2.29.4",
 		"nodegit": "^0.27.0",
+		"pino": "^8.15.0",
 		"svelte-french-toast": "^1.2.0"
 	}
 }
