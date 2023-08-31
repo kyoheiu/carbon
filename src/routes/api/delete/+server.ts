@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import type { RequestHandler } from '@sveltejs/kit';
 import pino from 'pino';
-import { addAndCommit, removeAndCommit } from '$lib/git';
+import { removeAndCommit } from '$lib/git';
 import { DATA_PATH } from '$lib/env';
 
 const logger = pino();
