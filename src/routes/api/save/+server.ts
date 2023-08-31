@@ -18,7 +18,7 @@ export const POST: RequestHandler = async (event) => {
 		try {
 			await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
 		} catch (e) {
-			logger.error(saveFailed);
+			logger.error(e);
 			return new Response(saveFailed, {
 				status: 500
 			});
@@ -27,7 +27,7 @@ export const POST: RequestHandler = async (event) => {
 		try {
 			await addAndCommit(req.new, message);
 		} catch (e) {
-			logger.error(commitFailed);
+			logger.error(e);
 			return new Response(commitFailed, {
 				status: 500
 			});
@@ -42,7 +42,7 @@ export const POST: RequestHandler = async (event) => {
 			try {
 				await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
 			} catch (e) {
-				logger.error(createFailed);
+				logger.error(e);
 				return new Response(createFailed, {
 					status: 500
 				});
@@ -51,7 +51,7 @@ export const POST: RequestHandler = async (event) => {
 			try {
 				await addAndCommit(req.new, message);
 			} catch (e) {
-				logger.error(commitFailed);
+				logger.error(e);
 				return new Response(commitFailed, {
 					status: 500
 				});
@@ -65,7 +65,7 @@ export const POST: RequestHandler = async (event) => {
 				await fs.rename(`${DATA_PATH}/${req.original}`, `${DATA_PATH}/${req.new}`);
 				await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
 			} catch (e) {
-				logger.error(saveFailed);
+				logger.error(e);
 				return new Response(saveFailed, { status: 500 });
 			}
 			const message = `Rename ${req.original} to ${req.new}`;
@@ -73,7 +73,7 @@ export const POST: RequestHandler = async (event) => {
 				await removeAndCommit(req.original);
 				await addAndCommit(req.new, message);
 			} catch (e) {
-				logger.error(commitFailed);
+				logger.error(e);
 				return new Response(commitFailed, {
 					status: 500
 				});

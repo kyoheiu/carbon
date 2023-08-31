@@ -13,8 +13,8 @@ export const DELETE: RequestHandler = async (event) => {
 			force: false
 		});
 	} catch (e) {
+		logger.error(e);
 		const message = 'Cannot delete the file.';
-		logger.error(message);
 		return new Response(message, { status: 500 });
 	}
 
@@ -23,8 +23,8 @@ export const DELETE: RequestHandler = async (event) => {
 	try {
 		await removeAndCommit(req.fn);
 	} catch (e) {
+		logger.error(e);
 		const message = 'File deleted, but failed to commit to the Git repository.';
-		logger.error(message);
 		return new Response(message, {
 			status: 500
 		});
