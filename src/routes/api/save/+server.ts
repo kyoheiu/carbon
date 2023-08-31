@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import type { RequestHandler } from '@sveltejs/kit';
 import pino from 'pino';
-import { addAndCommit } from '$lib/git';
+import { addAndCommit, removeAndCommit } from '$lib/git';
 import { DATA_PATH } from '$lib/env';
 
 const logger = pino();
@@ -25,7 +25,7 @@ export const POST: RequestHandler = async (event) => {
 		}
 		const message = `Update ${req.new}`;
 		try {
-			await addAndCommit(message);
+			await addAndCommit(req.new, message);
 		} catch (e) {
 			logger.error(commitFailed);
 			return new Response(commitFailed, {
@@ -49,7 +49,7 @@ export const POST: RequestHandler = async (event) => {
 			}
 			const message = `Create ${req.new}`;
 			try {
-				await addAndCommit(message);
+				await addAndCommit(req.new, message);
 			} catch (e) {
 				logger.error(commitFailed);
 				return new Response(commitFailed, {
@@ -70,7 +70,8 @@ export const POST: RequestHandler = async (event) => {
 			}
 			const message = `Rename ${req.original} to ${req.new}`;
 			try {
-				await addAndCommit(message);
+				await removeAndCommit(req.original);
+				await addAndCommit(req.new, message);
 			} catch (e) {
 				logger.error(commitFailed);
 				return new Response(commitFailed, {
