@@ -20,4 +20,6 @@
 		on:click={() => (showAll = true)}
 		title="show all">Show all</button
 	>
+	{:else}
+	<div class="mt-8" />
 {/if}
