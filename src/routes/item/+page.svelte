@@ -137,7 +137,7 @@
 						class="border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-itembackground drop-shadow-xl"
 					>
 						<div>
-							<a class="text-sm no-underline" href="/api/download?item={data.fileName}">Download</a>
+							<a class="text-sm no-underline" href="/api/download?fn={data.fileName}">Download</a>
 						</div>
 						<button
 							class="text-sm text-warning mt-3"
