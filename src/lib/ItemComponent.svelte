@@ -2,6 +2,7 @@
 	import type { Item } from './types';
 	import DialogToDelete from './DialogToDelete.svelte';
 	import moment from 'moment';
+	import { encode } from 'js-base64';
 
 	const toDuration = (time: number) => {
 		return moment.unix(time).fromNow(true);
@@ -14,7 +15,7 @@
 	<div class="flex h-20 w-64 items-center bg-itembackground px-2 shadow sm:w-120 md:w-144">
 		<div class="ml-2 flex flex-col items-start">
 			<a
-				href="/item?fn={item.base64}"
+				href="/item?fn={encodeURIComponent(encode(item.name))}"
 				class="w-40 cursor-pointer truncate text-left text-sm underline hover:text-hovertitle sm:w-72 sm:text-base md:w-96"
 				>{item.name}</a
 			>
