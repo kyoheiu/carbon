@@ -1,3 +1,7 @@
+fmt:
+	npm run format && npm run lint
+	cd axum && cargo fmt
+
 fe:
 	CARBON_GIT_SERVER=127.0.0.1 npm run dev
 
