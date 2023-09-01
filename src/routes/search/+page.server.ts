@@ -2,8 +2,6 @@ import * as child from 'node:child_process';
 import { toItem } from '$lib/toItem';
 import { DATA_PATH } from '$lib/env';
 
-const fd = process.env.NODE_ENV === 'production' ? 'fdfind' : 'fd';
-
 export const load = async ({ url }: { url: URL }) => {
 	const q: string | null = url.searchParams.get('q');
 	if (!q) {
@@ -14,7 +12,7 @@ export const load = async ({ url }: { url: URL }) => {
 	const fileNameResult = new Set<string>();
 
 	//fdfind
-	const subprocessFd = child.spawnSync(fd, [q, DATA_PATH]);
+	const subprocessFd = child.spawnSync('fd', [q, DATA_PATH]);
 	const splitFd: (string | null)[] = subprocessFd.stdout
 		.toString()
 		.split('\n')

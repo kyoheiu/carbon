@@ -1,1 +1,1 @@
-export const DATA_PATH = process.env.NODE_ENV === 'production' ? '/var/carbon' : './data';
+export const DATA_PATH = './data';

@@ -9,7 +9,6 @@
 	let edited = false;
 
 	export let data: ItemContent;
-	console.log(data);
 
 	let newName = data.fileName;
 
