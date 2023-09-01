@@ -12,12 +12,11 @@ use git2::Repository;
 use serde::{Deserialize, Serialize};
 use tracing::info;
 
-
 #[derive(Clone)]
 struct Core {
     git_user: String,
     git_email: String,
-    data_path: String
+    data_path: String,
 }
 
 impl Core {
@@ -25,7 +24,7 @@ impl Core {
         Ok(Core {
             git_user: std::env::var("CARBON_GIT_USER").unwrap_or("carbon".to_string()),
             git_email: std::env::var("CARBON_GIT_EMAIL").unwrap_or("git@example.com".to_string()),
-            data_path: std::env::var("CARBON_DATA_PATH").unwrap_or("../data".to_string())
+            data_path: std::env::var("CARBON_DATA_PATH").unwrap_or("../data".to_string()),
         })
     }
 
