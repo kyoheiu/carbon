@@ -30,13 +30,15 @@ impl Core {
 
     fn add_and_commit(
         &self,
-        file_to_add: &str,
+        file_to_add: Option<&str>,
         file_to_delete: Option<&str>,
         commit_message: &str,
     ) -> Result<(), Error> {
         let repo = Repository::open(&self.data_path)?;
         let mut index = repo.index()?;
-        index.add_path(std::path::Path::new(file_to_add))?;
+        if let Some(to_add) = file_to_add {
+        index.add_path(std::path::Path::new(to_add))?;
+        }
         if let Some(to_delete) = file_to_delete {
             index.remove_path(std::path::Path::new(to_delete))?;
         }
@@ -70,6 +72,11 @@ struct Payload {
     content: String,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+struct PayloadToDelete {
+    file: String,
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt().init();
@@ -78,7 +85,7 @@ async fn main() -> Result<(), Error> {
 
     let app = Router::new()
         .route("/health", get(health))
-        .route("/git", post(add_and_commit))
+        .route("/git", post(add_and_commit).delete(delete_and_commit))
         .with_state(core);
 
     axum::Server::bind(&"0.0.0.0:8080".parse().unwrap())
@@ -99,17 +106,27 @@ async fn add_and_commit(
     Json(payload): Json<Payload>,
 ) -> Result<(), Error> {
     if payload.original == payload.new {
-        core.add_and_commit(&payload.new, None, "Update")?;
+        core.add_and_commit(Some(&payload.new), None, "Update")?;
         Ok(info!("Update {}", payload.new))
     } else {
         if !payload.original.is_empty() {
             let message = format!("Rename {} -> {}", payload.original, payload.new);
-            core.add_and_commit(&payload.new, Some(&payload.original), &message)?;
+            core.add_and_commit(Some(&payload.new), Some(&payload.original), &message)?;
             Ok(info!(message))
         } else {
             let message = format!("Create {}", payload.new);
-            core.add_and_commit(&payload.new, None, &message)?;
+            core.add_and_commit(Some(&payload.new), None, &message)?;
             Ok(info!(message))
         }
     }
+}
+
+#[debug_handler]
+async fn delete_and_commit(
+    State(core): State<Core>,
+    Json(payload): Json<PayloadToDelete>,
+) -> Result<(), Error> {
+    let message = format!("Remove {}", payload.file);
+    core.add_and_commit(None, Some(&payload.file), &message)?;
+    Ok(())
 }

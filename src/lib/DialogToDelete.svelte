@@ -11,7 +11,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ fn: item })
+			body: JSON.stringify({ file: item })
 		});
 		if (!res.ok) {
 			dialog.close();
