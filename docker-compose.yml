@@ -1,0 +1,34 @@
+version: "3"
+services:
+  client:
+    image: docker.io/kyoheiudev/carbon-client:0.1.0
+    container_name: carbon-client
+    volumes:
+      - './data:/carbon/data:rw'
+    environment:
+      - CARBON_GIT_SERVER="carbon-server"
+    ports:
+      - 8088:8000
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: '3'
+  server:
+    image: docker.io/kyoheiudev/carbon-server:0.1.0
+    container_name: carbon-server
+    user: '1000:1000' # UID and GID that created Git repository.
+    volumes:
+      - './data:/carbon/data:rw'
+      - '/etc/passwd:/etc/passwd:ro'
+      - '/etc/group:/etc/group:ro'
+    environment:
+      - CARBON_GIT_USER="carbon"  # default to 'carbon'
+      - CARBON_GIT_EMAIL="im@kyoheiu.dev" # default to 'git@example.com'
+    ports:
+      - 3000:3000
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: '3'
