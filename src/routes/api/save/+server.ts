@@ -1,17 +1,34 @@
 import * as fs from 'node:fs/promises';
 import type { RequestHandler } from '@sveltejs/kit';
 import pino from 'pino';
-import { addAndCommit, removeAndCommit } from '$lib/git';
 import { DATA_PATH } from '$lib/env';
 
 const logger = pino();
+
+interface Req {
+	original: string;
+	new: string;
+	content: string;
+}
 
 const saveFailed = 'Failed to save the change.';
 const commitFailed = 'Change saved, but failed to commit to the Git repository.';
 const createFailed = 'Failed to create new file.';
 
+const postToGitServer = async (req: Req) => {
+	console.log("post");
+	console.log(req);
+	await fetch(`http://${process.env.CARBON_GIT_SERVER}:8080/git`, {
+		method: 'POST',
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(req)
+	});
+};
+
 export const POST: RequestHandler = async (event) => {
-	const req = await event.request.json();
+	const req: Req = await event.request.json();
 
 	if (req.original === req.new) {
 		//Simply write new content to the file
@@ -25,7 +42,7 @@ export const POST: RequestHandler = async (event) => {
 		}
 		const message = `Update ${req.new}`;
 		try {
-			await addAndCommit(req.new, message);
+			await postToGitServer(req);
 		} catch (e) {
 			logger.error(e);
 			return new Response(commitFailed, {
@@ -49,7 +66,7 @@ export const POST: RequestHandler = async (event) => {
 			}
 			const message = `Create ${req.new}`;
 			try {
-				await addAndCommit(req.new, message);
+				await postToGitServer(req);
 			} catch (e) {
 				logger.error(e);
 				return new Response(commitFailed, {
@@ -70,8 +87,7 @@ export const POST: RequestHandler = async (event) => {
 			}
 			const message = `Rename ${req.original} to ${req.new}`;
 			try {
-				await removeAndCommit(req.original);
-				await addAndCommit(req.new, message);
+				await postToGitServer(req);
 			} catch (e) {
 				logger.error(e);
 				return new Response(commitFailed, {
