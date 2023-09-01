@@ -3,6 +3,7 @@
 	import { marked } from 'marked';
 	import DialogToDelete from '$lib/DialogToDelete.svelte';
 	import { toast, Toaster } from 'svelte-french-toast';
+	import { afterNavigate } from '$app/navigation';
 
 	let showMenu = false;
 	let showModal = false;
@@ -56,6 +57,10 @@
 			save();
 		}
 	};
+
+	afterNavigate(() => {
+		newName = data.fileName;
+	})
 </script>
 
 <svelte:head>
