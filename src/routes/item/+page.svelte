@@ -60,7 +60,7 @@
 
 	afterNavigate(() => {
 		newName = data.fileName;
-	})
+	});
 </script>
 
 <svelte:head>
