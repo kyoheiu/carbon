@@ -2,11 +2,11 @@ use axum::{
     http::StatusCode,
     response::{IntoResponse, Response},
 };
+use tracing::error;
 
 #[derive(Debug)]
 pub enum Error {
     Git(String),
-    SameName
 }
 
 impl std::error::Error for Error {}
@@ -15,7 +15,6 @@ impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let printable = match self {
             Error::Git(s) => s,
-            Error::SameName => "A file with the same name exists.",
         };
         write!(f, "{}", printable)
     }
@@ -31,8 +30,8 @@ impl IntoResponse for Error {
     fn into_response(self) -> Response {
         let body = match self {
             Error::Git(s) => s,
-            Error::SameName => "A file with the same name exists.".to_string(),
         };
+        error!(body);
         (StatusCode::INTERNAL_SERVER_ERROR, body).into_response()
     }
 }
