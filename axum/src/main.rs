@@ -7,10 +7,10 @@ use axum::{
     routing::{get, post},
     Router,
 };
-use tower_http::cors::{Any, CorsLayer};
 use error::Error;
 use git2::Repository;
 use serde::{Deserialize, Serialize};
+use tower_http::cors::{Any, CorsLayer};
 use tracing::info;
 
 #[derive(Clone)]
@@ -82,7 +82,7 @@ async fn main() -> Result<(), Error> {
     info!("Initialized logger.");
     let core = Core::default()?;
 
-        let layer = CorsLayer::new()
+    let layer = CorsLayer::new()
         .allow_origin(Any)
         .allow_headers(Any)
         .allow_methods(Any);
@@ -132,8 +132,9 @@ async fn delete_and_commit(
     Json(payload): Json<Payload>,
 ) -> Result<(), Error> {
     if payload.original == payload.new {
-        core.add_and_commit(&payload.new, None, "Update")?;
-        Ok(info!("Update {}", payload.new))
+        let message = format!("Update {}", payload.new);
+        core.add_and_commit(&payload.new, None, &message)?;
+        Ok(info!("Update {}", message))
     } else {
         if !payload.original.is_empty() {
             let message = format!("Rename {} -> {}", payload.original, payload.new);
