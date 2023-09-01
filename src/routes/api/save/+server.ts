@@ -16,8 +16,6 @@ const commitFailed = 'Change saved, but failed to commit to the Git repository.'
 const createFailed = 'Failed to create new file.';
 
 const postToGitServer = async (req: Req) => {
-	console.log('post');
-	console.log(req);
 	await fetch(`http://${process.env.CARBON_GIT_SERVER}:8080/git`, {
 		method: 'POST',
 		headers: {
