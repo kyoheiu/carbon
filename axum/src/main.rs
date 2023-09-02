@@ -49,7 +49,7 @@ impl Core {
         let head = repo.head()?;
         let parent = repo.find_commit(
             head.target()
-                .ok_or_else(|| Error::Git("Cannot get the OID.".to_string()))?,
+                .ok_or_else(|| Error::Git("Failed get the OID.".to_string()))?,
         )?;
         repo.commit(
             Some("HEAD"),
