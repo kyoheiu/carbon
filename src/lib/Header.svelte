@@ -17,7 +17,7 @@
 
 <div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground shadow">
 	<div class="flex h-12 w-64 items-center pt-2 sm:w-120 md:w-144">
-		<a class="no-underline" href="/"><img class="ml-1" src="logo.png" alt="carbon" width="60" /></a>
+		<a class="no-underline" href="/"><img class="ml-1" src="logo.png" alt="carbon" width="72" /></a>
 		&nbsp; &nbsp;
 		{#if isRoot}
 			<a
