@@ -3,7 +3,7 @@ fmt:
 	cd axum && cargo fmt
 
 fe:
-	CARBON_GIT_SERVER=127.0.0.1 npm run dev
+	npm run dev
 
 be:
 	cd axum && RUST_LOG=debug cargo run
