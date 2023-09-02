@@ -91,7 +91,7 @@
 				<div class="py-1 w-16 bg-further text-center text-sm">...</div>
 			{:else if edited}
 				<button
-					class="relative w-16 bg-basecolor px-1 text-sm font-semibold text-itembackground"
+					class="relative w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-itembackground"
 					on:click={save}
 					title="click / tap to manually save"
 				>
@@ -105,7 +105,7 @@
 					class="w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-lightbuttontext"
 					title="click / tap to manually save"
 				>
-					Saved &#10003;
+					Saved
 				</button>
 			{/if}
 		</div>
