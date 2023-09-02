@@ -16,7 +16,7 @@
 {/each}
 {#if !showAll}
 	<button
-		class="mt-4 mb-4 border border-further bg-itembackground px-2 py-1 text-xs font-semibold text-basecolor"
+		class="mt-4 mb-4 border border-further bg-itembackground px-2 py-1 text-sm font-semibold text-basecolor"
 		on:click={() => (showAll = true)}
 		title="show all">Show all</button
 	>

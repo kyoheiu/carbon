@@ -15,7 +15,7 @@
 	});
 </script>
 
-<div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground text-sm shadow">
+<div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground shadow">
 	<div class="flex h-12 w-64 items-center pt-2 sm:w-120 md:w-144">
 		<a class="no-underline" href="/"><img class="ml-1" src="logo.png" alt="carbon" width="60" /></a>
 		&nbsp; &nbsp;
@@ -23,14 +23,14 @@
 			<a
 				href="/item"
 				title="add a new file"
-				class="no-underline h-6 bg-basecolor text-lightbuttontext px-2 py-1 text-xs font-semibold"
+				class="no-underline bg-basecolor text-lightbuttontext px-2 py-1 text-sm font-semibold"
 				>+New</a
 			>
 		{:else}
 			<a
 				href="/item"
 				title="add a new file"
-				class="no-underline h-6 bg-itembackground border text-basecolor border-baseborder px-2 py-1 text-xs font-semibold"
+				class="no-underline bg-itembackground border text-basecolor border-baseborder px-2 py-1 text-sm font-semibold"
 				>+New</a
 			>
 		{/if}

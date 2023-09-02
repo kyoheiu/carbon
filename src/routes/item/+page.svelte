@@ -67,7 +67,7 @@
 	<title>{data.fileName} | carbon</title>
 </svelte:head>
 {#if data.err}
-	<div class="p-4 text-sm text-center">
+	<div class="p-4 text-center">
 		File with this name does not exist: Possibly renamed.<br />
 		<div class="mt-4"><a class="mt-4" href="/"> Go back home</a></div>
 	</div>
@@ -76,22 +76,22 @@
 	<div class="mt-2 flex min-h-full flex-col items-center justify-center">
 		<div class="mb-2 flex w-full items-center py-2">
 			<input
-				class="h-8 w-32 border border-further px-2 font-mono text-sm shadow-inner sm:w-64 md:w-96"
+				class="h-8 w-32 border border-further px-2 font-mono shadow-inner sm:w-64 md:w-96"
 				bind:value={newName}
 				placeholder="file name"
 				on:input={detectChange}
 				on:keydown={(e) => keyDown(e)}
 			/>
 			<button
-				class="ml-auto mr-2 h-6 w-12 border border-further bg-lightbuttontext px-2 py-1 text-xs font-semibold text-basecolor"
+				class="ml-auto mr-2 py-1 w-12 border border-further bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
 				on:click={() => (data.editing = false)}
 				title="back to view">View</button
 			>
 			{#if !data.fileName && !data.content && !edited}
-				<div class="h-6 w-16 bg-further text-center text-xs">...</div>
+				<div class="py-1 w-16 bg-further text-center text-sm">...</div>
 			{:else if edited}
 				<button
-					class="relative h-6 w-16 bg-basecolor px-1 py-1 text-xs font-semibold text-itembackground"
+					class="relative w-16 bg-basecolor px-1 text-sm font-semibold text-itembackground"
 					on:click={save}
 					title="click / tap to manually save"
 				>
@@ -102,7 +102,7 @@
 				</button>
 			{:else}
 				<button
-					class="h-6 w-16 bg-basecolor px-1 py-1 text-xs font-semibold text-lightbuttontext"
+					class="w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-lightbuttontext"
 					title="click / tap to manually save"
 				>
 					Saved &#10003;
@@ -110,7 +110,7 @@
 			{/if}
 		</div>
 		<textarea
-			class="break-all h-120 w-64 flex-grow border border-further p-3 font-mono text-sm shadow-inner outline-none sm:h-144 sm:w-120 md:w-144"
+			class="break-all h-120 w-64 flex-grow border border-further p-3 font-mono shadow-inner outline-none sm:h-144 sm:w-120 md:w-144"
 			contenteditable="true"
 			bind:value={data.content}
 			placeholder="Write here. Press <C-CR> to save."
@@ -119,19 +119,19 @@
 		/>
 	</div>
 {:else}
-	<div class="mt-4 flex justify-center text-sm">
+	<div class="mt-4 flex justify-center">
 		<div class="flex w-64 items-center justify-center px-1 pb-2 sm:w-120 md:w-144">
 			<div class="grow break-all border-l-4 border-baseborder pl-2 font-mono leading-5">
 				{data.fileName}
 			</div>
 			<button
 				on:click={() => (data.editing = true)}
-				class="ml-2 h-6 w-12 bg-basecolor px-2 py-1 text-xs font-semibold text-lightbuttontext"
+				class="ml-2 py-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
 				title="edit">Edit</button
 			>
 			<div class="relative ml-4">
 				<button
-					class="text-xs"
+					class="text-sm"
 					on:click={() => {
 						showMenu = !showMenu;
 					}}>•••</button
@@ -141,13 +141,9 @@
 						class="border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-itembackground drop-shadow-xl"
 					>
 						<div>
-							<a class="text-sm no-underline" href="/api/download?fn={data.fileName}">Download</a>
+							<a class="no-underline" href="/api/download?fn={data.fileName}">Download</a>
 						</div>
-						<button
-							class="text-sm text-warning mt-3"
-							on:click={() => (showModal = true)}
-							title="delete"
-						>
+						<button class="text-warning mt-3" on:click={() => (showModal = true)} title="delete">
 							Delete
 						</button>
 					</div>
@@ -159,7 +155,7 @@
 
 	<div class="flex min-h-full flex-col items-center">
 		<div
-			class="mb-6 mt-2 w-64 flex-grow break-all bg-itembackground p-3 font-mono text-sm sm:w-120 md:w-144"
+			class="mb-6 mt-2 w-64 flex-grow break-all bg-itembackground p-3 font-mono sm:w-120 md:w-144"
 		>
 			{#if data.content.length === 0}
 				<i>No contents.</i>

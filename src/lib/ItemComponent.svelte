@@ -12,25 +12,25 @@
 </script>
 
 <div class="mt-4 flex flex-col items-center">
-	<div class="flex h-20 w-64 items-center bg-itembackground px-2 shadow sm:w-120 md:w-144">
+	<div class="flex h-24 w-64 items-center bg-itembackground px-2 shadow sm:w-120 md:w-144">
 		<div class="ml-2 flex flex-col items-start">
 			<a
 				href="/item?fn={encodeURIComponent(encode(item.name))}"
-				class="w-40 cursor-pointer truncate text-left text-sm underline hover:text-hovertitle sm:w-72 sm:text-base md:w-96"
+				class="text-lg w-40 cursor-pointer truncate text-left underline hover:text-hovertitle sm:w-72 md:w-96"
 				>{item.name}</a
 			>
 			{#if item.desc}
-				<div class="mt-2 w-40 truncate text-sm text-desc sm:w-72 md:w-96">
+				<div class="mt-4 w-40 truncate text-desc sm:w-72 md:w-96">
 					{item.desc}
 				</div>
 			{:else}
-				<div class="mt-2 w-40 truncate text-sm italic text-desc sm:w-72 md:w-96">No contents.</div>
+				<div class="mt-4 w-40 truncate italic text-desc sm:w-72 md:w-96">No contents.</div>
 			{/if}
 		</div>
-		<span class="ml-2 w-12 text-right text-xs text-subtle sm:w-20">{toDuration(item.modified)}</span
+		<span class="ml-2 w-12 text-right text-sm text-subtle sm:w-20">{toDuration(item.modified)}</span
 		>
 		<button
-			class="ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-xs text-warning sm:inline"
+			class="text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
 			on:click={() => (item.showModal = true)}
 			title="delete"
 		>
