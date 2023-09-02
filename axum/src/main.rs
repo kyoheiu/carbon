@@ -111,7 +111,8 @@ async fn add_and_commit(
     Json(payload): Json<Payload>,
 ) -> Result<(), Error> {
     if payload.original == payload.new {
-        core.add_and_commit(&payload.new, None, "Update")?;
+        let message = format!("Update {}", payload.new);
+        core.add_and_commit(&payload.new, None, &message)?;
         Ok(info!("Update {}", payload.new))
     } else {
         if !payload.original.is_empty() {
