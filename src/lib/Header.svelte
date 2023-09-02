@@ -23,21 +23,21 @@
 			<a
 				href="/item"
 				title="add a new file"
-				class="no-underline bg-basecolor text-lightbuttontext px-2 py-1 text-sm font-semibold"
+				class="rounded no-underline bg-basecolor text-lightbuttontext px-2 py-1 text-sm font-semibold"
 				>+New</a
 			>
 		{:else}
 			<a
 				href="/item"
 				title="add a new file"
-				class="no-underline bg-itembackground border text-basecolor border-baseborder px-2 py-1 text-sm font-semibold"
+				class="rounded no-underline bg-itembackground border text-basecolor border-baseborder px-2 py-1 text-sm font-semibold"
 				>+New</a
 			>
 		{/if}
 		&nbsp; &nbsp;
 		<div class="ml-auto">
 			<form id="search" action="/search">
-				<input name="q" placeholder="Search" class="w-32 bg-background px-3 py-1" />
+				<input name="q" placeholder="Search" class="w-32 bg-background px-3 py-1 rounded" />
 			</form>
 		</div>
 	</div>
