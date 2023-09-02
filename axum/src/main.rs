@@ -114,16 +114,14 @@ async fn add_and_commit(
         let message = format!("Update {}", payload.new);
         core.add_and_commit(&payload.new, None, &message)?;
         Ok(info!("Update {}", payload.new))
+    } else if !payload.original.is_empty() {
+        let message = format!("Rename {} -> {}", payload.original, payload.new);
+        core.add_and_commit(&payload.new, Some(&payload.original), &message)?;
+        Ok(info!(message))
     } else {
-        if !payload.original.is_empty() {
-            let message = format!("Rename {} -> {}", payload.original, payload.new);
-            core.add_and_commit(&payload.new, Some(&payload.original), &message)?;
-            Ok(info!(message))
-        } else {
-            let message = format!("Create {}", payload.new);
-            core.add_and_commit(&payload.new, None, &message)?;
-            Ok(info!(message))
-        }
+        let message = format!("Create {}", payload.new);
+        core.add_and_commit(&payload.new, None, &message)?;
+        Ok(info!(message))
     }
 }
 
@@ -136,15 +134,13 @@ async fn delete_and_commit(
         let message = format!("Update {}", payload.new);
         core.add_and_commit(&payload.new, None, &message)?;
         Ok(info!("Update {}", message))
+    } else if !payload.original.is_empty() {
+        let message = format!("Rename {} -> {}", payload.original, payload.new);
+        core.add_and_commit(&payload.new, Some(&payload.original), &message)?;
+        Ok(info!(message))
     } else {
-        if !payload.original.is_empty() {
-            let message = format!("Rename {} -> {}", payload.original, payload.new);
-            core.add_and_commit(&payload.new, Some(&payload.original), &message)?;
-            Ok(info!(message))
-        } else {
-            let message = format!("Create {}", payload.new);
-            core.add_and_commit(&payload.new, None, &message)?;
-            Ok(info!(message))
-        }
+        let message = format!("Create {}", payload.new);
+        core.add_and_commit(&payload.new, None, &message)?;
+        Ok(info!(message))
     }
 }
