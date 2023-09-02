@@ -10,13 +10,15 @@ interface Req {
 }
 
 const postToGitServer = async (req: Req) => {
-	await fetch(`http://${process.env.CARBON_GIT_SERVER}:8080/git`, {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(req)
-	});
+	if (process.env.CARBON_GIT_SERVER) {
+		await fetch(`http://${process.env.CARBON_GIT_SERVER}:8080/git`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(req)
+		});
+	}
 };
 
 export const DELETE: RequestHandler = async (event) => {
@@ -27,7 +29,7 @@ export const DELETE: RequestHandler = async (event) => {
 		});
 	} catch (e) {
 		logger.error(e);
-		const message = 'Cannot delete the file.';
+		const message = 'Failed to delete the file.';
 		return new Response(message, { status: 500 });
 	}
 
