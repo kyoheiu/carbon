@@ -15,8 +15,8 @@
 	<div class="flex h-24 w-64 items-center bg-itembackground px-2 shadow sm:w-120 md:w-144">
 		<div class="ml-2 flex flex-col items-start">
 			<a
-				href="/item?fn={encodeURIComponent(encode(item.name))}"
-				class="text-lg w-40 cursor-pointer truncate text-left underline hover:text-hovertitle sm:w-72 md:w-96"
+				href="/item?file={encodeURIComponent(encode(item.name))}"
+				class="text-lg w-40 cursor-pointer truncate text-left underline hover:text-hovertitle hover:font-semibold sm:w-72 md:w-96"
 				>{item.name}</a
 			>
 			{#if item.desc}
