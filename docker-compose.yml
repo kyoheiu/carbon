@@ -4,7 +4,7 @@ services:
     image: docker.io/kyoheiudev/carbon-client:0.1.0
     container_name: carbon-client
     volumes:
-      - './data:/carbon/data:rw'
+      - './data:/carbon-client/data:rw'
     environment:
       - CARBON_GIT_SERVER=carbon-server
     ports:

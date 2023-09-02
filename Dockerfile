@@ -1,6 +1,6 @@
 FROM node:alpine3.18
 
-WORKDIR /carbon
+WORKDIR /carbon-client
 
 COPY . .
 
