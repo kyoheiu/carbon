@@ -10,10 +10,11 @@ export default {
 			subtle: '#4b5563', // gray-600
 			desc: '#6b7280', // gray-500
 			further: '#9ca3af', // gray-400
-			basecolor: '#0e7490', // cyan-700
-			baseborder: '#06b6d4', // cyan-500
+			basecolor: '#2563eb', // blue-600
+			baseborder: '#60a5fa', // blue-400
 			hovertitle: '#2563eb', // blue-600
 			warning: '#b91c1c' // red-700
+			// logo color: #374151 (gray-700)
 		},
 		extend: {
 			spacing: {
