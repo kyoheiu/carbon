@@ -1,5 +1,3 @@
-export const DEFAULT_LIST_NUMBER = 10;
-
 export interface Item {
 	name: string;
 	desc: string;

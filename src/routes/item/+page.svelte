@@ -141,7 +141,7 @@
 						class="border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-itembackground drop-shadow-xl"
 					>
 						<div>
-							<a class="no-underline" href="/api/download?fn={data.fileName}">Download</a>
+							<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
 						</div>
 						<button class="text-warning mt-3" on:click={() => (showModal = true)} title="delete">
 							Delete

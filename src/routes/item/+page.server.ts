@@ -6,8 +6,8 @@ import pino from 'pino';
 const logger = pino();
 
 export const load = async ({ url }: { url: URL }) => {
-	const fn: string | null = url.searchParams.get('fn');
-	if (!fn) {
+	const file: string | null = url.searchParams.get('file');
+	if (!file) {
 		return {
 			fileName: '',
 			content: '',
@@ -15,7 +15,7 @@ export const load = async ({ url }: { url: URL }) => {
 		};
 	} else {
 		try {
-			const original = decode(fn);
+			const original = decode(file);
 			const content = await fs.readFile(`${DATA_PATH}/${original}`);
 			return { fileName: original, content: content.toString(), editing: false };
 		} catch (e) {

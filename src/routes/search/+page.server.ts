@@ -43,7 +43,7 @@ export const load = async ({ url }: { url: URL }) => {
 		}
 	});
 
-	const items = toItem(Array.from(fileNameResult.values()));
+	const items = toItem(Array.from(fileNameResult.values()), true);
 
 	return {
 		result: items,
