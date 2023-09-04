@@ -14,7 +14,7 @@ services:
       options:
         max-size: 1m
         max-file: '3'
-  # If you do not want git support, omit `server` entirely!
+  # If you do not want the git feature, omit `server` entirely!
   server:
     image: docker.io/kyoheiudev/carbon-server:0.2.0
     container_name: carbon-server
