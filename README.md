@@ -1,6 +1,8 @@
 # carbon
 Self-hosted & git-powered online text editor.
 
+![screenshot.png](/screenshot/screenshot.png)
+
 ## features
 - carbon enables you to edit or delete files in `data` directory, or add a new one.
 - Pressing <C-CR> inside the textarea will save the change.
