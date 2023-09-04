@@ -4,10 +4,14 @@
 	import DialogToDelete from '$lib/DialogToDelete.svelte';
 	import { toast, Toaster } from 'svelte-french-toast';
 	import { afterNavigate } from '$app/navigation';
+	import { tick } from 'svelte';
+	import { scale } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	let showMenu = false;
 	let showModal = false;
 	let edited = false;
+	let detectScroll = 0;
 
 	export let data: ItemContent;
 
@@ -58,11 +62,32 @@
 		}
 	};
 
+	const toEdit = async () => {
+		const scroll = window.scrollY;
+		data.editing = true;
+		await tick();
+		const textarea = document.getElementById('textarea');
+		if (textarea) {
+			textarea.scrollTop = scroll;
+		}
+	};
+
+	const toView = async () => {
+		const textarea = document.getElementById('textarea');
+		if (textarea) {
+			const scroll = textarea.scrollTop;
+			data.editing = false;
+			await tick();
+			window.scroll(0, scroll);
+		}
+	};
+
 	afterNavigate(() => {
 		newName = data.fileName;
 	});
 </script>
 
+<svelte:window on:scroll={() => (detectScroll = window.scrollY)} />
 <svelte:head>
 	<title>{data.fileName} | carbon</title>
 </svelte:head>
@@ -83,8 +108,8 @@
 				on:keydown={(e) => keyDown(e)}
 			/>
 			<button
-				class="ml-auto mr-2 py-1 w-12 border border-further bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
-				on:click={() => (data.editing = false)}
+				class="ml-auto mr-2 py-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
+				on:click={() => toView()}
 				title="back to view">View</button
 			>
 			{#if !data.fileName && !data.content && !edited}
@@ -110,6 +135,7 @@
 			{/if}
 		</div>
 		<textarea
+			id="textarea"
 			class="break-all h-120 w-64 flex-grow border border-further p-3 font-mono shadow-inner outline-none sm:h-144 sm:w-120 md:w-144"
 			contenteditable="true"
 			bind:value={data.content}
@@ -155,7 +181,7 @@
 
 	<div class="flex min-h-full flex-col items-center">
 		<div
-			class="mb-6 mt-2 w-64 flex-grow break-all bg-itembackground p-3 font-mono sm:w-120 md:w-144"
+			class="relative mb-20 mt-2 w-64 flex-grow break-all bg-itembackground p-3 font-mono sm:w-120 md:w-144"
 		>
 			{#if data.content.length === 0}
 				<i>No contents.</i>
@@ -169,4 +195,14 @@
 			{/if}
 		</div>
 	</div>
+	{#if detectScroll > 60}
+		<div class="absolute w-64 sm:w-120 md:w-144 flex justify-end px-2">
+			<button
+				transition:scale={{ duration: 150, delay: 50, opacity: 0, start: 0, easing: quintOut }}
+				on:click={() => toEdit()}
+				class="bottom-6 rounded-full w-10 h-10 bg-basecolor text-sm text-lightbuttontext font-semibold fixed z-90"
+				>Edit</button
+			>
+		</div>
+	{/if}
 {/if}
