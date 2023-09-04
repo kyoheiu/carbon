@@ -58,10 +58,10 @@
 		@apply m-2 border-l-2 pl-2 italic;
 	}
 	ul {
-		@apply m-2 list-disc px-2;
+		@apply mx-4 list-disc;
 	}
 	ol {
-		@apply m-2 list-decimal px-2;
+		@apply mx-4 list-decimal;
 	}
 	table {
 		@apply w-full max-w-full table-auto border-collapse overflow-x-scroll;
