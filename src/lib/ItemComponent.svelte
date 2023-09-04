@@ -16,18 +16,18 @@
 		<div class="ml-2 flex flex-col items-start">
 			<a
 				href="/item?file={encodeURIComponent(encode(item.name))}"
-				class="text-lg w-40 cursor-pointer truncate text-left underline hover:text-hovertitle hover:font-semibold sm:w-72 md:w-96"
+				class="text-lg w-56 cursor-pointer truncate text-left underline hover:text-hovertitle hover:font-semibold sm:w-72 md:w-96"
 				>{item.name}</a
 			>
 			{#if item.desc}
-				<div class="mt-3 w-40 truncate text-desc sm:w-72 md:w-96">
+				<div class="mt-3 w-56 truncate text-desc sm:w-72 md:w-96">
 					{item.desc}
 				</div>
 			{:else}
-				<div class="mt-3 w-40 truncate italic text-desc sm:w-72 md:w-96">No contents.</div>
+				<div class="mt-3 w-56 truncate italic text-desc sm:w-72 md:w-96">No contents.</div>
 			{/if}
 		</div>
-		<span class="ml-2 w-12 text-right text-sm text-subtle sm:w-20">{toDuration(item.modified)}</span
+		<span class="hidden sm:inline ml-2 w-12 text-right text-sm text-subtle sm:w-20">{toDuration(item.modified)}</span
 		>
 		<button
 			class="text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
