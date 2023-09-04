@@ -200,7 +200,7 @@
 			<button
 				transition:scale={{ duration: 150, delay: 50, opacity: 0, start: 0, easing: quintOut }}
 				on:click={() => toEdit()}
-				class="bottom-6 rounded-full w-10 h-10 bg-basecolor text-sm text-lightbuttontext font-semibold fixed z-90"
+				class="bottom-6 rounded-full w-12 h-12 bg-basecolor text-sm text-lightbuttontext font-semibold fixed z-90"
 				>Edit</button
 			>
 		</div>
