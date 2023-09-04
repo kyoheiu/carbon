@@ -26,8 +26,6 @@ services:
       - CARBON_GIT_USER="carbon" # default to 'carbon'
       - CARBON_GIT_EMAIL="im@kyoheiu.dev" # default to 'git@example.com'
       - CARBON_DATA_PATH=data # default to 'git@example.com'
-    ports:
-      - 8080:8080
     logging:
       driver: json-file
       options:
