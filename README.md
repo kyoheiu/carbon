@@ -1,10 +1,12 @@
 # carbon
+
 Self-hosted & git-powered online text editor. Keeps text files in a flat directory structure. Particularly suited for users who prefer a straightforward and Git-integrated text editing experience without fancy features.
 
 ![screenshot.png](/screenshot/screenshot.png)
 
 ## features
-- *Like a carbon paper*, through this app you can edit your text files in a single, flat directory on your server.
+
+- _Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.
 - Pressing <C-CR> inside the textarea will save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
 - No fancy editing feature such as WYSIWYG.
@@ -15,8 +17,9 @@ Self-hosted & git-powered online text editor. Keeps text files in a flat directo
 
 ## deploy
 
-1. If you'd like to use the git feature, `git init && git add -A && git commit -m "Initial commit"` in your directory that contains text files. *Sub direcotries are not supported.*
+1. If you'd like to use the git feature, `git init && git add -A && git commit -m "Initial commit"` in your directory that contains text files. _Sub direcotries are not supported._
    After that, add `user.name` and `user.email` to `data/.git/config` like this:
+
 ```
 [user]
     name = Kyohei Uto
@@ -69,6 +72,7 @@ services:
 And the app will start listening on port 3000.
 
 ## tech stack
+
 - frontend
   - SvelteKit
 - server to support git
