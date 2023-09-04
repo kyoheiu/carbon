@@ -1,21 +1,22 @@
 # carbon
-Self-hosted & git-powered online text editor.
+Self-hosted & git-powered online text editor. Keeps text files in a flat directory structure. Particularly suited for users who prefer a straightforward and Git-integrated text editing experience without fancy features.
 
 ![screenshot.png](/screenshot/screenshot.png)
 
 ## features
-- carbon enables you to edit or delete files in `data` directory, or add a new one.
+- *Like a carbon paper*, through this app you can edit your text files in a single, flat directory on your server.
 - Pressing <C-CR> inside the textarea will save the change.
-  - If you set `CARBON_GIT_SERVER` env, the change will be automatically added to the git index and commited.
+  - Optionally, the change can be automatically added and commited to the Git repository.
 - No fancy editing feature such as WYSIWYG.
 - No tags, no categories, no subdirectories.
+- Keep scroll position between the view mode and edit mode.
 - Texts with `.md` extension are converted to html in the view mode.
 - Search powered by `fd-find` and `ripgrep` (regex pattern supported).
 
 ## deploy
 
-1. If not initialized, `git init` in your `data` directory, which contains text files. Sub direcotries are not supported.
-   To commit on save, add `user.name` and `user.email` to `data/.git/config` like this:
+1. If you'd like to use the git feature, `git init && git add -A && git commit -m "Initial commit"` in your directory that contains text files. *Sub direcotries are not supported.*
+   After that, add `user.name` and `user.email` to `data/.git/config` like this:
 ```
 [user]
     name = Kyohei Uto
@@ -42,7 +43,7 @@ services:
       options:
         max-size: 1m
         max-file: '3'
-  # If you do not want git support, omit `server` entirely!
+  # If you do not want the git feature, omit `server` entirely!
   server:
     image: docker.io/kyoheiudev/carbon-server:0.2.0
     container_name: carbon-server
@@ -64,6 +65,8 @@ services:
         max-size: 1m
         max-file: '3'
 ```
+
+And the app will start listening on port 3000.
 
 ## tech stack
 - frontend
