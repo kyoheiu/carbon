@@ -1,10 +1,10 @@
 version: '3'
 services:
   client:
-    image: docker.io/kyoheiudev/carbon-client:0.1.0
+    image: docker.io/kyoheiudev/carbon-client:0.2.0
     container_name: carbon-client
     volumes:
-      - './data:/carbon-client/data:rw'
+      - '/path/to/data:/carbon-client/data:rw'
     environment:
       - CARBON_GIT_SERVER=carbon-server
     ports:
@@ -14,18 +14,22 @@ services:
       options:
         max-size: 1m
         max-file: '3'
+  # If you do not want git support, omit `server` entirely!
   server:
-    image: docker.io/kyoheiudev/carbon-server:0.1.0
+    image: docker.io/kyoheiudev/carbon-server:0.2.0
     container_name: carbon-server
-    user: '1000:1000' # UID and GID that created Git repository.
+    # UID and GID that created Git repository.
+    user: '1000:1000'
     volumes:
       - './data:/carbon-server/data:rw'
       - '/etc/passwd:/etc/passwd:ro'
       - '/etc/group:/etc/group:ro'
     environment:
-      - CARBON_GIT_USER="carbon" # default to 'carbon'
-      - CARBON_GIT_EMAIL="im@kyoheiu.dev" # default to 'git@example.com'
-      - CARBON_DATA_PATH=data # default to 'git@example.com'
+      # default to 'carbon'
+      - CARBON_GIT_USER="carbon"
+      # default to 'git@example.com'
+      - CARBON_GIT_EMAIL="git@example.com"
+      - CARBON_DATA_PATH=data
     logging:
       driver: json-file
       options:
