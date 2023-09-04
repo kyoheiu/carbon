@@ -45,7 +45,8 @@
 		@apply mb-3 mt-6 font-bold;
 	}
 	:not(pre) > code {
-		@apply rounded-md px-1 font-mono text-sm;
+		@apply rounded-md px-1 font-mono bg-background
+		;
 	}
 	pre {
 		@apply m-2 overflow-x-scroll border p-3;
