@@ -7,7 +7,7 @@ Self-hosted & git-powered online text editor. Keeps text files in a flat directo
 ## features
 
 - _Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.
-- Pressing <C-CR> inside the textarea will save the change.
+- Pressing `<C-CR>` inside the textarea will save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
 - No fancy editing feature such as WYSIWYG.
 - No tags, no categories, no subdirectories.
