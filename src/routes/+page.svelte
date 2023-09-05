@@ -16,15 +16,17 @@
 <svelte:head>
 	<title>carbon</title>
 </svelte:head>
-{#each data.result as item}
-	<ItemComponent {item} />
-{/each}
-{#if !showAll}
-	<button
-		class="mt-4 mb-4 border border-further bg-itembackground px-2 py-1 text-sm font-semibold text-basecolor"
-		on:click={showAllData}
-		title="show all">Show all</button
-	>
-{:else}
-	<div class="mt-8" />
+{#if data.result.length > 0}
+	{#each data.result as item}
+		<ItemComponent {item} />
+	{/each}
+	{#if !showAll}
+		<button
+			class="mt-4 mb-4 border border-further bg-itembackground px-2 py-1 text-sm font-semibold text-basecolor"
+			on:click={showAllData}
+			title="show all">Show all</button
+		>
+	{:else}
+		<div class="mt-8" />
+	{/if}
 {/if}
