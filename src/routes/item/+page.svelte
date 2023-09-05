@@ -164,7 +164,7 @@
 				>
 				{#if showMenu}
 					<div
-						class="border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-itembackground drop-shadow-xl"
+						class="z-50 border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-itembackground drop-shadow-xl"
 					>
 						<div>
 							<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
