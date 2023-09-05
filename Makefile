@@ -9,6 +9,8 @@ be:
 	cd axum && RUST_LOG=debug cargo run
 
 build:
+	npm install --package-lock-only
+	cd axum && cargo generate-lockfile
 	sudo docker build --tag=kyoheiudev/carbon-client:$(VER) .
 	cd axum && sudo docker build --tag=kyoheiudev/carbon-server:$(VER) .
 
