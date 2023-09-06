@@ -181,7 +181,7 @@
 
 	<div class="flex min-h-full flex-col items-center">
 		<div
-			class="relative mb-20 mt-2 w-64 flex-grow break-all bg-itembackground p-3 sm:w-120 md:w-144"
+			class="relative mb-20 mt-2 w-64 flex-grow break-words bg-itembackground p-3 sm:w-120 md:w-144"
 		>
 			{#if data.content.length === 0}
 				<i>No contents.</i>
