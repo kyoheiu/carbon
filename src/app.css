@@ -27,22 +27,22 @@
 		@apply m-auto table h-auto max-w-full;
 	}
 	h1 {
-		@apply mb-3 mt-6 border-b text-2xl font-bold;
+		@apply first:mt-0 mb-3 mt-6 border-b text-2xl font-bold;
 	}
 	h2 {
-		@apply mb-3 mt-6 border-b text-xl font-bold;
+		@apply first:mt-0 mb-3 mt-6 border-b text-xl font-bold;
 	}
 	h3 {
-		@apply mb-3  mt-6 text-lg font-bold;
+		@apply first:mt-0 border-l-4 pl-2 mb-3 mt-6 text-lg font-bold;
 	}
 	h4 {
-		@apply mb-3 mt-6 font-bold;
+		@apply border-l-4 first:mt-0 pl-2 mb-3 mt-6 font-bold;
 	}
 	h5 {
-		@apply mb-3 mt-6 font-bold;
+		@apply first:mt-0 border-l-4 pl-2 mb-3 mt-6 font-bold;
 	}
 	h6 {
-		@apply mb-3 mt-6 font-bold;
+		@apply border-l-4 first:mt-0 pl-2 mb-3 mt-6 font-bold;
 	}
 	:not(pre) > code {
 		@apply rounded-md px-1 font-mono bg-background;
@@ -60,19 +60,13 @@
 		@apply mx-4 list-disc;
 	}
 	ol {
-		@apply mx-4 list-decimal;
+		@apply mx-8 list-decimal;
 	}
 	table {
-		@apply w-full max-w-full table-auto border-collapse overflow-x-scroll;
-	}
-	table th {
-		@apply p-1;
+		@apply w-full table-fixed text-left;
 	}
 	table th,
 	td {
-		@apply border;
-	}
-	table td {
-		@apply p-1;
+		@apply p-2 border-b;
 	}
 }
