@@ -1,13 +1,23 @@
+# stage build
 FROM node:alpine3.18
+WORKDIR /app
 
-WORKDIR /carbon-client
-
+# copy everything to the container
 COPY . .
-
-RUN apk add --no-cache fd ripgrep
+# clean install all dependencies
 RUN npm ci
+# build SvelteKit app
 RUN npm run build
 
-ENV NODE_ENV=production
+# stage run
+FROM alpine:3.18.3
+WORKDIR /carbon-client
+RUN apk add --no-cache nodejs npm fd ripgrep
+# copy dependency list
+COPY --from=0 /app/package*.json ./
+# clean install dependencies, no devDependencies, no prepare script
+RUN npm ci --omit=dev --ignore-scripts
+# copy built SvelteKit app to /app
+COPY --from=0 /app/build ./
 EXPOSE 3000
-CMD ["node", "build/index.js"]
+CMD ["node", "./index.js"]
