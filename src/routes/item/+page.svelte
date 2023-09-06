@@ -45,7 +45,7 @@
 		}
 
 		toast.success('Saved.', {
-			duration: 2000
+			duration: 1000
 		});
 
 		data.fileName = newName;
