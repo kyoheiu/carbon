@@ -22,10 +22,15 @@ struct Core {
 
 impl Core {
     fn default() -> Result<Self, Error> {
+        let data_path = if std::path::Path::new("data").exists() {
+            "data".to_string()
+        } else {
+            "../data".to_string()
+        };
         Ok(Core {
             git_user: std::env::var("CARBON_GIT_USER").unwrap_or("carbon".to_string()),
             git_email: std::env::var("CARBON_GIT_EMAIL").unwrap_or("git@example.com".to_string()),
-            data_path: std::env::var("CARBON_DATA_PATH").unwrap_or("../data".to_string()),
+            data_path,
         })
     }
 
