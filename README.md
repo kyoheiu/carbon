@@ -1,6 +1,6 @@
 # carbon
 
-An opinionated online text editor, self-hostaed & Git-powered. _Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.  
+An opinionated online text editor, self-hosted & Git-powered. _Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.  
 Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 
 ![screenshot.png](/screenshot/screenshot.png)
