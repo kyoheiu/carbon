@@ -48,7 +48,7 @@
 		@apply rounded-md px-1 font-mono bg-background;
 	}
 	pre {
-		@apply m-2 overflow-x-scroll border p-3;
+		@apply m-3 overflow-x-scroll border p-3;
 	}
 	pre > code {
 		@apply font-mono;
@@ -57,13 +57,13 @@
 		@apply m-2 border-l-2 pl-2 italic;
 	}
 	ul {
-		@apply mx-4 list-disc;
+		@apply mx-4 list-inside list-disc mb-3 space-y-1;
 	}
 	ol {
-		@apply mx-8 list-decimal;
+		@apply mx-4 list-inside list-decimal mb-3 space-y-1;
 	}
 	table {
-		@apply w-full table-fixed text-left;
+		@apply w-full table-fixed text-left mb-3;
 	}
 	table th,
 	td {
