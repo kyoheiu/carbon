@@ -13,7 +13,7 @@ interface Req {
 
 const saveFailed = 'Failed to save the change.';
 const commitFailed = 'Change saved, but failed to commit to the Git repository.';
-const createFailed = 'Failed to create new file.';
+const createFailed = 'Failed to create new file. Possibly a file with the same name exists.';
 
 const postToGitServer = async (req: Req) => {
 	if (process.env.CARBON_GIT_SERVER) {
@@ -57,7 +57,7 @@ export const POST: RequestHandler = async (event) => {
 		if (req.original.length === 0) {
 			//Create new file.
 			try {
-				await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content);
+				await fs.writeFile(`${DATA_PATH}/${req.new}`, req.content, { flag: 'wx' });
 			} catch (e) {
 				logger.error(e);
 				return new Response(createFailed, {
