@@ -5,6 +5,9 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 
 ![screenshot.png](/screenshot/screenshot.png)
 
+[demo site](https://carbon-demo.kyoheiu.dev/)
+(No the git feature, reset every 15 minutes)
+
 ## features
 
 - No collaborative editing – it's designed for individual use.
@@ -14,6 +17,7 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
   - Optionally, the change can be automatically added and commited to the Git repository.
 - Keeps scroll position between view mode and edit mode.
 - Texts with `.md` extension are converted to html in the view mode.
+- KaTeX supported.
 - Search powered by `fd-find` and `ripgrep` (regex pattern supported).
 
 ## deploy
@@ -37,7 +41,7 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 version: '3'
 services:
   client:
-    image: docker.io/kyoheiudev/carbon-client:0.2.2
+    image: docker.io/kyoheiudev/carbon-client:0.2.3
     container_name: carbon-client
     volumes:
       - '/path/to/data:/carbon-client/data:rw'
@@ -53,7 +57,7 @@ services:
         max-file: '3'
   # If you don't want the git feature, omit `server` entirely!
   server:
-    image: docker.io/kyoheiudev/carbon-server:0.2.2
+    image: docker.io/kyoheiudev/carbon-server:0.2.3
     container_name: carbon-server
     # UID and GID that created Git repository.
     user: '1000:1000'
