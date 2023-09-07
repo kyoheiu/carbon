@@ -20,7 +20,7 @@
 	{#each data.result as item}
 		<ItemComponent {item} />
 	{/each}
-	{#if !showAll}
+	{#if data.hasMany && !showAll}
 		<button
 			class="mt-4 mb-4 border border-further bg-itembackground px-2 py-1 text-sm font-semibold text-basecolor"
 			on:click={showAllData}
