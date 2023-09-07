@@ -45,10 +45,6 @@
 			return;
 		}
 
-		toast.success('Saved.', {
-			duration: 1000
-		});
-
 		data.fileName = newName;
 		edited = false;
 	};
