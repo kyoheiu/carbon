@@ -87,3 +87,9 @@ And the app will start listening on port 3000.
 - server to support git
   - rust(axum)
   - libgit2
+
+## Contributing
+
+Contributions are very welcome!
+
+If you have an idea for a new feature, please create an issue before making PR.
