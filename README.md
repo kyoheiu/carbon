@@ -1,6 +1,9 @@
 # carbon
 
-An opinionated online text editor, self-hosted & Git-powered. _Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.  
+An opinionated online text editor, self-hosted & Git-powered.
+
+_Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.  
+
 Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 
 ![screenshot.png](/screenshot/screenshot.png)
@@ -13,9 +16,9 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 - No collaborative editing – it's designed for individual use.
 - No fancy editing feature such as WYSIWYG or image rendering.
 - No tags, categories, or subdirectories to keep things straightforward.
-- Pressing `<C-CR>` inside the textarea will save the change.
+- Pressing `<C-CR>` on the textarea will save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
-- Keeps scroll position between view mode and edit mode.
+- Keeps scroll position (roughly) between view mode and edit mode.
 - Texts with `.md` extension are converted to html in the view mode.
 - KaTeX supported.
 - Search powered by `fd-find` and `ripgrep` (regex pattern supported).
