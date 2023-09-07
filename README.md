@@ -6,7 +6,7 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 ![screenshot.png](/screenshot/screenshot.png)
 
 [demo site](https://carbon-demo.kyoheiu.dev/)
-(No the git feature, reset every 15 minutes)
+(Without the git feature; reset every 15 minutes)
 
 ## features
 
