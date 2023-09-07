@@ -4,9 +4,10 @@
 	import DialogToDelete from '$lib/DialogToDelete.svelte';
 	import { toast, Toaster } from 'svelte-french-toast';
 	import { afterNavigate } from '$app/navigation';
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import renderMathInElement from 'katex/contrib/auto-render';
 
 	let showMenu = false;
 	let showModal = false;
@@ -82,14 +83,43 @@
 		}
 	};
 
+	const renderMath = () => {
+		const el = document.getElementById('content');
+		if (el) {
+			renderMathInElement(el, {
+				// customised options
+				// • auto-render specific keys, e.g.:
+				delimiters: [
+					{ left: '$$', right: '$$', display: true },
+					{ left: '$', right: '$', display: false },
+					{ left: '\\(', right: '\\)', display: false },
+					{ left: '\\[', right: '\\]', display: true }
+				],
+				// • rendering keys, e.g.:
+				throwOnError: false
+			});
+		}
+	};
+
+	onMount(() => {
+		renderMath();
+	});
+
 	afterNavigate(() => {
 		newName = data.fileName;
 	});
 </script>
 
 <svelte:window on:scroll={() => (detectScroll = window.scrollY)} />
+<svelte:document on:load={renderMath} />
 <svelte:head>
 	<title>{data.fileName} | carbon</title>
+	<link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+		integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn"
+		crossorigin="anonymous"
+	/>
 </svelte:head>
 {#if data.err}
 	<div class="p-4 text-center">
@@ -179,7 +209,7 @@
 		<DialogToDelete bind:showModal item={data.fileName} />
 	</div>
 
-	<div class="flex min-h-full flex-col items-center">
+	<div id="content" class="flex min-h-full flex-col items-center">
 		<div
 			class="relative mb-20 mt-2 w-64 flex-grow break-words bg-itembackground p-3 sm:w-120 md:w-144"
 		>
@@ -189,9 +219,9 @@
 				<!-- eslint-disable -->
 				{@html marked.parse(data.content)}
 			{:else}
-				{#each data.content.split('\n') as line}
-					{line}<br />
-				{/each}
+				<div class="whitespace-pre-wrap">
+					{data.content}
+				</div>
 			{/if}
 		</div>
 	</div>
