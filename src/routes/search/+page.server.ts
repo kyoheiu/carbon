@@ -28,7 +28,7 @@ export const load = async ({ url }: { url: URL }) => {
 	});
 
 	//ripgrep
-	const subprocessRg = child.spawnSync('rg', ['-l', q, DATA_PATH]);
+	const subprocessRg = child.spawnSync('rg', ['-i', '-l', q, DATA_PATH]);
 	const splitRg: (string | null)[] = subprocessRg.stdout
 		.toString()
 		.split('\n')
