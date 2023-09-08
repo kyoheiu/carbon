@@ -5,8 +5,8 @@ RUN apk update && apk add --no-cache musl-dev
 RUN cargo build --release --locked
 
 FROM alpine:3.18
-WORKDIR /carbon-server
-COPY --from=builder /carbon-builder/target/release/carbon-server . 
+WORKDIR /carbon-git
+COPY --from=builder /carbon-builder/target/release/carbon-git . 
 ENV RUST_LOG info
 EXPOSE 8080
-ENTRYPOINT [ "./carbon-server" ]
+ENTRYPOINT [ "./carbon-git" ]

@@ -67,6 +67,36 @@ impl Core {
 
         Ok(())
     }
+
+    fn delete_and_commit(
+        &self,
+        file_to_delete: &str,
+        commit_message: &str
+        ) -> Result<(), Error> {
+        let repo = Repository::open(&self.data_path)?;
+        let mut index = repo.index()?;
+        index.remove_path(std::path::Path::new(file_to_delete))?;
+        index.write()?;
+
+        let new_tree_oid = index.write_tree()?;
+        let new_tree = repo.find_tree(new_tree_oid)?;
+        let author = git2::Signature::now(&self.git_user, &self.git_email)?;
+        let head = repo.head()?;
+        let parent = repo.find_commit(
+            head.target()
+                .ok_or_else(|| Error::Git("Failed get the OID.".to_string()))?,
+        )?;
+        repo.commit(
+            Some("HEAD"),
+            &author,
+            &author,
+            commit_message,
+            &new_tree,
+            &[&parent],
+        )?;
+
+        Ok(())
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -133,19 +163,9 @@ async fn add_and_commit(
 #[debug_handler]
 async fn delete_and_commit(
     State(core): State<Core>,
-    Json(payload): Json<Payload>,
+    Json(payload): Json<PayloadToDelete>,
 ) -> Result<(), Error> {
-    if payload.original == payload.new {
-        let message = format!("Update {}", payload.new);
-        core.add_and_commit(&payload.new, None, &message)?;
-        Ok(info!("Update {}", message))
-    } else if !payload.original.is_empty() {
-        let message = format!("Rename {} -> {}", payload.original, payload.new);
-        core.add_and_commit(&payload.new, Some(&payload.original), &message)?;
+        let message = format!("Delete {}", payload.file);
+        core.delete_and_commit(&payload.file, &message)?;
         Ok(info!(message))
-    } else {
-        let message = format!("Create {}", payload.new);
-        core.add_and_commit(&payload.new, None, &message)?;
-        Ok(info!(message))
-    }
 }
