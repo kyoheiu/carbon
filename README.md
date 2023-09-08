@@ -41,14 +41,14 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 ```
 version: '3'
 services:
-  client:
-    image: docker.io/kyoheiudev/carbon-client:0.3.0
-    container_name: carbon-client
+  carbon:
+    image: docker.io/kyoheiudev/carbon:0.3.1
+    container_name: carbon
     volumes:
       - '/path/to/data:/carbon-client/data:rw'
-    environment:
     # If you do not want the git feature, omit this!
-      - CARBON_GIT_SERVER=carbon-server
+    environment:
+      - CARBON_GIT_SERVER=carbon-git
     ports:
       - 3000:3000
     logging:
@@ -56,14 +56,14 @@ services:
       options:
         max-size: 1m
         max-file: '3'
-  # If you don't want the git feature, omit `server` entirely!
-  server:
-    image: docker.io/kyoheiudev/carbon-server:0.3.0
-    container_name: carbon-server
+  # If you don't want the git feature, omit `carbon-git` entirely!
+  carbon-git:
+    image: docker.io/kyoheiudev/carbon-git:1.0.0
+    container_name: carbon-git
     # UID and GID that created Git repository.
     user: '1000:1000'
     volumes:
-      - './data:/carbon-server/data:rw'
+      - './data:/carbon-git/data:rw'
       - '/etc/passwd:/etc/passwd:ro'
       - '/etc/group:/etc/group:ro'
     environment:
@@ -94,3 +94,19 @@ And the app will start listening on port 3000.
 Contributions are very welcome!
 
 If you have an idea for a new feature, please create an issue before making PR.
+
+### Development
+
+#### Prerequisites 
+- `nodejs` for client-side
+- `cargo` to enable the git feature
+
+```
+git clone https://github.com/kyoheiu/carbon
+npm install
+make fe # launch carbon
+make be # launch the git server
+make fmt # format both side
+```
+
+For details, see `Makefile`.
