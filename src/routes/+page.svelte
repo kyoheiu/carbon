@@ -1,4 +1,6 @@
 <script lang="ts">
+	import '../app.css';
+	import Header from '$lib/Header.svelte';
 	import ItemComponent from '$lib/ItemComponent.svelte';
 	import type { PageData } from './$types';
 
@@ -16,17 +18,20 @@
 <svelte:head>
 	<title>carbon</title>
 </svelte:head>
-{#if data.result.length > 0}
-	{#each data.result as item}
-		<ItemComponent {item} />
-	{/each}
-	{#if data.hasMany && !showAll}
-		<button
-			class="mt-4 mb-4 border border-further bg-itembackground px-2 py-1 text-sm font-semibold text-basecolor"
-			on:click={showAllData}
-			title="show all">Show all</button
-		>
-	{:else}
-		<div class="mt-8" />
+<main class="bg-itembackground flex min-h-screen flex-col items-center">
+	<Header />
+	{#if data.result.length > 0}
+		{#each data.result as item}
+			<ItemComponent {item} />
+		{/each}
+		{#if data.hasMany && !showAll}
+			<button
+				class="mt-4 mb-4 border border-further bg-background px-2 py-1 text-sm font-semibold text-basecolor"
+				on:click={showAllData}
+				title="show all">Show all</button
+			>
+		{:else}
+			<div class="mt-8" />
+		{/if}
 	{/if}
-{/if}
+</main>
