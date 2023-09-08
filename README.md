@@ -80,6 +80,11 @@ services:
 
 And the app will start listening on port 3000.
 
+### containers
+
+- `carbon` is the app itself, offering everything except the git feature.
+- `carbon-git` only serves the git feature.
+
 ## tech stack
 
 - frontend
