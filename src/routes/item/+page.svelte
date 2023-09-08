@@ -72,10 +72,13 @@
 	};
 
 	const toView = async () => {
-		const scroll = window.scrollY;
-		data.editing = false;
-		await tick();
-		window.scroll(0, scroll);
+		const textarea = document.getElementById('textarea');
+		if (textarea) {
+			const scroll = textarea.scrollTop;
+			data.editing = false;
+			await tick();
+			window.scroll(0, scroll);
+		}
 		renderMath();
 	};
 
