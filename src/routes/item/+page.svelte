@@ -174,7 +174,7 @@
 				autocorrect="off"
 				autocapitalize="off"
 				spellcheck="false"
-				class="rounded mb-8 mt-8 whitespace-pre-wrap break-words w-64 flex-grow bg-background p-3 font-mono outline-none sm:w-120 md:w-144"
+				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-64 flex-grow bg-background p-3 font-mono outline-none sm:w-120 md:w-144"
 				bind:value={data.content}
 				placeholder="Write here. Press <Ctrl + Enter> to save."
 				on:input={detectChange}
