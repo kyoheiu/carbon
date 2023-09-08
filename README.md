@@ -2,11 +2,9 @@
 
 An opinionated online text editor, self-hosted & Git-powered.
 
-_Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.  
+_Like a carbon paper_, through this app you can edit your text files in a single, flat directory on your server.
 
 Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
-
-![screenshot.png](/screenshot/screenshot.png)
 
 [demo site](https://carbon-demo.kyoheiu.dev/)
 (Without the git feature; reset every 15 minutes)
@@ -16,7 +14,7 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 - No collaborative editing – it's designed for individual use.
 - No fancy editing feature such as WYSIWYG or image rendering.
 - No tags, categories, or subdirectories to keep things straightforward.
-- Pressing `<C-CR>` on the textarea will save the change.
+- Pressing `Ctrl + Enter` on the textarea will save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
 - Keeps scroll position (roughly) between view mode and edit mode.
 - Texts with `.md` extension are converted to html in the view mode.
@@ -44,7 +42,7 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 version: '3'
 services:
   client:
-    image: docker.io/kyoheiudev/carbon-client:0.2.3
+    image: docker.io/kyoheiudev/carbon-client:0.3.0
     container_name: carbon-client
     volumes:
       - '/path/to/data:/carbon-client/data:rw'
@@ -60,7 +58,7 @@ services:
         max-file: '3'
   # If you don't want the git feature, omit `server` entirely!
   server:
-    image: docker.io/kyoheiudev/carbon-server:0.2.3
+    image: docker.io/kyoheiudev/carbon-server:0.3.0
     container_name: carbon-server
     # UID and GID that created Git repository.
     user: '1000:1000'
