@@ -204,7 +204,7 @@
 					>
 					{#if showMenu}
 						<div
-							class="z-50 border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-background drop-shadow-xl"
+							class="rounded z-50 border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-background drop-shadow-xl"
 						>
 							<div>
 								<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
@@ -236,8 +236,8 @@
 				<button
 					transition:scale={{ duration: 200, delay: 50, opacity: 0, start: 0, easing: quintOut }}
 					on:click={toEdit}
-					class="bottom-6 rounded-full w-12 h-12 bg-basecolor text-sm text-lightbuttontext font-semibold fixed z-90"
-					>Edit</button
+					class="bottom-6 rounded-full w-12 h-12 bg-basecolor text-sm text-lightbuttontext font-semibold fixed shadow"
+					><img src="edit.svg" alt="Edit" /></button
 				>
 			</div>
 		{/if}
