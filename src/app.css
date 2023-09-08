@@ -48,7 +48,7 @@
 		@apply rounded-md px-1 font-mono bg-itembackground;
 	}
 	pre {
-		@apply m-3 overflow-x-scroll bg-codebackground text-codetext shadow-md rounded-md p-4;
+		@apply border border-further m-3 overflow-x-scroll bg-codebackground text-codetext rounded-md p-4;
 	}
 	pre > code {
 		@apply font-mono;
