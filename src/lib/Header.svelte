@@ -15,8 +15,8 @@
 	});
 </script>
 
-<div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground shadow">
-	<div class="flex h-12 w-64 items-center pt-2 sm:w-120 md:w-144">
+<div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground">
+	<div class="flex h-12 w-64 items-center py-2 sm:w-120 md:w-144">
 		<a class="no-underline font-semibold italic" href="/">carbon</a>
 		&nbsp; &nbsp;
 		{#if isRoot}
@@ -30,7 +30,7 @@
 			<a
 				href="/item"
 				title="add a new file"
-				class="rounded no-underline bg-itembackground border text-basecolor border-baseborder px-2 py-1 text-sm font-semibold"
+				class="rounded no-underline bg-background border text-basecolor border-baseborder px-2 py-1 text-sm font-semibold"
 				>+New</a
 			>
 		{/if}

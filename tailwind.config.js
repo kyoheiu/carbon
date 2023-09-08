@@ -3,9 +3,9 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		colors: {
-			background: '#e5e7eb', // gray-200
+			background: '#f9fafb', // gray-200
 			text: '#111827', // gray-900
-			itembackground: '#f9fafb', // gray-50
+			itembackground: '#e5e7eb', // gray-50
 			lightbuttontext: '#f9fafb', // gray-50
 			subtle: '#4b5563', // gray-600
 			desc: '#6b7280', // gray-500

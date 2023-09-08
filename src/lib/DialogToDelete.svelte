@@ -32,7 +32,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <div class="m-auto">
 	<dialog
-		class="p-4 w-60 max-w-sm drop-shadow-2xl"
+		class="rounded p-4 w-60 max-w-sm drop-shadow-2xl"
 		bind:this={dialog}
 		on:close={() => (showModal = false)}
 		on:click|self={() => dialog.close()}

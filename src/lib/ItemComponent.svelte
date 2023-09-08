@@ -12,11 +12,11 @@
 </script>
 
 <div class="mt-4 flex flex-col items-center">
-	<div class="flex h-24 w-64 items-center bg-itembackground px-2 shadow sm:w-120 md:w-144">
+	<div class="rounded flex h-24 w-64 items-center bg-background px-2 sm:w-120 md:w-144">
 		<div class="ml-2 flex flex-col items-start">
 			<a
 				href="/item?file={encodeURIComponent(encode(item.name))}"
-				class="text-lg w-56 cursor-pointer truncate text-left underline hover:text-hovertitle hover:font-semibold sm:w-72 md:w-96"
+				class="no-underline font-mono text-lg w-56 cursor-pointer truncate text-left hover:text-hovertitle hover:font-semibold sm:w-72 md:w-96"
 				>{item.name}</a
 			>
 			{#if item.desc}
