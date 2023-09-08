@@ -77,6 +77,7 @@
 			await tick();
 			window.scroll(0, scroll);
 		}
+		renderMath();
 	};
 
 	const renderMath = () => {
