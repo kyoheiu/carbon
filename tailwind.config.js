@@ -4,7 +4,9 @@ export default {
 	theme: {
 		colors: {
 			background: '#f9fafb', // gray-200
+			codebackground: '#374151', // gray-700
 			text: '#111827', // gray-900
+			codetext: '#e5e7eb', // gray-50
 			itembackground: '#e5e7eb', // gray-50
 			lightbuttontext: '#f9fafb', // gray-50
 			subtle: '#4b5563', // gray-600

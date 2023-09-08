@@ -45,10 +45,10 @@
 		@apply border-l-4 first:mt-0 pl-2 mb-3 mt-6 font-bold;
 	}
 	:not(pre) > code {
-		@apply rounded-md px-1 font-mono bg-background;
+		@apply rounded-md px-1 font-mono bg-itembackground;
 	}
 	pre {
-		@apply m-3 overflow-x-scroll border p-3;
+		@apply m-3 overflow-x-scroll bg-codebackground text-codetext text-itembackground rounded p-3;
 	}
 	pre > code {
 		@apply font-mono;
