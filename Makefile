@@ -2,11 +2,12 @@ fmt:
 	npm run format && npm run lint
 	cd axum && cargo fmt
 
-fe:
-	npm run dev
-
 be:
 	cd axum && RUST_LOG=debug cargo run
+
+fe-build:
+	npm install --package-lock-only
+	sudo docker build --tag=kyoheiudev/carbon:$(VER) .
 
 build:
 	npm install --package-lock-only

@@ -42,7 +42,7 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 version: '3'
 services:
   carbon:
-    image: docker.io/kyoheiudev/carbon:0.3.1
+    image: docker.io/kyoheiudev/carbon:0.3.2
     container_name: carbon
     volumes:
       - '/path/to/data:/carbon-client/data:rw'
@@ -102,14 +102,15 @@ If you have an idea for a new feature, please create an issue before making PR.
 
 ### Development
 
-#### Prerequisites 
+#### Prerequisites
+
 - `nodejs` for client-side
 - `cargo` to enable the git feature
 
 ```
 git clone https://github.com/kyoheiu/carbon
 npm install
-make fe # launch carbon
+npm run dev # launch carbon
 make be # launch the git server
 make fmt # format both side
 ```
