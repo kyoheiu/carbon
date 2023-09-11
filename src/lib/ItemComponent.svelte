@@ -11,32 +11,34 @@
 	export let item: Item;
 </script>
 
-<div class="mt-4 flex flex-col items-center">
-	<div class="rounded flex h-24 w-64 items-center bg-background px-2 sm:w-120 md:w-144">
-		<div class="ml-2 flex flex-col items-start">
+<div
+	class="mt-1 sm:mt-4 rounded flex h-24 items-center bg-background w-full mx-3 sm:mx-0 sm:w-120 md:w-144"
+>
+	<div class="mx-2 flex flex-col items-start">
+		<div class="w-full sm:w-72 md:w-96 overflow-ellipsis line-clamp-1 break-all">
 			<a
+				class="no-underline font-mono text-lg hover:text-hovertitle hover:font-semibold"
 				href="/item?file={encodeURIComponent(encode(item.name))}"
-				class="no-underline font-mono text-lg w-56 cursor-pointer truncate text-left hover:text-hovertitle hover:font-semibold sm:w-72 md:w-96"
-				>{item.name}</a
-			>
-			{#if item.desc}
-				<div class="mt-3 w-56 truncate text-desc sm:w-72 md:w-96">
-					{item.desc}
-				</div>
-			{:else}
-				<div class="mt-3 w-56 truncate italic text-desc sm:w-72 md:w-96">No contents.</div>
-			{/if}
+				>{item.name}
+			</a>
 		</div>
-		<span class="hidden sm:inline ml-2 w-12 text-right text-sm text-subtle sm:w-20"
-			>{toDuration(item.modified)}</span
-		>
-		<button
-			class="text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
-			on:click={() => (item.showModal = true)}
-			title="delete"
-		>
-			Delete
-		</button>
-		<DialogToDelete bind:showModal={item.showModal} item={item.name} />
+		{#if item.desc}
+			<div class="mt-3 w-full overflow-ellipsis line-clamp-1 text-desc sm:w-72 md:w-96">
+				{item.desc}
+			</div>
+		{:else}
+			<div class="mt-3 w-full truncate italic text-desc sm:w-72 md:w-96">No contents.</div>
+		{/if}
 	</div>
+	<span class="hidden sm:inline ml-2 w-12 text-right text-sm text-subtle sm:w-20"
+		>{toDuration(item.modified)}</span
+	>
+	<button
+		class="text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
+		on:click={() => (item.showModal = true)}
+		title="delete"
+	>
+		Delete
+	</button>
+	<DialogToDelete bind:showModal={item.showModal} item={item.name} />
 </div>

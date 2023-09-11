@@ -68,11 +68,7 @@ impl Core {
         Ok(())
     }
 
-    fn delete_and_commit(
-        &self,
-        file_to_delete: &str,
-        commit_message: &str
-        ) -> Result<(), Error> {
+    fn delete_and_commit(&self, file_to_delete: &str, commit_message: &str) -> Result<(), Error> {
         let repo = Repository::open(&self.data_path)?;
         let mut index = repo.index()?;
         index.remove_path(std::path::Path::new(file_to_delete))?;
@@ -165,7 +161,7 @@ async fn delete_and_commit(
     State(core): State<Core>,
     Json(payload): Json<PayloadToDelete>,
 ) -> Result<(), Error> {
-        let message = format!("Delete {}", payload.file);
-        core.delete_and_commit(&payload.file, &message)?;
-        Ok(info!(message))
+    let message = format!("Delete {}", payload.file);
+    core.delete_and_commit(&payload.file, &message)?;
+    Ok(info!(message))
 }

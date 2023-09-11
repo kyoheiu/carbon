@@ -134,9 +134,11 @@
 		<Header />
 		<Toaster />
 		<div class="mt-4 flex flex-col justify-center">
-			<div class="h-12 w-64 sm:w-120 md:w-144 flex bg-itembackground items-center py-2">
+			<div
+				class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex bg-itembackground items-center py-2"
+			>
 				<input
-					class="h-8 w-32 border-b bg-itembackground border-further px-2 font-mono sm:w-64 md:w-96"
+					class="input-filename"
 					bind:value={newName}
 					placeholder="file name"
 					on:input={detectChange}
@@ -174,7 +176,7 @@
 				autocorrect="off"
 				autocapitalize="off"
 				spellcheck="false"
-				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-64 flex-grow bg-background p-3 font-mono outline-none sm:w-120 md:w-144"
+				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-full px-3 sm:px-0 bg-background p-3 font-mono outline-none sm:w-120 md:w-144"
 				bind:value={data.content}
 				placeholder="Write here. Press <Ctrl + Enter> to save."
 				on:input={detectChange}
@@ -186,13 +188,13 @@
 	<main class="flex min-h-screen flex-col items-center">
 		<Header />
 		<div class="mt-4 flex justify-center">
-			<div class="h-12 w-64 sm:w-120 md:w-144 flex bg-background items-center py-2">
+			<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex bg-background items-center py-2">
 				<div class="text-xl grow font-mono break-all leading-5 line-clamp-2">
 					{data.fileName}
 				</div>
 				<button
 					on:click={() => (data.editing = true)}
-					class="ml-2 py-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
+					class="ml-4 sm:ml-auto py-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
 					title="edit">Edit</button
 				>
 				<div class="relative ml-4">
@@ -220,7 +222,7 @@
 		</div>
 
 		<div id="content" class="flex min-h-full flex-col items-center">
-			<div class="relative mb-24 mt-8 w-64 flex-grow break-words sm:w-120 md:w-144">
+			<div class="relative mb-24 mt-8 w-full px-3 sm:px-0 flex-grow break-words sm:w-120 md:w-144">
 				{#if data.content.length === 0}
 					<i>No contents.</i>
 				{:else if data.fileName.split('.').pop() === 'md'}
@@ -232,7 +234,7 @@
 			</div>
 		</div>
 		{#if detectScroll > 60}
-			<div class="absolute w-64 sm:w-120 md:w-144 flex justify-end px-2">
+			<div class="absolute w-full sm:w-120 md:w-144 flex justify-end px-2">
 				<button
 					transition:scale={{ duration: 200, delay: 50, opacity: 0, start: 0, easing: quintOut }}
 					on:click={toEdit}

@@ -16,7 +16,7 @@
 </script>
 
 <div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground">
-	<div class="flex h-12 w-64 items-center py-2 sm:w-120 md:w-144">
+	<div class="flex h-12 w-full px-3 sm:px-0 items-center py-2 sm:w-120 md:w-144">
 		<a class="no-underline font-semibold italic" href="/">carbon</a>
 		&nbsp; &nbsp;
 		{#if isRoot}

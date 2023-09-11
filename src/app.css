@@ -5,13 +5,17 @@
 @layer base {
 	body {
 		@apply m-auto
-    bg-background text-text;
+             bg-background text-text;
 	}
 	button.shadow {
 		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
 	}
 	textarea {
 		height: calc(100vh - 200px);
+	}
+	input.input-filename {
+		@apply h-8 border-b bg-itembackground border-further px-2 font-mono sm:w-64 md:w-96;
+		width: calc(100vw - 200px);
 	}
 	button {
 		@apply rounded;
@@ -48,7 +52,9 @@
 		@apply rounded-md px-1 font-mono bg-itembackground;
 	}
 	pre {
-		@apply border border-further m-3 overflow-x-scroll bg-codebackground text-codetext rounded-md p-4;
+		width: calc(100vw - 50px);
+		@apply border border-further my-3 mx-auto overflow-x-scroll bg-codebackground text-codetext rounded-md p-4
+		       sm:w-120 md:w-144;
 	}
 	pre > code {
 		@apply font-mono;
