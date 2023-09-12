@@ -19,10 +19,14 @@
 		width: calc(100vw - 180px);
 	}
 	div.view-header {
-		width: calc(100vw - 152px);
+		@media (max-width: 639px) {
+			width: calc(100vw - 152px);
+		}
 	}
 	div.view {
-		width: calc(100vw - 12px);
+		@media (max-width: 639px) {
+			width: calc(100vw - 12px);
+		}
 	}
 	button {
 		@apply rounded;
