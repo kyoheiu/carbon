@@ -11,11 +11,12 @@
 		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
 	}
 	textarea {
+		width: calc(100vw - 180px);
 		height: calc(100vh - 200px);
 	}
 	input.input-filename {
 		@apply h-8 border-b bg-itembackground border-further px-2 font-mono sm:w-64 md:w-96;
-		width: calc(100vw - 200px);
+		width: calc(100vw - 180px);
 	}
 	button {
 		@apply rounded;
