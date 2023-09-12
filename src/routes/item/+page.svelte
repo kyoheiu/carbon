@@ -222,7 +222,9 @@
 		</div>
 
 		<div id="content" class="flex min-h-full flex-col items-center">
-			<div class="relative view mb-24 mt-4 w-full px-3 sm:px-0 flex-grow break-words sm:w-120 md:w-144">
+			<div
+				class="relative view mb-24 mt-4 w-full px-3 sm:px-0 flex-grow break-words sm:w-120 md:w-144"
+			>
 				{#if data.content.length === 0}
 					<i>No contents.</i>
 				{:else if data.fileName.split('.').pop() === 'md'}
