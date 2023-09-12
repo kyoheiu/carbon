@@ -189,7 +189,7 @@
 		<Header />
 		<div class="mt-4 flex justify-center">
 			<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex bg-background items-center py-2">
-				<div class="text-xl grow font-mono break-all leading-5 line-clamp-2">
+				<div class="text-xl view-header font-mono break-all leading-5 line-clamp-2">
 					{data.fileName}
 				</div>
 				<button
@@ -222,14 +222,14 @@
 		</div>
 
 		<div id="content" class="flex min-h-full flex-col items-center">
-			<div class="relative mb-24 mt-8 w-full px-3 sm:px-0 flex-grow break-words sm:w-120 md:w-144">
+			<div class="relative view mb-24 mt-4 w-full px-3 sm:px-0 flex-grow break-words sm:w-120 md:w-144">
 				{#if data.content.length === 0}
 					<i>No contents.</i>
 				{:else if data.fileName.split('.').pop() === 'md'}
 					<!-- eslint-disable -->
 					{@html marked.parse(data.content)}
 				{:else}
-					<span>{data.content}</span>
+					<span class="whitespace-pre-wrap">{data.content}</span>
 				{/if}
 			</div>
 		</div>

@@ -18,6 +18,12 @@
 		@apply h-8 border-b bg-itembackground border-further px-2 font-mono sm:w-64 md:w-96;
 		width: calc(100vw - 180px);
 	}
+	div.view-header {
+		width: calc(100vw - 152px);
+	}
+	div.view {
+		width: calc(100vw - 12px);
+	}
 	button {
 		@apply rounded;
 	}
