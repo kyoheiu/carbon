@@ -122,6 +122,7 @@
 </svelte:head>
 
 {#if data.err}
+	<!-- file name not found. -->
 	<main class="flex min-h-screen flex-col items-center">
 		<Header />
 		<div class="p-4 text-center">
@@ -130,6 +131,7 @@
 		</div>
 	</main>
 {:else if data.editing}
+	<!-- edit mode -->
 	<main class=" bg-itembackground flex min-h-screen flex-col items-center">
 		<Header />
 		<Toaster />
@@ -176,7 +178,7 @@
 				autocorrect="off"
 				autocapitalize="off"
 				spellcheck="false"
-				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-full px-3 sm:px-0 bg-background p-3 font-mono outline-none sm:w-120 md:w-144"
+				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-full p-3 bg-background font-mono outline-none sm:w-120 md:w-144"
 				bind:value={data.content}
 				placeholder="Write here. Press <Ctrl + Enter> to save."
 				on:input={detectChange}
@@ -185,6 +187,7 @@
 		</div>
 	</main>
 {:else}
+	<!-- view mode -->
 	<main class="flex min-h-screen flex-col items-center">
 		<Header />
 		<div class="mt-4 flex justify-center">
