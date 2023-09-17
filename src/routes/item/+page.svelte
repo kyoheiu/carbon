@@ -259,8 +259,8 @@
 				<button
 					transition:scale={{ duration: 200, delay: 50, opacity: 0, start: 0, easing: quintOut }}
 					on:click={toEdit}
-					class="bottom-6 rounded-full w-12 h-12 bg-basecolor text-sm text-lightbuttontext font-semibold fixed shadow"
-					><img src="edit.svg" alt="Edit" /></button
+					class="flex justify-center items-center bottom-6 rounded-full w-12 h-12 bg-basecolor text-sm text-lightbuttontext font-semibold fixed shadow"
+					><img class="w-5 h-5" src="edit.svg" alt="Edit" /></button
 				>
 			</div>
 		{/if}
