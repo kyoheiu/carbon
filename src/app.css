@@ -3,19 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-	body {
-		@apply m-auto
-             bg-background text-text;
-	}
 	button.shadow {
-		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+		box-shadow:
+			0 4px 6px -1px rgb(0 0 0 / 0.3),
+			0 2px 4px -2px rgb(0 0 0 / 0.3);
 	}
 	textarea {
 		width: calc(100vw - 180px);
 		height: calc(100vh - 200px);
 	}
 	input.input-filename {
-		@apply h-8 border-b bg-itembackground border-further px-2 font-mono sm:w-64 md:w-96;
+		@apply h-8 border-b border-further bg-itembackground px-2 font-mono sm:w-64 md:w-96;
 		width: calc(100vw - 180px);
 	}
 	div.view-header {
@@ -27,63 +25,5 @@
 		@media (max-width: 639px) {
 			width: calc(100vw - 12px);
 		}
-	}
-	button {
-		@apply rounded;
-	}
-	a {
-		@apply underline;
-	}
-	p {
-		@apply mt-2 mb-2;
-	}
-	img,
-	video {
-		@apply m-auto table h-auto max-w-full;
-	}
-	h1 {
-		@apply first:mt-0 mb-3 mt-6 border-b text-2xl font-bold;
-	}
-	h2 {
-		@apply first:mt-0 mb-3 mt-6 border-b text-xl font-bold;
-	}
-	h3 {
-		@apply first:mt-0 border-l-4 pl-2 mb-3 mt-6 text-lg font-bold;
-	}
-	h4 {
-		@apply border-l-4 first:mt-0 pl-2 mb-3 mt-6 font-bold;
-	}
-	h5 {
-		@apply first:mt-0 border-l-4 pl-2 mb-3 mt-6 font-bold;
-	}
-	h6 {
-		@apply border-l-4 first:mt-0 pl-2 mb-3 mt-6 font-bold;
-	}
-	:not(pre) > code {
-		@apply rounded-md px-1 font-mono bg-itembackground;
-	}
-	pre {
-		width: calc(100vw - 50px);
-		@apply border border-further my-3 mx-auto overflow-x-scroll bg-codebackground text-codetext rounded-md p-4
-		       sm:w-120 md:w-144;
-	}
-	pre > code {
-		@apply font-mono;
-	}
-	blockquote {
-		@apply m-3 border-l-2 pl-2 italic;
-	}
-	ul {
-		@apply mx-4 list-inside list-disc space-y-1;
-	}
-	ol {
-		@apply mx-4 list-inside list-decimal space-y-1;
-	}
-	table {
-		@apply w-full table-fixed text-left mb-3;
-	}
-	table th,
-	td {
-		@apply p-2 border-b;
 	}
 }

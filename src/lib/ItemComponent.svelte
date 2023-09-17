@@ -11,9 +11,7 @@
 	export let item: Item;
 </script>
 
-<div
-	class="mt-1 sm:mt-4 rounded flex h-24 items-center bg-background w-full mx-3 sm:mx-0 sm:w-120 md:w-144"
->
+<div class="mt-1 sm:mt-4 rounded flex h-24 items-center bg-background w-full sm:w-120 md:w-144">
 	<div class="mx-2 flex flex-col items-start">
 		<div class="w-full sm:w-72 md:w-96 overflow-ellipsis line-clamp-1 break-all">
 			<a

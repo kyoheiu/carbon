@@ -15,7 +15,8 @@ export default {
 			basecolor: '#2563eb', // blue-600
 			baseborder: '#60a5fa', // blue-400
 			hovertitle: '#2563eb', // blue-600
-			warning: '#b91c1c' // red-700
+			warning: '#b91c1c', // red-700
+			link: '#0369a1' // blue-700
 			// logo color: #374151 (gray-700)
 		},
 		extend: {
@@ -25,5 +26,5 @@ export default {
 			}
 		}
 	},
-	plugins: []
+	plugins: [require('@tailwindcss/typography')]
 };

@@ -147,7 +147,7 @@
 					on:keydown={(e) => keyDown(e)}
 				/>
 				<button
-					class="ml-auto mr-2 py-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
+					class="rounded ml-auto mr-2 py-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
 					on:click={() => toView()}
 					title="back to view">View</button
 				>
@@ -155,7 +155,7 @@
 					<div class="rounded py-1 w-16 bg-further text-center text-sm">Save</div>
 				{:else if edited}
 					<button
-						class="relative w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-itembackground"
+						class="rounded relative w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-itembackground"
 						on:click={save}
 						title="click / tap to manually save"
 					>
@@ -166,7 +166,7 @@
 					</button>
 				{:else}
 					<button
-						class="w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-lightbuttontext"
+						class="rounded w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-lightbuttontext"
 						title="click / tap to manually save"
 					>
 						Saved
@@ -190,43 +190,59 @@
 	<!-- view mode -->
 	<main class="flex min-h-screen flex-col items-center">
 		<Header />
-		<div class="mt-4 flex justify-center">
-			<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex bg-background items-center py-2">
-				<div class="text-xl view-header font-mono break-all leading-5 line-clamp-2">
-					{data.fileName}
-				</div>
-				<button
-					on:click={() => (data.editing = true)}
-					class="ml-4 sm:ml-auto py-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
-					title="edit">Edit</button
-				>
-				<div class="relative ml-4">
+		<div class="w-[100vw] bg-background flex flex-col items-center justify-center pb-4 mb-20">
+			<div class="mt-4 flex justify-center">
+				<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex items-center mt-2 mb-6">
+					<div class="text-xl view-header font-mono break-all leading-5 line-clamp-2">
+						{data.fileName}
+					</div>
 					<button
-						class="text-sm"
-						on:click={() => {
-							showMenu = !showMenu;
-						}}>•••</button
+						on:click={() => (data.editing = true)}
+						class="rounded ml-4 sm:ml-auto py-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
+						title="edit">Edit</button
 					>
-					{#if showMenu}
-						<div
-							class="rounded z-50 border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-background drop-shadow-xl"
+					<div class="relative ml-4">
+						<button
+							class="text-sm"
+							on:click={() => {
+								showMenu = !showMenu;
+							}}>•••</button
 						>
-							<div>
-								<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
+						{#if showMenu}
+							<div
+								class="rounded z-50 border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-background drop-shadow-xl"
+							>
+								<div>
+									<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
+								</div>
+								<button
+									class="text-warning mt-3"
+									on:click={() => (showModal = true)}
+									title="delete"
+								>
+									Delete
+								</button>
 							</div>
-							<button class="text-warning mt-3" on:click={() => (showModal = true)} title="delete">
-								Delete
-							</button>
-						</div>
-					{/if}
+						{/if}
+					</div>
 				</div>
+				<DialogToDelete bind:showModal item={data.fileName} />
 			</div>
-			<DialogToDelete bind:showModal item={data.fileName} />
-		</div>
 
-		<div id="content" class="flex min-h-full flex-col items-center">
 			<div
-				class="relative view mb-24 mt-4 w-full px-3 sm:px-0 flex-grow break-words sm:w-120 md:w-144"
+				id="content"
+				class="prose prose-gray px-3 sm:px-0 w-full sm:w-120 md:w-144
+		        prose-h1:border-b
+				prose-h2:border-b
+				prose-h1:border-further
+				prose-h2:border-further
+				prose-table:table-fixed
+				prose-a:text-link
+				prose-ul:ml-3
+				prose-ul:pl-2
+				prose-ol:ml-3
+				prose-ol:pl-2
+ "
 			>
 				{#if data.content.length === 0}
 					<i>No contents.</i>

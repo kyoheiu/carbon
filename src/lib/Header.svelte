@@ -15,8 +15,10 @@
 	});
 </script>
 
-<div class="sticky z-50 top-0 flex w-full flex-col items-center bg-itembackground">
-	<div class="flex h-12 w-full px-3 sm:px-0 items-center py-2 sm:w-120 md:w-144">
+<div class="w-full bg-itembackground flex justify-center">
+	<div
+		class="flex sticky px-3 sm:px-0 z-50 top-0 h-12 w-full sm:w-120 md:w-144 items-center bg-itembackground"
+	>
 		<a class="no-underline font-semibold italic" href="/">carbon</a>
 		&nbsp; &nbsp;
 		{#if isRoot}
@@ -34,7 +36,6 @@
 				>+New</a
 			>
 		{/if}
-		&nbsp; &nbsp;
 		<div class="ml-auto">
 			<form id="search" action="/search">
 				<input name="q" placeholder="Search" class="w-32 bg-background px-3 py-1 rounded" />
