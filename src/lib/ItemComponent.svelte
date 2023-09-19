@@ -32,7 +32,7 @@
 		>{toDuration(item.modified)}</span
 	>
 	<button
-		class="text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
+		class="rounded text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
 		on:click={() => (item.showModal = true)}
 		title="delete"
 	>
