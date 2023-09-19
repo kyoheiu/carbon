@@ -161,7 +161,7 @@
 					>
 						Save
 						<div
-							class="rounded-full absolute bottom-4 left-12 w-3 h-3 bg-warning border-2 border-background"
+							class="rounded-full absolute bottom-4 right-0 w-3 h-3 bg-warning border-2 border-background"
 						/>
 					</button>
 				{:else}
