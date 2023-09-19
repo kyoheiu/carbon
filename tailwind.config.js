@@ -20,6 +20,21 @@ export default {
 			// logo color: #374151 (gray-700)
 		},
 		extend: {
+			typography: {
+				DEFAULT: {
+					css: {
+						'code::before': {
+							content: '""'
+						},
+						'code::after': {
+							content: '""'
+						},
+						code: {
+							fontWeight: 400
+						}
+					}
+				}
+			},
 			spacing: {
 				120: '30rem',
 				144: '36rem'

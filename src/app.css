@@ -26,4 +26,10 @@
 			width: calc(100vw - 12px);
 		}
 	}
+
+	@layer base {
+		:not(pre) > code {
+			@apply rounded-md bg-itembackground px-1;
+		}
+	}
 }
