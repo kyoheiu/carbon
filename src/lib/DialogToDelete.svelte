@@ -45,7 +45,7 @@
 			<div class="flex justify-between">
 				<button class="font-semibold px-1" on:click={() => dialog.close()}>Cancel</button>
 				<button
-					class="font-semibold bg-warning px-2 py-1 text-itembackground"
+					class="rounded font-semibold bg-warning px-2 py-1 text-itembackground"
 					on:click={() => deleteItem()}>Delete</button
 				>
 			</div>
