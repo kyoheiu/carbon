@@ -147,7 +147,7 @@
 					on:keydown={(e) => keyDown(e)}
 				/>
 				<button
-					class="rounded ml-auto mr-2 py-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
+					class="rounded ml-4 mr-2 py-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
 					on:click={() => toView()}
 					title="back to view">View</button
 				>
