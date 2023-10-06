@@ -1,9 +1,7 @@
 import * as fs from 'node:fs/promises';
 import type { RequestHandler } from '@sveltejs/kit';
-import pino from 'pino';
 import { DATA_PATH } from '$lib/env';
-
-const logger = pino();
+import { logger } from '$lib/logger';
 
 interface Req {
 	file: string;

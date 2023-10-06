@@ -1,9 +1,7 @@
 import { DATA_PATH } from '$lib/env';
+import { logger } from '$lib/logger';
 import { decode } from 'js-base64';
 import * as fs from 'node:fs/promises';
-import pino from 'pino';
-
-const logger = pino();
 
 export const load = async ({ url }: { url: URL }) => {
 	const file: string | null = url.searchParams.get('file');
