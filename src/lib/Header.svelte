@@ -1,5 +1,14 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
+	import { encode } from 'js-base64';
+
+	const createNew = async () => {
+		const res = await fetch("/api/create", {
+			method: "POST"
+		});
+		const j = await res.json();
+		window.location.assign(`item?file=${encodeURIComponent(encode(j.name))}&editing=true`)
+	}
 
 	let isRoot = true;
 	afterNavigate(() => {
@@ -22,11 +31,11 @@
 		<a class="no-underline font-semibold italic" href="/">carbon</a>
 		&nbsp; &nbsp;
 		{#if isRoot}
-			<a
-				href="/item"
+			<button
+			on:click={createNew}
 				title="add a new file"
 				class="rounded no-underline bg-basecolor text-lightbuttontext px-2 py-1 text-sm font-semibold"
-				>+New</a
+				>+New</button
 			>
 		{:else}
 			<a
