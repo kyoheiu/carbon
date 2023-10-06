@@ -226,7 +226,7 @@
 						{/if}
 					</div>
 				</div>
-				<DialogToDelete bind:showModal item={data.fileName} />
+				<DialogToDelete bind:showModal item={data.fileName} hidden={false} reload={true} />
 			</div>
 
 			<div

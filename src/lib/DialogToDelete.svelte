@@ -4,6 +4,7 @@
 	export let showModal: boolean;
 	export let hidden: boolean;
 	export let item: string;
+	export let reload: boolean;
 	let dialog: HTMLDialogElement;
 
 	const deleteItem = async () => {
@@ -24,6 +25,9 @@
 		}
 		dialog.close();
 		hidden = true;
+		if (reload) {
+			window.location.assign("/");
+		}
 	};
 
 	$: if (dialog && showModal) dialog.showModal();

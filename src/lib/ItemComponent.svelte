@@ -40,7 +40,7 @@
 	>
 		Delete
 	</button>
-	<DialogToDelete bind:showModal={item.showModal} bind:hidden={hidden} item={item.name} />
+	<DialogToDelete bind:showModal={item.showModal} bind:hidden={hidden} item={item.name} reload={false} />
 </div>
 {:else}
 <span class="hidden" />
