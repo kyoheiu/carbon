@@ -2,6 +2,7 @@
 	import toast, { Toaster } from 'svelte-french-toast';
 
 	export let showModal: boolean;
+	export let hidden: boolean;
 	export let item: string;
 	let dialog: HTMLDialogElement;
 
@@ -22,7 +23,7 @@
 			return;
 		}
 		dialog.close();
-		window.location.assign('/');
+		hidden = true;
 	};
 
 	$: if (dialog && showModal) dialog.showModal();

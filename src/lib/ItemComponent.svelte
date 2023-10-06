@@ -9,8 +9,10 @@
 	};
 
 	export let item: Item;
+	let hidden = false;
 </script>
 
+{#if !hidden}
 <div class="mt-1 sm:mt-4 rounded flex h-24 items-center bg-background w-full sm:w-120 md:w-144">
 	<div class="mx-2 flex flex-col items-start">
 		<div class="w-full sm:w-72 md:w-96 overflow-ellipsis line-clamp-1 break-all">
@@ -38,5 +40,8 @@
 	>
 		Delete
 	</button>
-	<DialogToDelete bind:showModal={item.showModal} item={item.name} />
+	<DialogToDelete bind:showModal={item.showModal} bind:hidden={hidden} item={item.name} />
 </div>
+{:else}
+<span class="hidden" />
+{/if}
