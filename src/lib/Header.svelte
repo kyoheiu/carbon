@@ -47,7 +47,7 @@
 		{/if}
 		<div class="ml-auto">
 			<form id="search" action="/search">
-				<input name="q" placeholder="Search" class="w-32 bg-background px-3 py-1 rounded" />
+				<input name="q" placeholder="Search" class="w-32 px-3 py-1 rounded" />
 			</form>
 		</div>
 	</div>

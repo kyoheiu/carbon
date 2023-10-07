@@ -14,7 +14,7 @@
 	}
 	input.input-filename {
 		@apply h-8 border-b border-further bg-itembackground px-2 font-mono sm:w-64 md:w-96;
-		width: calc(100vw - 180px);
+		width: calc(100vw - 200px);
 	}
 	div.view-header {
 		@media (max-width: 639px) {

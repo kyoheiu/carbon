@@ -18,7 +18,7 @@
 <svelte:head>
 	<title>carbon</title>
 </svelte:head>
-<main class="bg-itembackground flex min-h-screen flex-col items-center">
+<main class="flex min-h-screen flex-col items-center">
 	<Header />
 	{#if data.result.length > 0}
 		{#each data.result as item}

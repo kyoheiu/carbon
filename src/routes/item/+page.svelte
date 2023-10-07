@@ -137,7 +137,7 @@
 		<Toaster />
 		<div class="mt-4 flex flex-col justify-center">
 			<div
-				class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex bg-itembackground items-center py-2"
+				class="h-12 sm:w-120 md:w-144 flex bg-itembackground items-center py-2"
 			>
 				<input
 					class="input-filename"
@@ -178,7 +178,7 @@
 				autocorrect="off"
 				autocapitalize="off"
 				spellcheck="false"
-				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-full p-3 bg-background font-mono outline-none sm:w-120 md:w-144"
+				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-full py-3 px-4 bg-background font-mono outline-none sm:w-120 md:w-144"
 				bind:value={data.content}
 				placeholder="Write here. Press <Ctrl + Enter> to save."
 				on:input={detectChange}
@@ -190,7 +190,7 @@
 	<!-- view mode -->
 	<main class="flex min-h-screen flex-col items-center">
 		<Header />
-		<div class="w-[100vw] bg-background flex flex-col items-center justify-center pb-4 mb-20">
+		<div class="w-[100vw] flex flex-col items-center justify-center pb-4 mb-20">
 			<div class="mt-4 flex justify-center">
 				<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex items-center mt-2 mb-6">
 					<div class="text-xl view-header font-mono break-all leading-5 line-clamp-2">

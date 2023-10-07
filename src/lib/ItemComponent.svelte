@@ -13,11 +13,11 @@
 </script>
 
 {#if !hidden}
-<div class="mt-1 sm:mt-4 rounded flex h-24 items-center bg-background w-full sm:w-120 md:w-144">
+<div class="mt-1 flex h-24 items-center w-full sm:w-120 md:w-144 border-b border-hr">
 	<div class="mx-2 flex flex-col items-start">
 		<div class="w-full sm:w-72 md:w-96 overflow-ellipsis line-clamp-1 break-all">
 			<a
-				class="no-underline font-mono text-lg hover:text-hovertitle hover:font-semibold"
+				class="no-underline font-mono text-lg text-hovertitle font-semibold"
 				href="/item?file={encodeURIComponent(encode(item.name))}"
 				>{item.name}
 			</a>

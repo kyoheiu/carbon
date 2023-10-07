@@ -3,12 +3,13 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		colors: {
-			background: '#f9fafb', // gray-50
-			codebackground: '#f3f4f6', // gray-100
 			text: '#111827', // gray-900
 			codetext: '#111827', // gray-900
-			itembackground: '#e5e7eb', // gray-200
 			lightbuttontext: '#f9fafb', // gray-50
+			background: '#f9fafb', // gray-50
+			codebackground: '#f3f4f6', // gray-100
+			itembackground: '#f3f4f6', // gray-100
+			hr: '#e5e7eb', // gray-200
 			subtle: '#4b5563', // gray-600
 			desc: '#6b7280', // gray-500
 			further: '#9ca3af', // gray-400
