@@ -26,7 +26,7 @@
 		{/each}
 		{#if data.hasMany && !showAll}
 			<button
-				class="rounded mt-4 mb-4 border border-further bg-background px-2 py-1 text-sm font-semibold text-basecolor"
+				class="rounded mt-4 mb-4 border border-baseborder bg-background px-2 pt-1 text-sm font-semibold text-basecolor"
 				on:click={showAllData}
 				title="show all">Show all</button
 			>

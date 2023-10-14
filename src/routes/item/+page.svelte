@@ -107,9 +107,15 @@
 	afterNavigate(() => {
 		newName = data.fileName;
 	});
+
+	const checkUnsaved = (e: BeforeUnloadEvent) => {
+		e.preventDefault();
+		return "";
+	}
+
 </script>
 
-<svelte:window on:scroll={() => (detectScroll = window.scrollY)} />
+<svelte:window on:scroll={() => (detectScroll = window.scrollY)} on:beforeunload={checkUnsaved} />
 <svelte:document on:load={renderMath} />
 <svelte:head>
 	<title>{data.fileName} | carbon</title>
@@ -147,12 +153,12 @@
 					on:keydown={(e) => keyDown(e)}
 				/>
 				<button
-					class="rounded ml-4 mr-2 py-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
+					class="rounded ml-4 mr-2 pt-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
 					on:click={() => toView()}
 					title="back to view">View</button
 				>
 				{#if !data.fileName && !data.content && !edited}
-					<div class="rounded py-1 w-16 bg-further text-center text-sm">Save</div>
+					<div class="rounded pt-1 w-16 bg-further text-center text-sm">Save</div>
 				{:else if edited}
 					<button
 						class="rounded relative w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-itembackground"
@@ -166,7 +172,7 @@
 					</button>
 				{:else}
 					<button
-						class="rounded w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-lightbuttontext"
+						class="rounded w-16 bg-basecolor px-1 pt-1 text-sm font-semibold text-lightbuttontext"
 						title="click / tap to manually save"
 					>
 						Saved
@@ -198,7 +204,7 @@
 					</div>
 					<button
 						on:click={() => (data.editing = true)}
-						class="rounded ml-4 sm:ml-auto py-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
+						class="rounded ml-4 sm:ml-auto pt-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
 						title="edit">Edit</button
 					>
 					<div class="relative ml-4">

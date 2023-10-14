@@ -8,7 +8,7 @@ export default {
 			lightbuttontext: '#f9fafb', // gray-50
 			background: '#f9fafb', // gray-50
 			codebackground: '#f3f4f6', // gray-100
-			itembackground: '#f3f4f6', // gray-100
+			itembackground: '#e5e7eb', // gray-200
 			hr: '#e5e7eb', // gray-200
 			subtle: '#4b5563', // gray-600
 			desc: '#6b7280', // gray-500

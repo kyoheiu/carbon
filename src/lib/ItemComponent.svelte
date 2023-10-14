@@ -14,7 +14,7 @@
 
 {#if !hidden}
 <div class="mt-1 flex h-24 items-center w-full sm:w-120 md:w-144 border-b border-hr">
-	<div class="mx-2 flex flex-col items-start">
+	<div class="mr-2 ml-2 sm:ml-0 flex flex-col items-start">
 		<div class="w-full sm:w-72 md:w-96 overflow-ellipsis line-clamp-1 break-all">
 			<a
 				class="no-underline font-mono text-lg text-hovertitle font-semibold"
@@ -34,7 +34,7 @@
 		>{toDuration(item.modified)}</span
 	>
 	<button
-		class="rounded text-xs ml-4 mr-2 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
+		class="rounded text-xs ml-4 mr-2 sm:mr-0 hidden w-12 border border-further px-1 py-1 text-warning sm:inline"
 		on:click={() => (item.showModal = true)}
 		title="delete"
 	>
