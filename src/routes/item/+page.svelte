@@ -109,8 +109,10 @@
 	});
 
 	const checkUnsaved = (e: BeforeUnloadEvent) => {
-		e.preventDefault();
-		return "";
+		if (edited) {
+			e.preventDefault();
+			return "";
+		}
 	}
 
 </script>
