@@ -28,26 +28,26 @@
 	<div
 		class="px-2 sm:px-0 flex sticky z-50 top-0 h-12 w-full sm:w-120 md:w-144 items-center bg-itembackground"
 	>
-		<a class="no-underline font-bold italic" href="/">carbon</a>
+		<a class="no-underline font-extrabold pt-1" href="/">carbon</a>
 		&nbsp; &nbsp;
 		{#if isRoot}
 			<button
 			on:click={createNew}
 				title="add a new file"
-				class="rounded no-underline bg-basecolor text-lightbuttontext px-2 pt-1 text-sm font-semibold"
+				class="btn btn-sm btn-primary"
 				>+New</button
 			>
 		{:else}
 			<a
 				href="/item"
 				title="add a new file"
-				class="rounded no-underline bg-background border text-basecolor border-baseborder px-2 pt-1 text-sm font-semibold"
+				class="btn btn-sm btn-secondary"
 				>+New</a
 			>
 		{/if}
 		<div class="ml-auto">
 			<form id="search" action="/search">
-				<input name="q" placeholder="Search" class="w-32 h-8 px-3 rounded border border-hr" />
+				<input name="q" placeholder="Search" class="input input-bordered w-32" />
 			</form>
 		</div>
 	</div>
