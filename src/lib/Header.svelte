@@ -3,51 +3,24 @@
 	import { encode } from 'js-base64';
 
 	const createNew = async () => {
-		const res = await fetch("/api/create", {
-			method: "POST"
+		const res = await fetch('/api/create', {
+			method: 'POST'
 		});
 		const j = await res.json();
-		window.location.assign(`item?file=${encodeURIComponent(encode(j.name))}&editing=true`)
-	}
-
-	let isRoot = true;
-	afterNavigate(() => {
-		let form: HTMLFormElement | null = document.forms[0];
-		if (form) {
-			form.reset();
-		}
-		if (window.location.pathname !== '/') {
-			isRoot = false;
-		} else {
-			isRoot = true;
-		}
-	});
+		window.location.assign(`item?file=${encodeURIComponent(encode(j.name))}&editing=true`);
+	};
 </script>
 
-<div class="w-full bg-itembackground flex justify-center">
-	<div
-		class="px-2 sm:px-0 flex sticky z-50 top-0 h-12 w-full sm:w-120 md:w-144 items-center bg-itembackground"
-	>
-		<a class="no-underline font-extrabold pt-1" href="/">carbon</a>
+<div class="p-2 fixed z-50 h-12 top-0 w-full backdrop-blur">
+	<div class="flex items-center">
+		<a class="no-underline text-surface-500 font-extrabold pt-1" href="/">carbon</a>
 		&nbsp; &nbsp;
-		{#if isRoot}
-			<button
-			on:click={createNew}
-				title="add a new file"
-				class="btn btn-sm btn-primary"
-				>+New</button
-			>
-		{:else}
-			<a
-				href="/item"
-				title="add a new file"
-				class="btn btn-sm btn-secondary"
-				>+New</a
-			>
-		{/if}
+		<button on:click={createNew} title="add a new file" class="chip variant-filled-surface"
+			>+New</button
+		>
 		<div class="ml-auto">
 			<form id="search" action="/search">
-				<input name="q" placeholder="Search" class="input input-bordered w-32" />
+				<input name="q" placeholder="Search" class="input rounded px-2 w-32" />
 			</form>
 		</div>
 	</div>

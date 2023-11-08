@@ -3,22 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-	button.shadow {
-		box-shadow:
-			0 4px 6px -1px rgb(0 0 0 / 0.3),
-			0 2px 4px -2px rgb(0 0 0 / 0.3);
-	}
 	textarea {
 		width: calc(100vw - 180px);
 		height: calc(100vh - 200px);
 	}
 	input.input-filename {
-		@apply h-8 border-b border-further bg-itembackground px-2 font-mono sm:w-64 md:w-96;
+		@apply input h-8 px-2 font-mono sm:w-64 md:w-96;
 		width: calc(100vw - 200px);
 	}
 	div.view-header {
 		@media (max-width: 639px) {
-			width: calc(100vw - 152px);
+			width: calc(100vw - 160px);
 		}
 	}
 	div.view {
@@ -29,7 +24,7 @@
 
 	@layer base {
 		:not(pre) > code {
-			@apply rounded-md bg-itembackground px-1;
+			@apply rounded-md px-1;
 		}
 	}
 }

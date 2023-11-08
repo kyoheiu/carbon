@@ -26,7 +26,7 @@
 		dialog.close();
 		hidden = true;
 		if (reload) {
-			window.location.assign("/");
+			window.location.assign('/');
 		}
 	};
 
@@ -48,10 +48,9 @@
 				Are you sure to delete <b>{item}</b>?<br />
 			</div>
 			<div class="flex justify-between">
-				<button class="font-semibold px-1" on:click={() => dialog.close()}>Cancel</button>
-				<button
-					class="rounded font-semibold bg-warning px-2 pt-1 text-itembackground"
-					on:click={() => deleteItem()}>Delete</button
+				<button class="text-sm px-1" on:click={() => dialog.close()}>Cancel</button>
+				<button class="chip variant-filled-error px-2 pt-1" on:click={() => deleteItem()}
+					>Delete</button
 				>
 			</div>
 		</div>

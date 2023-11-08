@@ -10,9 +10,12 @@
 	export let data: PageData;
 </script>
 
-<div class="mt-4">Query: {data.query}</div>
+<div class="mt-16" />
+<div class="mb-4">Query: {data.query}</div>
 {#if data.result}
-	{#each data.result as item}
-		<ItemComponent {item} />
-	{/each}
+	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		{#each data.result as item}
+			<ItemComponent {item} />
+		{/each}
+	</div>
 {/if}

@@ -20,15 +20,16 @@
 </svelte:head>
 <main class="flex min-h-screen flex-col items-center">
 	<Header />
+	<div class="mt-16" />
 	{#if data.result.length > 0}
-		{#each data.result as item}
-			<ItemComponent {item} />
-		{/each}
+		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+			{#each data.result as item}
+				<ItemComponent {item} />
+			{/each}
+		</div>
 		{#if data.hasMany && !showAll}
-			<button
-				class="rounded mt-4 mb-4 border border-baseborder bg-background px-2 pt-1 text-sm font-semibold text-basecolor"
-				on:click={showAllData}
-				title="show all">Show all</button
+			<button class="chip variant-filled-secondary my-4" on:click={showAllData} title="show all"
+				>Show all</button
 			>
 		{:else}
 			<div class="mt-8" />

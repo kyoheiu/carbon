@@ -111,10 +111,9 @@
 	const checkUnsaved = (e: BeforeUnloadEvent) => {
 		if (edited) {
 			e.preventDefault();
-			return "";
+			return '';
 		}
-	}
-
+	};
 </script>
 
 <svelte:window on:scroll={() => (detectScroll = window.scrollY)} on:beforeunload={checkUnsaved} />
@@ -143,10 +142,8 @@
 	<main class=" bg-itembackground flex min-h-screen flex-col items-center">
 		<Header />
 		<Toaster />
-		<div class="mt-4 flex flex-col justify-center">
-			<div
-				class="h-12 sm:w-120 md:w-144 flex bg-itembackground items-center py-2"
-			>
+		<div class="mt-16 flex flex-col justify-center">
+			<div class="h-12 sm:w-120 md:w-144 flex items-center py-2">
 				<input
 					class="input-filename"
 					bind:value={newName}
@@ -155,30 +152,20 @@
 					on:keydown={(e) => keyDown(e)}
 				/>
 				<button
-					class="rounded ml-4 mr-2 pt-1 w-12 border border-baseborder bg-lightbuttontext px-2 text-sm font-semibold text-basecolor"
+					class="chip variant-filled-secondary ml-4 mr-2 w-12"
 					on:click={() => toView()}
 					title="back to view">View</button
 				>
-				{#if !data.fileName && !data.content && !edited}
-					<div class="rounded pt-1 w-16 bg-further text-center text-sm">Save</div>
-				{:else if edited}
+				{#if edited}
 					<button
-						class="rounded relative w-16 bg-basecolor px-1 py-1 text-sm font-semibold text-itembackground"
+						class="chip variant-filled-warning w-16"
 						on:click={save}
 						title="click / tap to manually save"
 					>
 						Save
-						<div
-							class="rounded-full absolute bottom-4 right-0 w-3 h-3 bg-warning border-2 border-background"
-						/>
 					</button>
 				{:else}
-					<button
-						class="rounded w-16 bg-basecolor px-1 pt-1 text-sm font-semibold text-lightbuttontext"
-						title="click / tap to manually save"
-					>
-						Saved
-					</button>
+					<span class="chip variant-filled-tertiary w-16"> Saved </span>
 				{/if}
 			</div>
 			<textarea
@@ -186,7 +173,7 @@
 				autocorrect="off"
 				autocapitalize="off"
 				spellcheck="false"
-				class="rounded mb-8 mt-4 whitespace-pre-wrap break-words w-full py-3 px-4 bg-background font-mono outline-none sm:w-120 md:w-144"
+				class="textarea p-4 mb-8 mt-4 whitespace-pre-wrap break-words w-full font-mono outline-none sm:w-120 md:w-144"
 				bind:value={data.content}
 				placeholder="Write here. Press <Ctrl + Enter> to save."
 				on:input={detectChange}
@@ -196,56 +183,54 @@
 	</main>
 {:else}
 	<!-- view mode -->
-	<main class="flex min-h-screen flex-col items-center">
+	<main class="flex flex-col items-center">
 		<Header />
-		<div class="w-[100vw] flex flex-col items-center justify-center pb-4 mb-20">
-			<div class="mt-4 flex justify-center">
-				<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex items-center mt-2 mb-6">
-					<div class="text-xl view-header font-mono break-all leading-5 line-clamp-2">
-						{data.fileName}
-					</div>
-					<button
-						on:click={() => (data.editing = true)}
-						class="rounded ml-4 sm:ml-auto pt-1 w-12 bg-basecolor px-2 text-sm font-semibold text-lightbuttontext"
-						title="edit">Edit</button
-					>
-					<div class="relative ml-4">
-						<button
-							class="text-sm"
-							on:click={() => {
-								showMenu = !showMenu;
-							}}>•••</button
-						>
-						{#if showMenu}
-							<div
-								class="rounded z-50 border border-further flex flex-col items-end p-3 absolute right-0 top-8 bg-background drop-shadow-xl"
-							>
-								<div>
-									<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
-								</div>
-								<button
-									class="text-warning mt-3"
-									on:click={() => (showModal = true)}
-									title="delete"
-								>
-									Delete
-								</button>
-							</div>
-						{/if}
-					</div>
+		<div class="w-full flex flex-col items-center mt-16 mb-20">
+			<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex items-center mt-2 mb-6">
+				<div class="text-xl view-header font-mono break-all leading-5 line-clamp-2">
+					{data.fileName}
 				</div>
-				<DialogToDelete bind:showModal item={data.fileName} hidden={false} reload={true} />
+				<button
+					on:click={() => (data.editing = true)}
+					class="chip variant-filled-primary ml-4 sm:ml-auto"
+					title="edit">Edit</button
+				>
+				<div class="relative ml-4">
+					<button
+						class="text-sm"
+						on:click={() => {
+							showMenu = !showMenu;
+						}}>•••</button
+					>
+					{#if showMenu}
+						<div
+							class="rounded z-50 flex flex-col items-end p-3 absolute right-0 top-8 text-surface-50 bg-surface-800 drop-shadow-xl"
+						>
+							<div>
+								<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
+							</div>
+							<button
+								class="text-warning-200 mt-3"
+								on:click={() => (showModal = true)}
+								title="delete"
+							>
+								Delete
+							</button>
+						</div>
+					{/if}
+				</div>
 			</div>
+			<DialogToDelete bind:showModal item={data.fileName} hidden={false} reload={true} />
 
 			<div
 				id="content"
 				class="prose prose-gray px-3 sm:px-0 w-full sm:w-120 md:w-144
 		        prose-h1:border-b
 				prose-h2:border-b
-				prose-h1:border-further
-				prose-h2:border-further
+				prose-h1:border-surface-500
+				prose-h2:border-surface-500
 				prose-table:table-fixed
-				prose-a:text-link
+				prose-a:text-tertiary-700
 				prose-ul:ml-3
 				prose-ul:pl-2
 				prose-ol:ml-3
@@ -267,7 +252,7 @@
 				<button
 					transition:scale={{ duration: 200, delay: 50, opacity: 0, start: 0, easing: quintOut }}
 					on:click={toEdit}
-					class="flex justify-center items-center bottom-6 rounded-full w-12 h-12 bg-basecolor text-sm text-lightbuttontext font-semibold fixed shadow"
+					class="flex justify-center items-center bottom-6 rounded-full w-12 h-12 bg-tertiary-500 text-sm text-lightbuttontext font-semibold fixed shadow"
 					><img class="w-5 h-5" src="edit.svg" alt="Edit" /></button
 				>
 			</div>
