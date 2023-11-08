@@ -235,6 +235,7 @@
 				prose-ul:pl-2
 				prose-ol:ml-3
 				prose-ol:pl-2
+				break-words
  "
 			>
 				{#if data.content.length === 0}
