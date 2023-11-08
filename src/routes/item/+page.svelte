@@ -192,7 +192,7 @@
 				</div>
 				<button
 					on:click={() => (data.editing = true)}
-					class="chip variant-filled-primary ml-4 sm:ml-auto"
+					class="chip variant-filled-primary ml-auto"
 					title="edit">Edit</button
 				>
 				<div class="relative ml-4">
