@@ -22,7 +22,7 @@
 	<Header />
 	<div class="mt-16" />
 	{#if data.result.length > 0}
-		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 md:gap-6">
 			{#each data.result as item}
 				<ItemComponent {item} />
 			{/each}

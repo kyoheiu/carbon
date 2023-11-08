@@ -11,7 +11,7 @@
 	};
 </script>
 
-<div class="p-2 fixed z-50 h-12 top-0 w-full backdrop-blur">
+<div class="w-full px-2 py-2 sm:px-0 sm:w-120 md:w-144 fixed z-50 h-12 top-0 backdrop-blur">
 	<div class="flex items-center">
 		<a class="no-underline text-surface-500 font-extrabold pt-1" href="/">carbon</a>
 		&nbsp; &nbsp;
