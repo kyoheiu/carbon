@@ -33,7 +33,7 @@ export default {
 	plugins: [
 		require('@tailwindcss/typography'),
 		skeleton({
-			themes: { preset: ['vintage'] }
+			themes: { preset: ['skeleton'] }
 		})
 	]
 };
