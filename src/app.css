@@ -26,5 +26,8 @@
 		:not(pre) > code {
 			@apply rounded-md px-1;
 		}
+		li::marker {
+			@apply !text-surface-400;
+		}
 	}
 }
