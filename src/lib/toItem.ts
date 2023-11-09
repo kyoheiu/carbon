@@ -3,7 +3,7 @@ import moment from 'moment';
 import type { Item } from '$lib/types';
 import { DATA_PATH } from './env';
 
-export const DEFAULT_LIST_NUMBER = 10;
+export const DEFAULT_LIST_NUMBER = 12;
 
 interface Stat {
 	path: string;
