@@ -13,7 +13,7 @@
 </script>
 
 {#if !hidden}
-	<div class="card w-full px-2 py-4 sm:px-4 sm:w-56 md:w-44 bg-surface-100 mx-auto">
+	<div class="!w-full rounded px-2 py-4 sm:px-4 sm:w-56 md:w-44 bg-surface-100 mx-auto">
 		<div class="w-full overflow-ellipsis line-clamp-1 break-all mb-4">
 			<a
 				class="no-underline text-lg text-tertiary-700 font-semibold"
