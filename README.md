@@ -58,7 +58,7 @@ services:
         max-file: '3'
   # If you don't want the git feature, omit `carbon-git` entirely!
   carbon-git:
-    image: docker.io/kyoheiudev/carbon-git:1.0.0
+    image: docker.io/kyoheiudev/carbon-git:1.1.0
     container_name: carbon-git
     # UID and GID that created Git repository.
     user: '1000:1000'
