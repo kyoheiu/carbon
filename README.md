@@ -42,7 +42,7 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 version: '3'
 services:
   carbon:
-    image: docker.io/kyoheiudev/carbon:1.0.1
+    image: docker.io/kyoheiudev/carbon:1.2.0
     container_name: carbon
     volumes:
       - '/path/to/data:/carbon-client/data:rw'
