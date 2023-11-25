@@ -5,7 +5,7 @@
 	export let items: Item[];
 </script>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 md:gap-6">
+<div class="sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-6 space-y-4 items-baseline">
 	{#each items as item}
 		<ItemComponent {item} />
 	{/each}
