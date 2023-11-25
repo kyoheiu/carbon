@@ -19,7 +19,7 @@
 <svelte:head>
 	<title>carbon</title>
 </svelte:head>
-<main class="flex min-h-screen flex-col items-center">
+<main class="flex flex-col items-center">
 	<Header />
 	<div class="mt-16" />
 	{#if data.result.length > 0}
