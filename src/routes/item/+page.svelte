@@ -58,6 +58,42 @@
 	const keyDown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter' && e.ctrlKey) {
 			save();
+		} else if (e.key === 'Enter') {
+			const el = <HTMLTextAreaElement>document.getElementById('textarea');
+			if (el) {
+				const cursorPos = el.selectionEnd;
+				for (let i = cursorPos; i >= 0; i--) {
+					const char = data.content[i];
+					if (char === `\n`) {
+						const firstChar = data.content[i + 1];
+						const secondChar = data.content[i + 2];
+						setListMarker(el, firstChar, secondChar, cursorPos);
+						break;
+					} else if (i === 0) {
+						const firstChar = data.content[0];
+						const secondChar = data.content[1];
+						setListMarker(el, firstChar, secondChar, cursorPos);
+						break;
+					} else {
+						continue;
+					}
+				}
+			}
+		}
+	};
+
+	const setListMarker = (
+		el: HTMLTextAreaElement,
+		firstChar: string,
+		secondChar: string,
+		cursorPos: number
+	) => {
+		if ((firstChar === '-' || firstChar === '+' || firstChar === '*') && secondChar === ' ') {
+			console.log('Found list.');
+			el.setRangeText(`${firstChar} `, cursorPos, cursorPos);
+			setTimeout(() => {
+				el.selectionStart = el.selectionEnd = cursorPos + 3;
+			}, 1);
 		}
 	};
 
@@ -143,7 +179,7 @@
 		<Header />
 		<Toaster />
 		<div class="mt-16 flex flex-col justify-center">
-			<div class="h-12 sm:w-120 md:w-144 flex items-center py-2">
+			<div class="flex h-12 items-center py-2 sm:w-120 md:w-144">
 				<input
 					class="input-filename"
 					bind:value={newName}
@@ -152,20 +188,20 @@
 					on:keydown={(e) => keyDown(e)}
 				/>
 				<button
-					class="chip variant-filled-secondary ml-4 mr-2 w-12"
+					class="variant-filled-secondary chip ml-4 mr-2 w-12"
 					on:click={() => toView()}
 					title="back to view">View</button
 				>
 				{#if edited}
 					<button
-						class="chip variant-filled-warning w-16"
+						class="variant-filled-warning chip w-16"
 						on:click={save}
 						title="click / tap to manually save"
 					>
 						Save
 					</button>
 				{:else}
-					<span class="chip variant-filled-tertiary w-16"> Saved </span>
+					<span class="variant-filled-tertiary chip w-16"> Saved </span>
 				{/if}
 			</div>
 			<textarea
@@ -173,7 +209,7 @@
 				autocorrect="off"
 				autocapitalize="off"
 				spellcheck="false"
-				class="textarea p-4 mb-8 mt-4 whitespace-pre-wrap break-words w-full font-mono outline-none sm:w-120 md:w-144"
+				class="textarea mb-8 mt-4 w-full whitespace-pre-wrap break-words p-4 font-mono outline-none sm:w-120 md:w-144"
 				bind:value={data.content}
 				placeholder="Write here. Press <Ctrl + Enter> to save."
 				on:input={detectChange}
@@ -185,14 +221,14 @@
 	<!-- view mode -->
 	<main class="flex flex-col items-center">
 		<Header />
-		<div class="w-full flex flex-col items-center mt-16 mb-20">
-			<div class="h-12 w-full px-3 sm:px-0 sm:w-120 md:w-144 flex items-center mt-2 mb-6">
-				<div class="text-xl view-header font-mono break-all leading-6 line-clamp-2">
+		<div class="mb-20 mt-16 flex w-full flex-col items-center">
+			<div class="mb-6 mt-2 flex h-12 w-full items-center px-3 sm:w-120 sm:px-0 md:w-144">
+				<div class="view-header line-clamp-2 break-all font-mono text-xl leading-6">
 					{data.fileName}
 				</div>
 				<button
 					on:click={() => (data.editing = true)}
-					class="chip variant-filled-primary ml-auto"
+					class="variant-filled-primary chip ml-auto"
 					title="edit">Edit</button
 				>
 				<div class="relative ml-4">
@@ -204,13 +240,13 @@
 					>
 					{#if showMenu}
 						<div
-							class="rounded z-50 flex flex-col items-end p-3 absolute right-0 top-8 text-surface-50 bg-surface-800 drop-shadow-xl"
+							class="absolute right-0 top-8 z-50 flex flex-col items-end rounded bg-surface-800 p-3 text-surface-50 drop-shadow-xl"
 						>
 							<div>
 								<a class="no-underline" href="/api/download?file={data.fileName}">Download</a>
 							</div>
 							<button
-								class="text-warning-200 mt-3"
+								class="mt-3 text-warning-200"
 								on:click={() => (showModal = true)}
 								title="delete"
 							>
@@ -224,18 +260,18 @@
 
 			<div
 				id="content"
-				class="prose prose-gray px-3 sm:px-0 w-full sm:w-120 md:w-144
-		        prose-h1:border-b
-				prose-h2:border-b
-				prose-h1:border-surface-500
+				class="prose prose-gray w-full break-words px-3 prose-h1:border-b prose-h1:border-surface-500
+		        prose-h2:border-b
 				prose-h2:border-surface-500
-				prose-table:table-fixed
 				prose-a:text-tertiary-700
-				prose-ul:ml-3
-				prose-ul:pl-2
 				prose-ol:ml-3
 				prose-ol:pl-2
-				break-words
+				prose-ul:ml-3
+				prose-ul:pl-2
+				prose-table:table-fixed
+				sm:w-120
+				sm:px-0
+				md:w-144
  "
 			>
 				{#if data.content.length === 0}
@@ -249,12 +285,12 @@
 			</div>
 		</div>
 		{#if detectScroll > 60}
-			<div class="absolute w-full sm:w-120 md:w-144 flex justify-end px-2">
+			<div class="absolute flex w-full justify-end px-2 sm:w-120 md:w-144">
 				<button
 					transition:scale={{ duration: 200, delay: 50, opacity: 0, start: 0, easing: quintOut }}
 					on:click={toEdit}
-					class="flex justify-center items-center bottom-6 rounded-full w-12 h-12 bg-tertiary-500 text-sm text-lightbuttontext font-semibold fixed shadow"
-					><img class="w-5 h-5" src="edit.svg" alt="Edit" /></button
+					class="text-lightbuttontext fixed bottom-6 flex h-12 w-12 items-center justify-center rounded-full bg-tertiary-500 text-sm font-semibold shadow"
+					><img class="h-5 w-5" src="edit.svg" alt="Edit" /></button
 				>
 			</div>
 		{/if}
