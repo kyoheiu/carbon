@@ -20,6 +20,8 @@
 
 	let newName = data.fileName;
 
+	const reg = /^\s*[-\+\*] /g;
+
 	export const save = async () => {
 		if (newName === '') {
 			toast.error('File name required.', {
@@ -62,17 +64,21 @@
 			const el = <HTMLTextAreaElement>document.getElementById('textarea');
 			if (el) {
 				const cursorPos = el.selectionEnd;
-				for (let i = cursorPos; i >= 0; i--) {
+				for (let i = cursorPos - 1; i >= 0; i--) {
 					const char = data.content[i];
 					if (char === `\n`) {
-						const firstChar = data.content[i + 1];
-						const secondChar = data.content[i + 2];
-						setListMarker(el, firstChar, secondChar, cursorPos);
+						const line = data.content.substring(i + 1, cursorPos);
+						const matched = line.match(reg);
+						if (matched !== null) {
+							setListMarker(el, matched[0], cursorPos);
+						}
 						break;
 					} else if (i === 0) {
-						const firstChar = data.content[0];
-						const secondChar = data.content[1];
-						setListMarker(el, firstChar, secondChar, cursorPos);
+						const line = data.content.substring(i, cursorPos);
+						const matched = line.match(reg);
+						if (matched !== null) {
+							setListMarker(el, matched[0], cursorPos);
+						}
 						break;
 					} else {
 						continue;
@@ -82,19 +88,11 @@
 		}
 	};
 
-	const setListMarker = (
-		el: HTMLTextAreaElement,
-		firstChar: string,
-		secondChar: string,
-		cursorPos: number
-	) => {
-		if ((firstChar === '-' || firstChar === '+' || firstChar === '*') && secondChar === ' ') {
-			console.log('Found list.');
-			el.setRangeText(`${firstChar} `, cursorPos, cursorPos);
-			setTimeout(() => {
-				el.selectionStart = el.selectionEnd = cursorPos + 3;
-			}, 1);
-		}
+	const setListMarker = (el: HTMLTextAreaElement, captured: string, cursorPos: number) => {
+		el.setRangeText(captured, cursorPos, cursorPos);
+		setTimeout(() => {
+			el.selectionStart = el.selectionEnd = cursorPos + captured.length + 1;
+		}, 1);
 	};
 
 	const toEdit = async () => {
