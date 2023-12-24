@@ -3,7 +3,8 @@ use std::time::UNIX_EPOCH;
 use axum::{
     debug_handler,
     extract::{self, Path},
-    http::Method,
+    http::{Method, StatusCode},
+    response::IntoResponse,
     routing::get,
     Json, Router,
 };
@@ -91,19 +92,10 @@ async fn read_item(Path(file_name): Path<String>) -> Json<Item> {
 }
 
 #[debug_handler]
-async fn create_item() -> String {
-    println!("[CREATE] NEW FILE");
-    let new_file_name_prefix = "untitled_";
-    let mut i: usize = 1;
-    loop {
-        let new_file_name = format!("{}{}", new_file_name_prefix, i);
-        let new_file_path = std::path::PathBuf::from(format!("data/{}", new_file_name));
-        if std::path::PathBuf::from(&new_file_path).exists() {
-            i += 1;
-            continue;
-        } else {
-            std::fs::File::create(&new_file_path).unwrap();
-            return new_file_name;
-        }
+async fn create_item(new_file_name: String) -> impl IntoResponse {
+    println!("[CREATE] {}", new_file_name);
+    match std::fs::File::create(format!("data/{}", &new_file_name)) {
+        Ok(_) => return new_file_name.into_response(),
+        Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR).into_response(),
     }
 }
