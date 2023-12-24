@@ -1,17 +1,33 @@
 import { useParams } from "react-router-dom";
 import { useItem } from "./hooks";
 import { ViewItem } from "../../components/ViewItem";
+import { EditItem } from "../../components/EditItem";
 
 export const PageItem = () => {
   const { fileName } = useParams();
-  const { item, setItem, isEditMode, getEditMode } = useItem(fileName ?? "");
+  const {
+    isLoading,
+    item,
+    currentValue,
+    setCurrentValue,
+    handleSave,
+    isEditMode,
+    toggleEditMode,
+  } = useItem(fileName ?? "");
 
-  if (!item) return <h1>File does not exist.</h1>;
+  if (!item || isLoading) return <h1>NOW LOADING...</h1>;
 
-  const props = { item: item, getEditMode: getEditMode };
-  if (isEditMode) {
-    return <div>Edit Mode</div>;
-  } else {
-    return <ViewItem {...props} />;
-  }
+  const viewProps = {
+    item: item,
+    currentValue: currentValue,
+    toggleEditMode: toggleEditMode,
+  };
+  const editProps = {
+    item: item,
+    currentValue: currentValue,
+    setCurrentValue: setCurrentValue,
+    handleSave: handleSave,
+    toggleEditMode: toggleEditMode,
+  };
+  return isEditMode ? <EditItem {...editProps} /> : <ViewItem {...viewProps} />;
 };

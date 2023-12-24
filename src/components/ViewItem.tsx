@@ -2,16 +2,18 @@ import { Item } from "../types";
 
 export const ViewItem = ({
   item,
-  getEditMode,
+  currentValue,
+  toggleEditMode,
 }: {
   item: Item;
-  getEditMode: () => void;
+  currentValue: string;
+  toggleEditMode: () => void;
 }) => {
   return (
     <>
       <div>{item.title}</div>
-      <button onClick={() => getEditMode()}>Edit</button>
-      <div>{item.content}</div>
+      <button onClick={() => toggleEditMode()}>Edit</button>
+      <div>{currentValue}</div>
     </>
   );
 };
