@@ -97,11 +97,12 @@ async fn create_item() -> String {
     let mut i: usize = 1;
     loop {
         let new_file_name = format!("{}{}", new_file_name_prefix, i);
-        if std::path::PathBuf::from(&new_file_name).exists() {
+        let new_file_path = std::path::PathBuf::from(format!("data/{}", new_file_name));
+        if std::path::PathBuf::from(&new_file_path).exists() {
             i += 1;
             continue;
         } else {
-            std::fs::File::create(format!("data/{}", &new_file_name)).unwrap();
+            std::fs::File::create(&new_file_path).unwrap();
             return new_file_name;
         }
     }
