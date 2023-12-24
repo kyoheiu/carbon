@@ -28,7 +28,7 @@ async fn main() {
     // build our application with a single route
     let app = Router::new()
         .route("/health", get(check_health))
-        .route("/items", get(read_all))
+        .route("/items", get(read_all).post(create_item))
         .route("/items/:file_name", get(read_item))
         .layer(cors);
 
@@ -88,4 +88,21 @@ async fn read_item(Path(file_name): Path<String>) -> Json<Item> {
             .as_secs(),
     };
     Json(item)
+}
+
+#[debug_handler]
+async fn create_item() -> String {
+    println!("[CREATE] NEW FILE");
+    let new_file_name_prefix = "untitled_";
+    let mut i: usize = 1;
+    loop {
+        let new_file_name = format!("{}{}", new_file_name_prefix, i);
+        if std::path::PathBuf::from(&new_file_name).exists() {
+            i += 1;
+            continue;
+        } else {
+            std::fs::File::create(format!("data/{}", &new_file_name)).unwrap();
+            return new_file_name;
+        }
+    }
 }
