@@ -10,8 +10,8 @@ export const useApp = () => {
       if (!res.ok) {
         console.error("fetch error");
       } else {
-        const j = await res.json();
-        console.log(j);
+        const j: Item[] = await res.json();
+        j.sort((a, b) => b.modified - a.modified);
         setItems(j);
       }
     };

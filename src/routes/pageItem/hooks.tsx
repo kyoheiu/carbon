@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Item } from "../../types";
+import { useSearchParams } from "react-router-dom";
 
 export const useItem = (fileName: string) => {
   const [item, setItem] = useState<Item | null>(null);
+  const [searchParams, _] = useSearchParams();
+  const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,5 +20,15 @@ export const useItem = (fileName: string) => {
     fetchData();
   }, []);
 
-  return { item, setItem };
+  const getEditMode = useCallback(() => {
+    setIsEditMode(() => true);
+  }, [setIsEditMode]);
+
+  useEffect(() => {
+    if (!isEditMode && searchParams.get("mode") === "edit") {
+      setIsEditMode(true);
+    }
+  }, [searchParams]);
+
+  return { item, setItem, isEditMode, getEditMode };
 };
