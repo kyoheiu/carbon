@@ -1,6 +1,12 @@
 use std::time::UNIX_EPOCH;
 
-use axum::{debug_handler, extract, http::Method, routing::get, Json, Router};
+use axum::{
+    debug_handler,
+    extract::{self, Path},
+    http::Method,
+    routing::get,
+    Json, Router,
+};
 use serde::Serialize;
 use tower_http::cors::{Any, Cors, CorsLayer};
 
@@ -23,6 +29,7 @@ async fn main() {
     let app = Router::new()
         .route("/health", get(check_health))
         .route("/items", get(read_all))
+        .route("/items/:file_name", get(read_item))
         .layer(cors);
 
     // run our app with hyper, listening globally on port 3000
@@ -61,4 +68,24 @@ async fn read_all() -> extract::Json<Vec<Item>> {
     }
     println!("[READ-ALL]: {:?}", result);
     Json(result)
+}
+
+#[debug_handler]
+async fn read_item(Path(file_name): Path<String>) -> Json<Item> {
+    println!("file_name: {}", file_name);
+    let p = format!("data/{}", file_name);
+    let path = std::path::Path::new(&p);
+    let item = Item {
+        title: file_name.to_string(),
+        content: std::fs::read_to_string(&p).unwrap(),
+        modified: path
+            .metadata()
+            .unwrap()
+            .modified()
+            .unwrap()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_secs(),
+    };
+    Json(item)
 }
