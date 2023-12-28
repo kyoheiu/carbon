@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useItemList } from "../ItemListContext";
 import { Item } from "../types";
+import { fromNow } from "../utils";
 
 const ItemList = ({
   items,
@@ -30,7 +31,7 @@ const ItemList = ({
                 <div>
                   <a href={`/items/${item.title}`}>{item.title}</a>
                 </div>
-                <div>{item.modified}</div>
+                <div>{fromNow(item.modified)}</div>
                 <button
                   onClick={() => {
                     deleteItem(item.title);
@@ -53,7 +54,7 @@ const ItemList = ({
         })}
       </ul>
       <dialog open={showRenameDialog}>
-        <button onClick={() => false}>close</button>
+        <button onClick={toggleDialog}>close</button>
         <div>
           <input
             type="text"
