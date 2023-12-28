@@ -1,18 +1,10 @@
-import { Item } from "../types";
+import { useItem } from "../ItremContext";
 
-export const EditItem = ({
-  item,
-  currentValue,
-  setCurrentValue,
-  handleSave,
-  toggleEditMode,
-}: {
-  item: Item;
-  currentValue: string;
-  setCurrentValue: React.Dispatch<React.SetStateAction<string>>;
-  handleSave: () => void;
-  toggleEditMode: () => void;
-}) => {
+export const EditItem = () => {
+  const { item, currentValue, setCurrentValue, handleSave, toggleEditMode } =
+    useItem();
+
+  if (!item) return null;
   return (
     <>
       <div>{item.title}</div>

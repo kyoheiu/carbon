@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { Item } from "./types";
+import { Item } from "../../types";
 
-export const useApp = () => {
+export const useSearch = (query: string) => {
   const [items, setItems] = useState<Item[]>();
 
   const hideItem = useCallback(
@@ -15,17 +15,19 @@ export const useApp = () => {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:3000/items");
+    const searchItem = async (q: string) => {
+      const res = await fetch(`http://localhost:3000/items/search`, {
+        method: "POST",
+        body: q,
+      });
       if (!res.ok) {
-        console.error("fetch error");
+        console.error(await res.text());
       } else {
-        const j: Item[] = await res.json();
-        j.sort((a, b) => b.modified - a.modified);
+        const j = await res.json();
         setItems(j);
       }
     };
-    fetchData();
+    searchItem(query);
   }, []);
 
   return { items, hideItem };

@@ -1,14 +1,9 @@
-import { Item } from "../types";
+import { useItem } from "../ItremContext";
 
-export const ViewItem = ({
-  item,
-  currentValue,
-  toggleEditMode,
-}: {
-  item: Item;
-  currentValue: string;
-  toggleEditMode: () => void;
-}) => {
+export const ViewItem = () => {
+  const { item, currentValue, toggleEditMode } = useItem();
+
+  if (!item) return null;
   return (
     <>
       <div>{item.title}</div>

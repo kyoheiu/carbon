@@ -1,7 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
-import { Item } from "../../types";
+import { createContext, useCallback, useContext, useState } from "react";
+import { Item } from "./types";
 
-export const useItem = (fileName: string) => {
+type ctxValue = {
+  isLoading: boolean;
+  useFetchItem: (arg: string) => Promise<void>;
+  item: Item | null;
+  currentValue: string;
+  setCurrentValue: React.Dispatch<React.SetStateAction<string>>;
+  handleSave: () => void;
+  isEditMode: boolean;
+  toggleEditMode: () => void;
+};
+
+const ItemContext = createContext<ctxValue | null>(null);
+
+export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [item, setItem] = useState<Item | null>(null);
   const [currentValue, setCurrentValue] = useState("");
@@ -32,8 +45,13 @@ export const useItem = (fileName: string) => {
     saveData();
   }, [item, currentValue]);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const toggleEditMode = useCallback(() => {
+    setIsEditMode((b) => !b);
+  }, [setIsEditMode]);
+
+  const useFetchItem = useCallback(
+    async (fileName: string) => {
+      setIsLoading(true);
       const res = await fetch(`http://localhost:3000/items/${fileName}`);
       if (!res.ok) {
         console.log("fetch error");
@@ -42,18 +60,14 @@ export const useItem = (fileName: string) => {
         setItem(j);
         setCurrentValue(j.content);
       }
-    };
-    setIsLoading(true);
-    fetchData();
-    setIsLoading(false);
-  }, []);
+      setIsLoading(false);
+    },
+    [setIsLoading, setItem, setCurrentValue]
+  );
 
-  const toggleEditMode = useCallback(() => {
-    setIsEditMode((b) => !b);
-  }, [setIsEditMode]);
-
-  return {
+  const ctxValue: ctxValue = {
     isLoading,
+    useFetchItem,
     item,
     currentValue,
     setCurrentValue,
@@ -61,4 +75,16 @@ export const useItem = (fileName: string) => {
     isEditMode,
     toggleEditMode,
   };
+
+  return (
+    <ItemContext.Provider value={ctxValue}>{children}</ItemContext.Provider>
+  );
+};
+
+export const useItem = () => {
+  const ctx = useContext(ItemContext);
+  if (!ctx) {
+    throw Error("Cannot access to the item context.");
+  }
+  return ctx;
 };

@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 export const Root = () => {
   const [showModal, setShowModal] = useState(false);
   const [newFile, setNewFile] = useState("");
 
   const handleClick = () => {
-    console.log("click");
     setShowModal(true);
   };
 
@@ -42,6 +41,9 @@ export const Root = () => {
             </div>
           </>
         )}
+        <form method="get" action="/search">
+          <input type="text" name="q" />
+        </form>
       </header>
       <div>
         <Outlet />
