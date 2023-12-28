@@ -97,7 +97,7 @@ async fn read_item(Path(file_name): Path<String>) -> Result<Json<Item>, Error> {
 }
 
 #[debug_handler]
-async fn create_item(new_file_name: String) -> Result<IntoResponse, Error> {
+async fn create_item(new_file_name: String) -> Result<impl IntoResponse, Error> {
     println!("[CREATE] {}", new_file_name);
     std::fs::File::create(create_path(&new_file_name))?;
     Ok(new_file_name.into_response())
