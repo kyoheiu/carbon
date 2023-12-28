@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 export const Root = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const [newFile, setNewFile] = useState("");
 
   const handleClick = () => {
-    setShowModal((b) => !b);
+    setShowDialog((b) => !b);
   };
 
   const handleCreate = async () => {
@@ -25,27 +25,24 @@ export const Root = () => {
 
   return (
     <>
-      <header className="py-2 w-screen flex items-center space-x-1 text-shiro bg-kuro">
+      <header className="flex items-center p-2 w-screen">
         <a className="font-extrabold" href="/">
           carbon
         </a>
-        <button
-          className="border rounded py-1 px-2 bg-hai"
-          onClick={handleClick}
-        >
+        <button className="px-2 py-1 ml-2 rounded border" onClick={handleClick}>
           New
         </button>
-        <form method="get" action="/search">
+        <form className="ml-auto" method="get" action="/search">
           <input
-            className="w-36 bg-shiro border rounded p-1"
+            className="p-1 w-32 rounded"
             type="text"
             placeholder="Search"
             name="q"
           />
         </form>
       </header>
-      <dialog open={showModal}>
-        <button onClick={() => setShowModal(false)}>close</button>
+      <dialog open={showDialog}>
+        <button onClick={() => setShowDialog(false)}>close</button>
         <div>
           <input
             type="text"

@@ -6,6 +6,8 @@ import { useEffect } from "react";
 
 export const PageItem = () => {
   const { fileName } = useParams();
+  const isMarkdown = fileName?.split(".").at(-1) === "md" ? true : false;
+
   const { isLoading, useFetchItem, item, isEditMode } = useItem();
 
   useEffect(() => {
@@ -13,5 +15,9 @@ export const PageItem = () => {
   }, []);
 
   if (!item || isLoading) return <h1>NOW LOADING...</h1>;
-  return <>{isEditMode ? <EditItem /> : <ViewItem />}</>;
+  return (
+    <div className="w-screen flex flex-col justify-center px-2 bg-bg2 rounded">
+      {isEditMode ? <EditItem /> : <ViewItem isMarkdown={isMarkdown} />}
+    </div>
+  );
 };

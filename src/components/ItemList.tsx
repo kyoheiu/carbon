@@ -31,21 +31,17 @@ const ItemList = ({
             !item.hidden && (
               <li
                 key={`item-${index}`}
-                className="flex items-center relative my-2 border-b"
+                className="flex relative items-center border-b bg-bg2"
               >
-                <div>
-                  <a className="text-lg" href={`/items/${item.title}`}>
-                    {item.title}
-                  </a>
+                <div className="overflow-hidden w-48 text-lg text-ellipsis">
+                  <a href={`/items/${item.title}`}>{item.title}</a>
                 </div>
-                <div className="ml-auto text-sm text-hai">
-                  {fromNow(item.modified)}
-                </div>
+                <div className="ml-auto text-sm">{fromNow(item.modified)}</div>
                 <button onClick={() => toggleMenu(`item-${index}`)}>
                   <img src="/more-vertical.svg" />
                 </button>
                 {openIndex === `item-${index}` && (
-                  <div className="z-50 absolute right-0 mt-16 flex flex-col bg-shiro border rounded">
+                  <div className="flex absolute right-0 z-50 flex-col mt-16 rounded border bg-shiro">
                     <button
                       onClick={() => {
                         deleteItem(item.title);
@@ -70,7 +66,13 @@ const ItemList = ({
         })}
       </ul>
       <dialog open={showRenameDialog}>
-        <button onClick={toggleDialog}>close</button>
+        <button
+          onClick={() => {
+            toggleDialog();
+          }}
+        >
+          close
+        </button>
         <div>
           <input
             type="text"
