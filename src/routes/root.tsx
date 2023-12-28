@@ -9,7 +9,7 @@ export const Root = () => {
     setShowModal(true);
   };
 
-  const handleCreate = async (e: any) => {
+  const handleCreate = async () => {
     const res = await fetch("http://localhost:3000/items", {
       method: "POST",
       body: newFile,

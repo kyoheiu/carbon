@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useApp } from "../hooks";
 import ItemList from "../components/ItemList";
 
