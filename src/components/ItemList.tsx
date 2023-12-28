@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useItemList } from "../ItemListContext";
 import { Item } from "../types";
 import { fromNow } from "../utils";
+import { Dialog } from "primereact/dialog";
 
 const ItemList = ({
   items,
@@ -31,7 +32,7 @@ const ItemList = ({
             !item.hidden && (
               <li
                 key={`item-${index}`}
-                className="flex relative items-center border-b bg-bg2"
+                className="flex relative items-center p-2 pt-4 border-b bg-bg2"
               >
                 <div className="overflow-hidden w-48 text-lg text-ellipsis">
                   <a href={`/items/${item.title}`}>{item.title}</a>
@@ -41,22 +42,25 @@ const ItemList = ({
                   <img src="/more-vertical.svg" />
                 </button>
                 {openIndex === `item-${index}` && (
-                  <div className="flex absolute right-0 z-50 flex-col mt-16 rounded border bg-shiro">
+                  <div className="flex absolute right-0 z-50 flex-col items-start p-2 mt-20 space-y-2 rounded border bg-shiro">
                     <button
+                      onClick={() => {
+                        currentName.current = item.title;
+                        setNewName(item.title);
+                        toggleDialog();
+                        toggleMenu(`item-${index}`);
+                      }}
+                    >
+                      Rename
+                    </button>
+                    <button
+                      className="text-warning"
                       onClick={() => {
                         deleteItem(item.title);
                         hideItem(item.title);
                       }}
                     >
-                      delete
-                    </button>
-                    <button
-                      onClick={() => {
-                        currentName.current = item.title;
-                        toggleDialog();
-                      }}
-                    >
-                      rename
+                      Delete
                     </button>
                   </div>
                 )}
@@ -65,16 +69,15 @@ const ItemList = ({
           );
         })}
       </ul>
-      <dialog open={showRenameDialog}>
-        <button
-          onClick={() => {
-            toggleDialog();
-          }}
-        >
-          close
-        </button>
+      <Dialog
+        className="p-2 rounded border bg-shiro"
+        visible={showRenameDialog}
+        onHide={toggleDialog}
+      >
         <div>
+          <div>Rename</div>
           <input
+            className="rounded border"
             type="text"
             value={newName}
             onChange={(e) => setNewName(() => e.target.value)}
@@ -83,7 +86,7 @@ const ItemList = ({
             Rename
           </button>
         </div>
-      </dialog>
+      </Dialog>
     </>
   );
 };

@@ -11,5 +11,10 @@ export const Search = () => {
   if (!items) return null;
 
   const props = { items: items, hideItem: hideItem };
-  return <ItemList {...props} />;
+  return (
+    <>
+      <div>Query: {query}</div>
+      <ItemList {...props} />
+    </>
+  );
 };

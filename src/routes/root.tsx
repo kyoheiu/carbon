@@ -1,3 +1,5 @@
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -29,8 +31,8 @@ export const Root = () => {
         <a className="font-extrabold" href="/">
           carbon
         </a>
-        <button className="px-2 py-1 ml-2 rounded border" onClick={handleClick}>
-          New
+        <button className="px-2 bg-cyan-200 rounded" onClick={handleClick}>
+          +New
         </button>
         <form className="ml-auto" method="get" action="/search">
           <input
@@ -41,17 +43,22 @@ export const Root = () => {
           />
         </form>
       </header>
-      <dialog open={showDialog}>
-        <button onClick={() => setShowDialog(false)}>close</button>
+      <Dialog
+        className="p-2 rounded border bg-shiro"
+        visible={showDialog}
+        onHide={handleClick}
+      >
         <div>
+          <div>Create new file</div>
           <input
+            className="rounded border"
             type="text"
             value={newFile}
             onChange={(e) => setNewFile(() => e.target.value)}
           />
           <button onClick={handleCreate}>Create</button>
         </div>
-      </dialog>
+      </Dialog>
       <div>
         <Outlet />
       </div>
