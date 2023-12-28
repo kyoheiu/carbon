@@ -6,7 +6,7 @@ export const Root = () => {
   const [newFile, setNewFile] = useState("");
 
   const handleClick = () => {
-    setShowModal(true);
+    setShowModal((b) => !b);
   };
 
   const handleCreate = async () => {
@@ -25,26 +25,33 @@ export const Root = () => {
 
   return (
     <>
-      <header>
-        <a href="/">carbon</a>
-        <button onClick={handleClick}>New</button>
-        {showModal && (
-          <>
-            <button onClick={() => setShowModal(false)}>close</button>
-            <div>
-              <input
-                type="text"
-                value={newFile}
-                onChange={(e) => setNewFile(() => e.target.value)}
-              />
-              <button onClick={handleCreate}>Create</button>
-            </div>
-          </>
-        )}
+      <header className="flex items-center">
+        <a className="font-extrabold" href="/">
+          carbon
+        </a>
+        <button className="border rounded py-1 px-2" onClick={handleClick}>
+          New
+        </button>
         <form method="get" action="/search">
-          <input type="text" name="q" />
+          <input
+            className="border rounded p-1"
+            type="text"
+            placeholder="Search"
+            name="q"
+          />
         </form>
       </header>
+      <dialog open={showModal}>
+        <button onClick={() => setShowModal(false)}>close</button>
+        <div>
+          <input
+            type="text"
+            value={newFile}
+            onChange={(e) => setNewFile(() => e.target.value)}
+          />
+          <button onClick={handleCreate}>Create</button>
+        </div>
+      </dialog>
       <div>
         <Outlet />
       </div>

@@ -12,6 +12,8 @@ const ItemList = ({
 }) => {
   const {
     deleteItem,
+    openIndex,
+    toggleMenu,
     showRenameDialog,
     toggleDialog,
     newName,
@@ -27,27 +29,34 @@ const ItemList = ({
         {items.map((item, index) => {
           return (
             !item.hidden && (
-              <li key={`item-${index}`}>
+              <li key={`item-${index}`} className="flex relative">
                 <div>
                   <a href={`/items/${item.title}`}>{item.title}</a>
                 </div>
-                <div>{fromNow(item.modified)}</div>
-                <button
-                  onClick={() => {
-                    deleteItem(item.title);
-                    hideItem(item.title);
-                  }}
-                >
-                  delete
+                <div className="ml-auto">{fromNow(item.modified)}</div>
+                <button onClick={() => toggleMenu(`item-${index}`)}>
+                  <img src="/more-vertical.svg" />
                 </button>
-                <button
-                  onClick={() => {
-                    currentName.current = item.title;
-                    toggleDialog();
-                  }}
-                >
-                  rename
-                </button>
+                {openIndex === `item-${index}` && (
+                  <div className="z-50 absolute right-0 mt-5 flex flex-col bg-white border rounded">
+                    <button
+                      onClick={() => {
+                        deleteItem(item.title);
+                        hideItem(item.title);
+                      }}
+                    >
+                      delete
+                    </button>
+                    <button
+                      onClick={() => {
+                        currentName.current = item.title;
+                        toggleDialog();
+                      }}
+                    >
+                      rename
+                    </button>
+                  </div>
+                )}
               </li>
             )
           );

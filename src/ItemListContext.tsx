@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 
 type ctxValue = {
   deleteItem: (arg: string) => Promise<Response>;
+  openIndex: string | null;
+  toggleMenu: (arg: string) => void;
   showRenameDialog: boolean;
   toggleDialog: () => void;
   newName: string;
@@ -15,8 +17,13 @@ export const ItemListProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const [openIndex, setOpenIndex] = useState<string | null>(null);
   const [showRenameDialog, setShowRenameDialog] = useState(false);
   const [newName, setNewName] = useState("");
+
+  const toggleMenu = (index: string) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
 
   const toggleDialog = () => {
     setShowRenameDialog((b) => !b);
@@ -52,6 +59,8 @@ export const ItemListProvider = ({
 
   const ctxValue = {
     deleteItem,
+    openIndex,
+    toggleMenu,
     showRenameDialog,
     newName,
     setNewName,
