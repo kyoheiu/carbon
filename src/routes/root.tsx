@@ -25,16 +25,19 @@ export const Root = () => {
 
   return (
     <>
-      <header className="flex items-center">
+      <header className="py-2 w-screen flex items-center space-x-1 text-shiro bg-kuro">
         <a className="font-extrabold" href="/">
           carbon
         </a>
-        <button className="border rounded py-1 px-2" onClick={handleClick}>
+        <button
+          className="border rounded py-1 px-2 bg-hai"
+          onClick={handleClick}
+        >
           New
         </button>
         <form method="get" action="/search">
           <input
-            className="border rounded p-1"
+            className="w-36 bg-shiro border rounded p-1"
             type="text"
             placeholder="Search"
             name="q"

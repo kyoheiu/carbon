@@ -29,16 +29,23 @@ const ItemList = ({
         {items.map((item, index) => {
           return (
             !item.hidden && (
-              <li key={`item-${index}`} className="flex relative">
+              <li
+                key={`item-${index}`}
+                className="flex items-center relative my-2 border-b"
+              >
                 <div>
-                  <a href={`/items/${item.title}`}>{item.title}</a>
+                  <a className="text-lg" href={`/items/${item.title}`}>
+                    {item.title}
+                  </a>
                 </div>
-                <div className="ml-auto">{fromNow(item.modified)}</div>
+                <div className="ml-auto text-sm text-hai">
+                  {fromNow(item.modified)}
+                </div>
                 <button onClick={() => toggleMenu(`item-${index}`)}>
                   <img src="/more-vertical.svg" />
                 </button>
                 {openIndex === `item-${index}` && (
-                  <div className="z-50 absolute right-0 mt-5 flex flex-col bg-white border rounded">
+                  <div className="z-50 absolute right-0 mt-16 flex flex-col bg-shiro border rounded">
                     <button
                       onClick={() => {
                         deleteItem(item.title);
