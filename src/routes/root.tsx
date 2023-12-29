@@ -41,7 +41,7 @@ export const Root = () => {
         </button>
         <form className="ml-auto" method="get" action="/search">
           <input
-            className="px-2 py-1 w-32 bg-gray-100 rounded"
+            className="px-2 py-1 w-32 bg-gray-200 rounded"
             type="text"
             placeholder="Search"
             name="q"
