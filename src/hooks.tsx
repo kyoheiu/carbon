@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Item } from "./types";
+import { toastError } from "./utils";
 
 export const useApp = () => {
   const [items, setItems] = useState<Item[]>();
@@ -18,7 +19,7 @@ export const useApp = () => {
     const fetchData = async () => {
       const res = await fetch("http://localhost:3000/items");
       if (!res.ok) {
-        console.error("fetch error");
+        toastError(await res.text());
       } else {
         const j: Item[] = await res.json();
         j.sort((a, b) => b.modified - a.modified);

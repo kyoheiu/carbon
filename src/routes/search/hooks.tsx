@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Item } from "../../types";
+import { toastError } from "../../utils";
 
 export const useSearch = (query: string) => {
   const [items, setItems] = useState<Item[]>();
@@ -21,7 +22,7 @@ export const useSearch = (query: string) => {
         body: q,
       });
       if (!res.ok) {
-        console.error(await res.text());
+        toastError(await res.text());
       } else {
         const j = await res.json();
         setItems(j);

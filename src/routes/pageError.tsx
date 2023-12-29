@@ -1,8 +1,9 @@
 import { useRouteError } from "react-router-dom";
+import { toastError } from "../utils";
 
 export default function PageError() {
   const error = useRouteError() as any;
-  console.error(error);
+  toastError(error);
 
   return (
     <div id="error-page">

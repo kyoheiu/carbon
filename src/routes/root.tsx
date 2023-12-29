@@ -1,13 +1,15 @@
-import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
+import { toastError } from "../utils";
 
 export const Root = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [newFile, setNewFile] = useState("");
 
   const handleClick = () => {
+    setNewFile("");
     setShowDialog((b) => !b);
   };
 
@@ -17,7 +19,7 @@ export const Root = () => {
       body: newFile,
     });
     if (!res.ok) {
-      console.error("Post failed.");
+      toastError(await res.text());
     } else {
       const newFile = await res.text();
       window.location.href = `/items/${newFile}`;
@@ -31,12 +33,15 @@ export const Root = () => {
         <a className="font-extrabold" href="/">
           carbon
         </a>
-        <button className="px-2 bg-cyan-200 rounded" onClick={handleClick}>
+        <button
+          className="px-2 py-1 ml-2 text-sm text-gray-50 bg-gray-600 rounded"
+          onClick={handleClick}
+        >
           +New
         </button>
         <form className="ml-auto" method="get" action="/search">
           <input
-            className="p-1 w-32 rounded"
+            className="px-2 py-1 w-32 bg-gray-100 rounded"
             type="text"
             placeholder="Search"
             name="q"
@@ -44,24 +49,30 @@ export const Root = () => {
         </form>
       </header>
       <Dialog
-        className="p-2 rounded border bg-shiro"
+        className="p-4 text-gray-100 bg-gray-800 rounded"
         visible={showDialog}
         onHide={handleClick}
       >
-        <div>
-          <div>Create new file</div>
+        <div className="flex flex-col space-y-2">
+          <div>New file</div>
           <input
-            className="rounded border"
+            className="text-gray-900 rounded"
             type="text"
             value={newFile}
             onChange={(e) => setNewFile(() => e.target.value)}
           />
-          <button onClick={handleCreate}>Create</button>
+          <button
+            className="self-end px-2 py-1 w-16 text-sm text-gray-800 bg-gray-100 rounded"
+            onClick={handleCreate}
+          >
+            Create
+          </button>
         </div>
       </Dialog>
       <div>
         <Outlet />
       </div>
+      <Toaster />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { useItem } from "../ItremContext";
+import { ArrowLeft, UploadCloud } from "./Icons";
 
 export const EditItem = () => {
   const { item, currentValue, setCurrentValue, handleSave, toggleEditMode } =
@@ -9,17 +10,27 @@ export const EditItem = () => {
     <>
       <div className="my-3 text-xl leading-6 break-words">{item.title}</div>
       <div className="flex justify-between mb-4">
-        <button className="rounded border" onClick={() => toggleEditMode()}>
-          <img src="/arrow-left.svg" className="inline" />
+        <button
+          className="px-2 py-1 text-sm rounded bg-stone-600 text-stone-50"
+          onClick={() => toggleEditMode()}
+        >
+          <ArrowLeft />
           View
         </button>
-        <button className="rounded border" onClick={() => handleSave()}>
+        <button
+          className="px-2 py-1 text-sm rounded bg-stone-600 text-stone-50 disabled:bg-stone-300"
+          onClick={() => handleSave()}
+          disabled={currentValue === item.content}
+        >
+          <UploadCloud />
           Save
         </button>
       </div>
       <textarea
+        id="content"
         className="p-2"
         value={currentValue}
+        placeholder="Text here."
         onChange={(e) => setCurrentValue(e.target.value)}
       />
     </>

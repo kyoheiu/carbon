@@ -34,11 +34,11 @@ export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
         }),
       });
       if (!res.ok) {
-        console.error(await res.text());
+        toastError(await res.text());
       } else {
         const j: Item = await res.json();
         console.log(j);
-        if (j.title !== item.title) console.error("Cannot resolve file name.");
+        if (j.title !== item.title) toastError("Cannot resolve file name.");
         setItem(j);
       }
     };

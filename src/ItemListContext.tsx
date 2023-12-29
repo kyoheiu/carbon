@@ -32,7 +32,7 @@ export const ItemListProvider = ({
   const handleRename = async (fileName: string) => {
     const res = await renameItem(fileName, newName);
     if (!res.ok) {
-      console.error(await res.text());
+      toastError(await res.text());
     } else {
       setShowRenameDialog(false);
       setNewName("");

@@ -3,6 +3,7 @@ import { useItemList } from "../ItemListContext";
 import { Item } from "../types";
 import { fromNow } from "../utils";
 import { Dialog } from "primereact/dialog";
+import { MoreVertical } from "./Icons";
 
 const ItemList = ({
   items,
@@ -35,11 +36,11 @@ const ItemList = ({
                 className="flex relative items-center p-2 pt-4 border-b bg-bg2"
               >
                 <div className="overflow-hidden w-48 text-lg text-ellipsis">
-                  <a href={`/items/${item.title}`}>{item.title}</a>
+                  <a href={`/items/${encodeURI(item.title)}`}>{item.title}</a>
                 </div>
                 <div className="ml-auto text-sm">{fromNow(item.modified)}</div>
                 <button onClick={() => toggleMenu(`item-${index}`)}>
-                  <img src="/more-vertical.svg" />
+                  <MoreVertical />
                 </button>
                 {openIndex === `item-${index}` && (
                   <div className="flex absolute right-0 z-50 flex-col items-start p-2 mt-20 space-y-2 rounded border bg-shiro">
