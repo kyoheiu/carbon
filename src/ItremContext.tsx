@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import { Item } from "./types";
+import { toastError } from "./utils";
 
 type ctxValue = {
   isLoading: boolean;
@@ -37,7 +38,6 @@ export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
         toastError(await res.text());
       } else {
         const j: Item = await res.json();
-        console.log(j);
         if (j.title !== item.title) toastError("Cannot resolve file name.");
         setItem(j);
       }
