@@ -9,9 +9,9 @@ export const ArrowLeft = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="inline text-gray-50 feather feather-arrow-left"
     >
       <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -29,9 +29,9 @@ export const ArrowRight = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="inline text-gray-50 feather feather-arrow-right"
     >
       <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -49,9 +49,9 @@ export const MoreVertical = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="inline text-gray-900 feather feather-more-vertical"
     >
       <circle cx="12" cy="12" r="1"></circle>
@@ -70,9 +70,9 @@ export const UploadCloud = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="inline mr-1 text-gray-50 feather feather-upload-cloud"
     >
       <polyline points="16 16 12 12 8 16"></polyline>
