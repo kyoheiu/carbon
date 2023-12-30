@@ -2,18 +2,12 @@ import { useParams } from "react-router-dom";
 import { useItem } from "../../contexts/ItremContext";
 import { ViewItem } from "../../components/ViewItem";
 import { EditItem } from "../../components/EditItem";
-import { useEffect } from "react";
 import { Skeleton } from "primereact/skeleton";
 
 export const PageItem = () => {
   const { fileName } = useParams();
   const isMarkdown = fileName?.split(".").at(-1) === "md" ? true : false;
-
-  const { isLoading, useFetchItem, item, isEditMode } = useItem();
-
-  useEffect(() => {
-    useFetchItem(fileName as string);
-  }, []);
+  const { isLoading, item, isEditMode } = useItem();
 
   if (!item || isLoading)
     return (
@@ -26,7 +20,7 @@ export const PageItem = () => {
       </>
     );
   return (
-    <div className="flex flex-col justify-center w-screen px-2 rounded sm:w-120 md:w-144">
+    <div className="flex flex-col justify-center px-2 w-screen rounded sm:w-120 md:w-144">
       {isEditMode ? <EditItem /> : <ViewItem isMarkdown={isMarkdown} />}
     </div>
   );

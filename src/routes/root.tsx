@@ -43,6 +43,7 @@ export const Root = () => {
           <input
             className="px-2 py-1 w-36 bg-gray-200 rounded"
             type="text"
+            required
             placeholder="Search"
             name="q"
           />
@@ -57,6 +58,7 @@ export const Root = () => {
           <input
             className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
+            required
             value={newFile}
             placeholder="file name"
             onChange={(e) => setNewFile(() => e.target.value)}

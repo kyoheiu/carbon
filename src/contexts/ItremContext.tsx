@@ -1,10 +1,15 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Item } from "../lib/types";
 import { toastError } from "../lib/utils";
 
 type ctxValue = {
   isLoading: boolean;
-  useFetchItem: (arg: string) => Promise<void>;
   item: Item | null;
   currentValue: string;
   setCurrentValue: React.Dispatch<React.SetStateAction<string>>;
@@ -14,11 +19,17 @@ type ctxValue = {
   handleKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
 
-const reg = /^\s*([-\+\*] |\d+[\.\)] )/g;
+const reg = /^\s*([-+*] |\d+[.)] )/g;
 
 const ItemContext = createContext<ctxValue | null>(null);
 
-export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
+export const ItemProvider = ({
+  children,
+  fileName,
+}: {
+  children: React.ReactNode;
+  fileName: string;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [item, setItem] = useState<Item | null>(null);
   const [currentValue, setCurrentValue] = useState("");
@@ -101,25 +112,24 @@ export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
     [currentValue, handleSave]
   );
 
-  const useFetchItem = useCallback(
-    async (fileName: string) => {
+  useEffect(() => {
+    const fetchItem = async (fileName: string) => {
       setIsLoading(true);
       const res = await fetch(`http://localhost:3000/items/${fileName}`);
       if (!res.ok) {
-        console.log("fetch error");
+        toastError(await res.text());
       } else {
         const j = await res.json();
         setItem(j);
         setCurrentValue(j.content);
       }
       setIsLoading(false);
-    },
-    [setIsLoading, setItem, setCurrentValue]
-  );
+    };
+    fetchItem(fileName);
+  }, []);
 
   const ctxValue: ctxValue = {
     isLoading,
-    useFetchItem,
     item,
     currentValue,
     setCurrentValue,

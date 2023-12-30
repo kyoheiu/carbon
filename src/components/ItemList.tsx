@@ -37,10 +37,12 @@ const ItemList = ({
                 key={`item-${index}`}
                 className="flex relative items-center p-2 pt-4 border-b"
               >
-                <div className="overflow-hidden w-48 text-lg text-ellipsis">
+                <div className="overflow-hidden w-44 text-lg text-ellipsis">
                   <a href={`/items/${encodeURI(item.title)}`}>{item.title}</a>
                 </div>
-                <div className="ml-auto text-sm">{fromNow(item.modified)}</div>
+                <div className="ml-auto text-sm break-all">
+                  {fromNow(item.modified)}
+                </div>
                 <button onClick={() => toggleMenu(`item-${index}`)}>
                   <MoreVertical />
                 </button>
@@ -82,6 +84,7 @@ const ItemList = ({
           <input
             className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
+            required
             value={newName}
             onChange={(e) => setNewName(() => e.target.value)}
           />
