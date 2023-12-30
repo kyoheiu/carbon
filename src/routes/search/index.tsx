@@ -12,9 +12,9 @@ export const Search = () => {
 
   const props = { items: items, hideItem: hideItem };
   return (
-    <>
+    <div className="flex flex-col items-center">
       <div>Query: {query}</div>
       <ItemList {...props} />
-    </>
+    </div>
   );
 };

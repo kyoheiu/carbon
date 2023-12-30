@@ -27,15 +27,15 @@ const ItemList = ({
   if (!items) return null;
   return (
     <>
-      <ul>
+      <ul className="w-full">
         {items.map((item, index) => {
           return (
             !item.hidden && (
               <li
                 key={`item-${index}`}
-                className="flex relative items-center p-2 pt-4 border-b bg-bg2"
+                className="relative flex items-center p-2 pt-4 border-b bg-bg2"
               >
-                <div className="overflow-hidden w-48 text-lg text-ellipsis">
+                <div className="w-48 overflow-hidden text-lg text-ellipsis">
                   <a href={`/items/${encodeURI(item.title)}`}>{item.title}</a>
                 </div>
                 <div className="ml-auto text-sm">{fromNow(item.modified)}</div>
@@ -43,7 +43,7 @@ const ItemList = ({
                   <MoreVertical />
                 </button>
                 {openIndex === `item-${index}` && (
-                  <div className="flex absolute right-0 z-50 flex-col items-start p-2 mt-20 space-y-2 rounded border bg-shiro">
+                  <div className="absolute right-0 z-50 flex flex-col items-start p-2 mt-20 space-y-2 border rounded bg-shiro">
                     <button
                       onClick={() => {
                         currentName.current = item.title;
@@ -71,14 +71,14 @@ const ItemList = ({
         })}
       </ul>
       <Dialog
-        className="p-2 rounded border bg-shiro"
+        className="p-2 border rounded bg-shiro"
         visible={showRenameDialog}
         onHide={toggleDialog}
       >
         <div>
           <div>Rename</div>
           <input
-            className="rounded border"
+            className="border rounded"
             type="text"
             value={newName}
             onChange={(e) => setNewName(() => e.target.value)}

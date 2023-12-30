@@ -4,3 +4,8 @@ export type Item = {
     modified: number
     hidden: boolean
 }
+
+export type ReadResponse = {
+    result: Item[],
+    more: boolean
+}
