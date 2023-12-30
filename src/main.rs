@@ -33,12 +33,19 @@ struct PayloadRename {
     new_title: String,
 }
 
+#[derive(Debug, Serialize)]
+struct ReadResponse {
+    result: Vec<Item>,
+    more: bool,
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     // build our application with a single route
     let app = Router::new()
         .route("/health", get(check_health))
-        .route("/items", get(read_all).post(create_item))
+        .route("/items", get(read_partial).post(create_item))
+        .route("/items_all", get(read_all))
         .route(
             "/items/:file_name",
             get(read_item).post(save_content).delete(delete_item),
@@ -60,28 +67,28 @@ async fn check_health() -> String {
 
 #[debug_handler]
 async fn read_all() -> Result<extract::Json<Vec<Item>>, Error> {
+    println!("[READ-ALL]");
+    let result = read_data()?;
+    Ok(Json(result))
+}
+
+#[debug_handler]
+async fn read_partial() -> Result<extract::Json<ReadResponse>, Error> {
+    println!("[READ-PARTIAL]");
+    let all = read_data()?;
+    let more = &all.len() > &10;
+
     let mut result = Vec::new();
-    for entry in std::fs::read_dir("data")? {
-        let entry = entry?;
-        let path = entry.path();
-        if path.is_dir() {
-            continue;
-        } else {
-            let item = Item {
-                title: entry
-                    .file_name()
-                    .as_os_str()
-                    .to_str()
-                    .ok_or(Error::ToUtf8)?
-                    .to_owned(),
-                content: std::fs::read_to_string(&path)?,
-                modified: get_modified_time(entry.metadata()?)?,
-            };
-            result.push(item);
+    let mut i = 0;
+    for item in all {
+        result.push(item);
+        i += 1;
+        if i == 10 {
+            break;
         }
     }
-    println!("[READ-ALL]");
-    Ok(Json(result))
+
+    Ok(Json(ReadResponse { result, more }))
 }
 
 #[debug_handler]
@@ -158,7 +165,7 @@ async fn search_item(query: String) -> Result<impl IntoResponse, Error> {
     let mut result = std::collections::BTreeSet::new();
     //fd
     let output = std::process::Command::new("fd")
-        .args([&query, "data"])
+        .args([&query, "./data"])
         .output()?
         .stdout;
     let output = String::from_utf8(output)?;
@@ -170,7 +177,7 @@ async fn search_item(query: String) -> Result<impl IntoResponse, Error> {
 
     //ripgrep
     let output = std::process::Command::new("rg")
-        .args(["-i", "-l", &query, "data"])
+        .args(["-i", "-l", &query, "./data"])
         .output()?
         .stdout;
     let output = String::from_utf8(output)?;
@@ -201,4 +208,29 @@ fn create_path(name: &str) -> PathBuf {
 
 fn get_modified_time(metadata: std::fs::Metadata) -> Result<u64, Error> {
     Ok(metadata.modified()?.duration_since(UNIX_EPOCH)?.as_secs())
+}
+
+fn read_data() -> Result<Vec<Item>, Error> {
+    let mut result = Vec::new();
+    for entry in std::fs::read_dir("data")? {
+        let entry = entry?;
+        let path = entry.path();
+        if path.is_dir() {
+            continue;
+        } else {
+            let item = Item {
+                title: entry
+                    .file_name()
+                    .as_os_str()
+                    .to_str()
+                    .ok_or(Error::ToUtf8)?
+                    .to_owned(),
+                content: std::fs::read_to_string(&path)?,
+                modified: get_modified_time(entry.metadata()?)?,
+            };
+            result.push(item);
+        }
+    }
+    result.sort_by(|a, b| b.modified.cmp(&a.modified));
+    Ok(result)
 }
