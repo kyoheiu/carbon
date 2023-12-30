@@ -29,19 +29,19 @@ export const Root = () => {
 
   return (
     <>
-      <header className="flex items-center w-screen p-2 sm:w-120 md:w-144">
+      <header className="flex items-center p-2 w-screen sm:w-120 md:w-144">
         <a className="font-extrabold" href="/">
           carbon
         </a>
         <button
-          className="px-2 py-1 ml-2 text-sm bg-gray-600 rounded text-gray-50"
+          className="px-2 py-1 ml-2 text-sm text-gray-50 bg-gray-600 rounded"
           onClick={handleClick}
         >
           +New
         </button>
         <form className="ml-auto" method="get" action="/search">
           <input
-            className="px-2 py-1 bg-gray-200 rounded w-36"
+            className="px-2 py-1 w-36 bg-gray-200 rounded"
             type="text"
             placeholder="Search"
             name="q"
@@ -54,17 +54,14 @@ export const Root = () => {
         onHide={handleClick}
       >
         <div className="flex flex-col space-y-2">
-          <div>New file</div>
           <input
-            className="text-gray-900 rounded"
+            className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
             value={newFile}
+            placeholder="file name"
             onChange={(e) => setNewFile(() => e.target.value)}
           />
-          <button
-            className="self-end w-16 px-2 py-1 text-sm text-gray-800 bg-gray-100 rounded"
-            onClick={handleCreate}
-          >
+          <button className="border" onClick={handleCreate}>
             Create
           </button>
         </div>

@@ -13,14 +13,16 @@ const ItemList = ({
   hideItem: (arg: string) => void;
 }) => {
   const {
-    deleteItem,
     openIndex,
     toggleMenu,
     showRenameDialog,
-    toggleDialog,
+    toggleRenameDialog,
     newName,
     setNewName,
     handleRename,
+    showDeleteDialog,
+    toggleDeleteDialog,
+    handleDelete,
   } = useItemList();
   const currentName = useRef("");
 
@@ -33,9 +35,9 @@ const ItemList = ({
             !item.hidden && (
               <li
                 key={`item-${index}`}
-                className="relative flex items-center p-2 pt-4 border-b bg-bg2"
+                className="flex relative items-center p-2 pt-4 border-b"
               >
-                <div className="w-48 overflow-hidden text-lg text-ellipsis">
+                <div className="overflow-hidden w-48 text-lg text-ellipsis">
                   <a href={`/items/${encodeURI(item.title)}`}>{item.title}</a>
                 </div>
                 <div className="ml-auto text-sm">{fromNow(item.modified)}</div>
@@ -43,22 +45,23 @@ const ItemList = ({
                   <MoreVertical />
                 </button>
                 {openIndex === `item-${index}` && (
-                  <div className="absolute right-0 z-50 flex flex-col items-start p-2 mt-20 space-y-2 border rounded bg-shiro">
+                  <div className="flex absolute right-3 z-50 flex-col items-start p-2 mt-20 space-y-2 text-gray-50 bg-gray-800 rounded border">
                     <button
                       onClick={() => {
                         currentName.current = item.title;
                         setNewName(item.title);
-                        toggleDialog();
+                        toggleRenameDialog();
                         toggleMenu(`item-${index}`);
                       }}
                     >
                       Rename
                     </button>
                     <button
-                      className="text-warning"
+                      className="text-red-200"
                       onClick={() => {
-                        deleteItem(item.title);
-                        hideItem(item.title);
+                        currentName.current = item.title;
+                        toggleDeleteDialog();
+                        toggleMenu(`item-${index}`);
                       }}
                     >
                       Delete
@@ -71,20 +74,46 @@ const ItemList = ({
         })}
       </ul>
       <Dialog
-        className="p-2 border rounded bg-shiro"
+        className="p-4 text-gray-100 bg-gray-800 rounded"
         visible={showRenameDialog}
-        onHide={toggleDialog}
+        onHide={toggleRenameDialog}
       >
-        <div>
-          <div>Rename</div>
+        <div className="flex flex-col space-y-2">
           <input
-            className="border rounded"
+            className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
             value={newName}
             onChange={(e) => setNewName(() => e.target.value)}
           />
-          <button onClick={() => handleRename(currentName.current)}>
+          <button
+            className="border"
+            onClick={() => {
+              handleRename(currentName.current);
+              currentName.current = "";
+            }}
+          >
             Rename
+          </button>
+        </div>
+      </Dialog>
+      <Dialog
+        className="p-4 text-gray-100 bg-gray-800 rounded"
+        visible={showDeleteDialog}
+        onHide={toggleDeleteDialog}
+      >
+        <div className="flex flex-col space-y-2">
+          <div className="mt-2 text-lg">
+            Are you sure to delete {currentName.current}?
+          </div>
+          <button
+            className="bg-red-700 border"
+            onClick={() => {
+              handleDelete(currentName.current);
+              hideItem(currentName.current);
+              currentName.current = "";
+            }}
+          >
+            Delete
           </button>
         </div>
       </Dialog>

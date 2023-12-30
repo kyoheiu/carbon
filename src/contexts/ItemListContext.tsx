@@ -2,14 +2,16 @@ import { createContext, useContext, useState } from "react";
 import { toastError } from "../lib/utils";
 
 type ctxValue = {
-  deleteItem: (arg: string) => Promise<Response>;
   openIndex: string | null;
   toggleMenu: (arg: string) => void;
   showRenameDialog: boolean;
-  toggleDialog: () => void;
+  toggleRenameDialog: () => void;
   newName: string;
   setNewName: React.Dispatch<React.SetStateAction<string>>;
   handleRename: (arg: string) => Promise<void>;
+  showDeleteDialog: boolean;
+  toggleDeleteDialog: () => void;
+  handleDelete: (arg: string) => Promise<void>;
 };
 const ItemListContext = createContext<ctxValue | null>(null);
 
@@ -20,13 +22,14 @@ export const ItemListProvider = ({
 }) => {
   const [openIndex, setOpenIndex] = useState<string | null>(null);
   const [showRenameDialog, setShowRenameDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [newName, setNewName] = useState("");
 
   const toggleMenu = (index: string) => {
     setOpenIndex((prev) => (prev === index ? null : index));
   };
 
-  const toggleDialog = () => {
+  const toggleRenameDialog = () => {
     setShowRenameDialog((b) => !b);
   };
 
@@ -41,11 +44,6 @@ export const ItemListProvider = ({
     }
   };
 
-  const deleteItem = async (fileName: string) =>
-    fetch(`http://localhost:3000/items/${fileName}`, {
-      method: "DELETE",
-    });
-
   const renameItem = async (fileName: string, newFileName: string) =>
     fetch(`http://localhost:3000/items/rename`, {
       method: "POST",
@@ -58,15 +56,35 @@ export const ItemListProvider = ({
       }),
     });
 
+  const toggleDeleteDialog = () => {
+    setShowDeleteDialog((b) => !b);
+  };
+
+  const handleDelete = async (fileName: string) => {
+    const res = await deleteItem(fileName);
+    if (!res.ok) {
+      toastError(await res.text());
+    } else {
+      setShowDeleteDialog(false);
+    }
+  };
+
+  const deleteItem = async (fileName: string) =>
+    fetch(`http://localhost:3000/items/${fileName}`, {
+      method: "DELETE",
+    });
+
   const ctxValue = {
-    deleteItem,
     openIndex,
     toggleMenu,
     showRenameDialog,
     newName,
     setNewName,
-    toggleDialog,
+    toggleRenameDialog,
     handleRename,
+    showDeleteDialog,
+    toggleDeleteDialog,
+    handleDelete,
   };
   return (
     <ItemListContext.Provider value={ctxValue}>
