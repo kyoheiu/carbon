@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./AppRoute";
-import { ItemProvider } from "./ItremContext";
-import { ItemListProvider } from "./ItemListContext";
+import { ItemProvider } from "./contexts/ItremContext";
+import { ItemListProvider } from "./contexts/ItemListContext";
 import { PrimeReactProvider } from "primereact/api";
 import "./index.css";
 

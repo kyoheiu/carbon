@@ -1,4 +1,4 @@
-import { useItem } from "../ItremContext";
+import { useItem } from "../contexts/ItremContext";
 import { ArrowLeft, UploadCloud } from "./Icons";
 
 export const EditItem = () => {

@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/contexts/ItemListContext.tsx", "src/contexts/ItremContext.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

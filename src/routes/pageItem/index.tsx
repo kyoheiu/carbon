@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useItem } from "../../ItremContext";
+import { useItem } from "../../contexts/ItremContext";
 import { ViewItem } from "../../components/ViewItem";
 import { EditItem } from "../../components/EditItem";
 import { useEffect } from "react";

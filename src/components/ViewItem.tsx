@@ -1,4 +1,4 @@
-import { useItem } from "../ItremContext";
+import { useItem } from "../contexts/ItremContext";
 import { marked } from "marked";
 import { ArrowRight } from "./Icons";
 
