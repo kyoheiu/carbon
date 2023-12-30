@@ -12,10 +12,14 @@ pub enum Error {
     SameName,
     Split,
     ToUtf8,
+    Git(String),
 }
 
-impl std::error::Error for Error {}
-
+impl From<git2::Error> for Error {
+    fn from(err: git2::Error) -> Self {
+        Error::Git(err.to_string())
+    }
+}
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let printable = match self {
@@ -26,6 +30,7 @@ impl std::fmt::Display for Error {
             Error::SameName => "A file with the same name exists.",
             Error::Split => "Cannot split the file path.",
             Error::ToUtf8 => "Cannot read file name as UTF-8.",
+            Error::Git(s) => s,
         };
         write!(f, "{}", printable)
     }
@@ -58,6 +63,7 @@ impl IntoResponse for Error {
             Error::SameName => "A file with the same name exists.".to_string(),
             Error::Split => "Cannot split the file path.".to_string(),
             Error::ToUtf8 => "Cannot read file name as UTF-8.".to_string(),
+            Error::Git(s) => s,
         };
         (StatusCode::INTERNAL_SERVER_ERROR, body).into_response()
     }

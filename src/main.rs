@@ -1,18 +1,17 @@
 mod error;
-use error::Error;
-
-use std::{path::PathBuf, time::UNIX_EPOCH};
-
 use axum::{
     debug_handler,
     extract::{self, Path},
-    http::{Method, StatusCode},
+    http::StatusCode,
     response::IntoResponse,
     routing::{get, post},
     Json, Router,
 };
+use error::Error;
+use git2::Repository;
 use serde::{Deserialize, Serialize};
-use tower_http::cors::{Any, Cors, CorsLayer};
+use std::{path::PathBuf, time::UNIX_EPOCH};
+use tower_http::cors::CorsLayer;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Item {
@@ -48,7 +47,7 @@ async fn main() -> Result<(), Error> {
         .route("/items_all", get(read_all))
         .route(
             "/items/:file_name",
-            get(read_item).post(save_content).delete(delete_item),
+            get(read_item).post(save_item).delete(delete_item),
         )
         .route("/items/rename", post(rename_item))
         .route("/items/search", post(search_item))
@@ -111,12 +110,16 @@ async fn create_item(new_file_name: String) -> Result<impl IntoResponse, Error> 
         Err(Error::SameName)
     } else {
         std::fs::File::create(create_path(&new_file_name))?;
+        if is_git_supported() {
+            let msg = format!("Create: {}", &new_file_name);
+            add_and_commit(&new_file_name, None, &msg)?;
+        }
         Ok(new_file_name.into_response())
     }
 }
 
 #[debug_handler]
-async fn save_content(Json(payload): Json<PayloadSave>) -> Result<impl IntoResponse, Error> {
+async fn save_item(Json(payload): Json<PayloadSave>) -> Result<impl IntoResponse, Error> {
     println!("[SAVE] {}", payload.title);
     let path = create_path(&payload.title);
     if !path.exists() {
@@ -124,6 +127,10 @@ async fn save_content(Json(payload): Json<PayloadSave>) -> Result<impl IntoRespo
     } else {
         std::fs::write(&path, &payload.content)?;
         let modified = get_modified_time(path.metadata()?)?;
+        if is_git_supported() {
+            let msg = format!("Update: {}", payload.title);
+            add_and_commit(&payload.title, None, &msg)?;
+        }
         Ok(Json(Item {
             title: payload.title,
             content: payload.content,
@@ -141,7 +148,10 @@ async fn delete_item(Path(file_name): Path<String>) -> Result<impl IntoResponse,
         Err(Error::NonExistentFile)
     } else {
         std::fs::remove_file(&path)?;
-
+        if is_git_supported() {
+            let msg = format!("Delete: {}", &file_name);
+            delete_and_commit(&file_name, &msg)?;
+        }
         Ok((StatusCode::OK).into_response())
     }
 }
@@ -155,6 +165,10 @@ async fn rename_item(Json(payload): Json<PayloadRename>) -> Result<impl IntoResp
         Err(Error::SameName)
     } else {
         std::fs::rename(path, &new_path)?;
+        if is_git_supported() {
+            let msg = format!("Rename: {} -> {}", &payload.title, &payload.new_title);
+            add_and_commit(&payload.title, Some(&payload.new_title), &msg)?;
+        }
         Ok((StatusCode::OK).into_response())
     }
 }
@@ -233,4 +247,76 @@ fn read_data() -> Result<Vec<Item>, Error> {
     }
     result.sort_by(|a, b| b.modified.cmp(&a.modified));
     Ok(result)
+}
+
+fn add_and_commit(
+    file_to_add: &str,
+    file_to_delete: Option<&str>,
+    commit_message: &str,
+) -> Result<(), Error> {
+    let repo = Repository::open("./data")?;
+    let mut index = repo.index()?;
+    index.add_path(std::path::Path::new(file_to_add))?;
+    if let Some(to_delete) = file_to_delete {
+        index.remove_path(std::path::Path::new(to_delete))?;
+    }
+    index.write()?;
+
+    let new_tree_oid = index.write_tree()?;
+    let new_tree = repo.find_tree(new_tree_oid)?;
+    let git_config = get_git_config();
+    let author = git2::Signature::now(&git_config.0, &git_config.1)?;
+    let head = repo.head()?;
+    let parent = repo.find_commit(
+        head.target()
+            .ok_or_else(|| Error::Git("Failed get the OID.".to_string()))?,
+    )?;
+    repo.commit(
+        Some("HEAD"),
+        &author,
+        &author,
+        commit_message,
+        &new_tree,
+        &[&parent],
+    )?;
+
+    Ok(())
+}
+
+fn delete_and_commit(file_to_delete: &str, commit_message: &str) -> Result<(), Error> {
+    let repo = Repository::open("./data")?;
+    let mut index = repo.index()?;
+    index.remove_path(std::path::Path::new(file_to_delete))?;
+    index.write()?;
+
+    let new_tree_oid = index.write_tree()?;
+    let new_tree = repo.find_tree(new_tree_oid)?;
+    let git_config = get_git_config();
+    let author = git2::Signature::now(&git_config.0, &git_config.1)?;
+    let head = repo.head()?;
+    let parent = repo.find_commit(
+        head.target()
+            .ok_or_else(|| Error::Git("Failed get the OID.".to_string()))?,
+    )?;
+    repo.commit(
+        Some("HEAD"),
+        &author,
+        &author,
+        commit_message,
+        &new_tree,
+        &[&parent],
+    )?;
+
+    Ok(())
+}
+
+fn get_git_config() -> (String, String) {
+    (
+        std::env::var("CARBON_GIT_USER").unwrap_or("carbon".to_string()),
+        std::env::var("CARBON_GIT_EMAIL").unwrap_or("git@example.com".to_string()),
+    )
+}
+
+fn is_git_supported() -> bool {
+    std::env::var("CARBON_GIT") == Ok("true".to_string())
 }
