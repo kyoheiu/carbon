@@ -27,7 +27,7 @@ const ItemList = ({
   if (!items) return null;
   return (
     <>
-      <ul className="w-full sm:w-96">
+      <ul className="w-full sm:w-120 md:w-144">
         {items.map((item, index) => {
           return (
             !item.hidden && (

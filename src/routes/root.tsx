@@ -29,7 +29,7 @@ export const Root = () => {
 
   return (
     <>
-      <header className="flex items-center w-screen p-2 sm:w-96">
+      <header className="flex items-center w-screen p-2 sm:w-120 md:w-144">
         <a className="font-extrabold" href="/">
           carbon
         </a>
@@ -41,7 +41,7 @@ export const Root = () => {
         </button>
         <form className="ml-auto" method="get" action="/search">
           <input
-            className="w-32 px-2 py-1 bg-gray-200 rounded"
+            className="px-2 py-1 bg-gray-200 rounded w-36"
             type="text"
             placeholder="Search"
             name="q"
