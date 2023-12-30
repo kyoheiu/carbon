@@ -2,7 +2,7 @@ import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
-import { toastError } from "../utils";
+import { toastError } from "../lib/utils";
 
 export const Root = () => {
   const [showDialog, setShowDialog] = useState(false);

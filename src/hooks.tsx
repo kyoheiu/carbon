@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Item, ReadResponse } from "./types";
-import { toastError } from "./utils";
+import { Item, ReadResponse } from "./lib/types";
+import { toastError } from "./lib/utils";
 
 export const useApp = () => {
   const [items, setItems] = useState<Item[]>();

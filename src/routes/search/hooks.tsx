@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Item } from "../../types";
-import { toastError } from "../../utils";
+import { Item } from "../../lib/types";
+import { toastError } from "../../lib/utils";
 
 export const useSearch = (query: string) => {
   const [items, setItems] = useState<Item[]>();

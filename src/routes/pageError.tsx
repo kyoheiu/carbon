@@ -1,5 +1,5 @@
 import { useRouteError } from "react-router-dom";
-import { toastError } from "../utils";
+import { toastError } from "../lib/utils";
 
 export default function PageError() {
   const error = useRouteError() as any;

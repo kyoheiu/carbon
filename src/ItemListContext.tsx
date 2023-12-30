@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { toastError } from "./utils";
+import { toastError } from "./lib/utils";
 
 type ctxValue = {
   deleteItem: (arg: string) => Promise<Response>;

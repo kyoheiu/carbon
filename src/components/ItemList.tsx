@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useItemList } from "../ItemListContext";
-import { Item } from "../types";
-import { fromNow } from "../utils";
+import { Item } from "../lib/types";
+import { fromNow } from "../lib/utils";
 import { Dialog } from "primereact/dialog";
 import { MoreVertical } from "./Icons";
 

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useState } from "react";
-import { Item } from "./types";
-import { toastError } from "./utils";
+import { Item } from "./lib/types";
+import { toastError } from "./lib/utils";
 
 type ctxValue = {
   isLoading: boolean;
