@@ -11,7 +11,10 @@ type ctxValue = {
   handleSave: () => void;
   isEditMode: boolean;
   toggleEditMode: () => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
+
+const reg = /^\s*([-\+\*] |\d+[\.\)] )/g;
 
 const ItemContext = createContext<ctxValue | null>(null);
 
@@ -49,6 +52,55 @@ export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
     setIsEditMode((b) => !b);
   }, [setIsEditMode]);
 
+  const setListMarker = (
+    el: HTMLTextAreaElement,
+    captured: string,
+    cursorPos: number
+  ) => {
+    setTimeout(() => {
+      setCurrentValue(
+        (v) => v.slice(0, cursorPos) + captured + v.slice(cursorPos)
+      );
+    }, 5);
+    setTimeout(() => {
+      el.selectionStart = el.selectionEnd = cursorPos + captured.length;
+    }, 10);
+  };
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === "Enter" && e.ctrlKey) {
+        handleSave();
+      } else if (e.key === "Enter") {
+        const el = document.getElementById("textarea") as HTMLTextAreaElement;
+        if (el) {
+          const cursorPos = el.selectionEnd;
+          for (let i = cursorPos - 1; i >= 0; i--) {
+            const char = currentValue[i];
+            if (char === `\n`) {
+              const line = currentValue.substring(i + 1, cursorPos + 1);
+              const matched = line.match(reg);
+              if (matched !== null) {
+                setListMarker(el, matched[0], cursorPos + 1);
+              }
+              break;
+            } else if (i === 0) {
+              const line = currentValue.substring(i, cursorPos + 1);
+              const matched = line.match(reg);
+              if (matched !== null) {
+                setListMarker(el, matched[0], cursorPos + 1);
+              }
+              break;
+            } else {
+              continue;
+            }
+          }
+        }
+      }
+    },
+    [currentValue, handleSave]
+  );
+
   const useFetchItem = useCallback(
     async (fileName: string) => {
       setIsLoading(true);
@@ -74,6 +126,7 @@ export const ItemProvider = ({ children }: { children: React.ReactNode }) => {
     handleSave,
     isEditMode,
     toggleEditMode,
+    handleKeyDown,
   };
 
   return (
