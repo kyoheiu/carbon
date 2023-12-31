@@ -37,10 +37,10 @@ const ItemList = ({
                 key={`item-${index}`}
                 className="flex relative items-center p-2 pt-4 border-b"
               >
-                <div className="overflow-hidden w-44 text-lg text-ellipsis">
+                <div className="overflow-hidden text-lg break-all text-ellipsis line-clamp-1">
                   <a href={`/items/${encodeURI(item.title)}`}>{item.title}</a>
                 </div>
-                <div className="ml-auto text-sm break-all">
+                <div className="ml-auto text-sm text-gray-600 break-all">
                   {fromNow(item.modified)}
                 </div>
                 <button onClick={() => toggleMenu(`item-${index}`)}>
@@ -49,6 +49,7 @@ const ItemList = ({
                 {openIndex === `item-${index}` && (
                   <div className="flex absolute right-3 z-50 flex-col items-start p-2 mt-20 space-y-2 text-gray-50 bg-gray-800 rounded border">
                     <button
+                      className="text-sm"
                       onClick={() => {
                         currentName.current = item.title;
                         setNewName(item.title);
@@ -59,7 +60,7 @@ const ItemList = ({
                       Rename
                     </button>
                     <button
-                      className="text-red-200"
+                      className="text-sm text-red-200"
                       onClick={() => {
                         currentName.current = item.title;
                         toggleDeleteDialog();
