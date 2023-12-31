@@ -129,11 +129,11 @@ async fn save_item(Json(payload): Json<PayloadSave>) -> Result<impl IntoResponse
         Err(Error::NonExistentFile)
     } else {
         std::fs::write(&path, &payload.content)?;
-        let modified = get_modified_time(path.metadata()?)?;
         if is_git_supported() {
             let msg = format!("Update: {}", payload.title);
             add_and_commit(&payload.title, None, &msg)?;
         }
+        let modified = get_modified_time(path.metadata()?)?;
         Ok(Json(Item {
             title: payload.title,
             content: payload.content,
@@ -320,5 +320,5 @@ fn get_git_config() -> (String, String) {
 }
 
 fn is_git_supported() -> bool {
-    std::env::var("CARBON_GIT") == Ok("true".to_string())
+    std::env::var("CARBON_GIT") == Ok("on".to_string())
 }
