@@ -2,6 +2,7 @@ use axum::{
     http::StatusCode,
     response::{IntoResponse, Response},
 };
+use tracing::error;
 
 #[derive(Debug)]
 pub enum Error {
@@ -65,6 +66,7 @@ impl IntoResponse for Error {
             Error::ToUtf8 => "Cannot read file name as UTF-8.".to_string(),
             Error::Git(s) => s,
         };
+        error!(body);
         (StatusCode::INTERNAL_SERVER_ERROR, body).into_response()
     }
 }

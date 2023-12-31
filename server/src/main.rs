@@ -1,4 +1,5 @@
 mod error;
+
 use axum::{
     debug_handler,
     extract::{self, Path},
@@ -11,7 +12,9 @@ use error::Error;
 use git2::Repository;
 use serde::{Deserialize, Serialize};
 use std::{path::PathBuf, time::UNIX_EPOCH};
-use tower_http::cors::CorsLayer;
+use tower_http::{cors::CorsLayer, services::ServeDir};
+use tracing::info;
+use tracing_subscriber;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Item {
@@ -40,7 +43,8 @@ struct ReadResponse {
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    // build our application with a single route
+    tracing_subscriber::fmt::init();
+
     let app = Router::new()
         .route("/health", get(check_health))
         .route("/api/items", get(read_partial).post(create_item))
@@ -51,9 +55,11 @@ async fn main() -> Result<(), Error> {
         )
         .route("/api/rename", post(rename_item))
         .route("/api/search", post(search_item))
+        .nest_service("/", ServeDir::new("static"))
+        .nest_service("/items/:file_name", ServeDir::new("static"))
+        .nest_service("/search", ServeDir::new("static"))
         .layer(CorsLayer::permissive());
 
-    // run our app with hyper, listening globally on port 3000
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
     axum::serve(listener, app).await?;
     Ok(())
@@ -66,14 +72,12 @@ async fn check_health() -> String {
 
 #[debug_handler]
 async fn read_all() -> Result<extract::Json<Vec<Item>>, Error> {
-    println!("[READ-ALL]");
     let result = read_data()?;
     Ok(Json(result))
 }
 
 #[debug_handler]
 async fn read_partial() -> Result<extract::Json<ReadResponse>, Error> {
-    println!("[READ-PARTIAL]");
     let all = read_data()?;
     let more = &all.len() > &10;
 
@@ -92,7 +96,6 @@ async fn read_partial() -> Result<extract::Json<ReadResponse>, Error> {
 
 #[debug_handler]
 async fn read_item(Path(file_name): Path<String>) -> Result<Json<Item>, Error> {
-    println!("[READ-ITEM] {}", file_name);
     let path = create_path(&file_name);
     let item = Item {
         title: file_name.to_string(),
@@ -104,7 +107,7 @@ async fn read_item(Path(file_name): Path<String>) -> Result<Json<Item>, Error> {
 
 #[debug_handler]
 async fn create_item(new_file_name: String) -> Result<impl IntoResponse, Error> {
-    println!("[CREATE] {}", new_file_name);
+    info!("[CREATE] {}", new_file_name);
     let path = create_path(&new_file_name);
     if path.exists() {
         Err(Error::SameName)
@@ -120,7 +123,7 @@ async fn create_item(new_file_name: String) -> Result<impl IntoResponse, Error> 
 
 #[debug_handler]
 async fn save_item(Json(payload): Json<PayloadSave>) -> Result<impl IntoResponse, Error> {
-    println!("[SAVE] {}", payload.title);
+    info!("[SAVE] {}", payload.title);
     let path = create_path(&payload.title);
     if !path.exists() {
         Err(Error::NonExistentFile)
@@ -142,7 +145,7 @@ async fn save_item(Json(payload): Json<PayloadSave>) -> Result<impl IntoResponse
 
 #[debug_handler]
 async fn delete_item(Path(file_name): Path<String>) -> Result<impl IntoResponse, Error> {
-    println!("[DELETE] {}", file_name);
+    info!("[DELETE] {}", file_name);
     let path = create_path(&file_name);
     if !path.exists() {
         Err(Error::NonExistentFile)
@@ -158,7 +161,7 @@ async fn delete_item(Path(file_name): Path<String>) -> Result<impl IntoResponse,
 
 #[debug_handler]
 async fn rename_item(Json(payload): Json<PayloadRename>) -> Result<impl IntoResponse, Error> {
-    println!("[RENAME] {} -> {}", payload.title, payload.new_title);
+    info!("[RENAME] {} -> {}", payload.title, payload.new_title);
     let path = create_path(&payload.title);
     let new_path = create_path(&payload.new_title);
     if new_path.exists() {
@@ -175,7 +178,6 @@ async fn rename_item(Json(payload): Json<PayloadRename>) -> Result<impl IntoResp
 
 #[debug_handler]
 async fn search_item(query: String) -> Result<impl IntoResponse, Error> {
-    println!("[SEARCH] {}", query);
     let mut result = std::collections::BTreeSet::new();
     //fd
     let output = std::process::Command::new("fd")
