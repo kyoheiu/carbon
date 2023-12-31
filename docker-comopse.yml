@@ -1,0 +1,33 @@
+version: "3"
+services:
+  client:
+    image: docker.io/kyoheiudev/carbon-client:latest
+    container_name: carbon-client
+    volumes:
+      - ./data/.env.production:/app/.env.production
+    ports:
+      - 3000:3000
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: "3"
+  server:
+    image: docker.io/kyoheiudev/carbon-server:latest
+    container_name: carbon-server
+    volumes:
+      - ./data:/carbon-server/data:rw
+      - "/etc/passwd:/etc/passwd:ro"
+      - "/etc/group:/etc/group:ro"
+    environment:
+      # true to enable the git feature
+      - CARBON_GIT="true"
+      # default to 'carbon'
+      - CARBON_GIT_USER="carbon"
+      # default to 'git@example.com'
+      - CARBON_GIT_EMAIL="git@example.com"
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: "3"

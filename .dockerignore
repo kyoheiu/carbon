@@ -1,0 +1,10 @@
+# server
+/server/target
+/server/data
+/server/static
+
+# client
+/client/node_modules
+/client/dist
+/client/dist-ssr
+/client/*.local

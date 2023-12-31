@@ -1,20 +1,19 @@
-FROM node:slim AS frontend-builder
-WORKDIR /frontend-builder
+FROM node:slim as client-builder
+WORKDIR /client-builder
 COPY ./client .
-RUN npm install && npm run build
+RUN npm i && npm run build
 
-FROM rust:1-alpine3.18 as backend-builder
-WORKDIR /backend-builder
+FROM rust:1-alpine3.18 as server-builder
+WORKDIR /server-builder
 COPY ./server .
 RUN apk update && apk add --no-cache musl-dev
 RUN cargo build --release --locked
 
-# stage run
-FROM alpine:3.18.3
+FROM alpine:3.18
 WORKDIR /carbon
-RUN apk add --no-cache fd ripgrep
-COPY --from=frontend-builder /frontend-builder/dist .
-COPY --from=backend-builder /backend-builder/target/release/carbon .
+RUN apk update && apk add --no-cache fd ripgrep && mkdir static
+COPY --from=server-builder /server-builder/target/release/carbon-server . 
+COPY --from=client-builder /client-builder/dist/ ./static/
 ENV RUST_LOG info
 EXPOSE 3000
-CMD ["carbon"]
+ENTRYPOINT [ "./carbon-server" ]
