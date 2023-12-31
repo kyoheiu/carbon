@@ -1,23 +1,19 @@
-# stage build
-FROM node:alpine3.18
-WORKDIR /app
+FROM node:slim as client-builder
+WORKDIR /client-builder
+COPY ./client .
+RUN npm i && npm run build
 
-# copy everything to the container
-COPY . .
-# clean install all dependencies
-RUN npm ci
-# build SvelteKit app
-RUN npm run build
+FROM rust:1-alpine3.18 as server-builder
+WORKDIR /server-builder
+COPY ./server .
+RUN apk update && apk add --no-cache musl-dev
+RUN cargo build --release --locked
 
-# stage run
-FROM alpine:3.18.3
-WORKDIR /carbon-client
-RUN apk add --no-cache nodejs npm fd ripgrep
-# copy dependency list
-COPY --from=0 /app/package*.json ./
-# clean install dependencies, no devDependencies, no prepare script
-RUN npm ci --omit=dev --ignore-scripts
-# copy built SvelteKit app to /app
-COPY --from=0 /app/build ./
+FROM alpine:3.18
+WORKDIR /carbon
+RUN apk update && apk add --no-cache fd ripgrep && mkdir static
+COPY --from=server-builder /server-builder/target/release/carbon-server . 
+COPY --from=client-builder /client-builder/dist/ ./static/
+ENV RUST_LOG info
 EXPOSE 3000
-CMD ["node", "./index.js"]
+ENTRYPOINT [ "./carbon-server" ]

@@ -1,0 +1,15 @@
+[package]
+name = "carbon-server"
+version = "2.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "0.7.2", features = ["macros"] }
+serde = { version = "1.0.193", features = ["derive"] }
+tokio = { version = "1.35.1", features = ["macros", "full"] }
+tower-http = { version = "0.5.0", features = ["cors", "fs"] }
+git2 = { version = "0.17.2", default-features = false }
+tracing = "0.1"
+tracing-subscriber = "0.3"
