@@ -14,7 +14,7 @@ export const Root = () => {
   };
 
   const handleCreate = async () => {
-    const res = await fetch("${import.meta.env.VITE_API_URL}/items", {
+    const res = await fetch(`/api/items`, {
       method: "POST",
       body: newFile,
     });

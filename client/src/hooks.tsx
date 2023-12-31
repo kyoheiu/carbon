@@ -7,7 +7,7 @@ export const useApp = () => {
   const [more, setMore] = useState(false);
 
   const readAll = useCallback(async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/items_all`);
+    const res = await fetch(`/api/items_all`);
     if (!res.ok) {
       toastError(await res.text());
     } else {
@@ -28,7 +28,7 @@ export const useApp = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/items`);
+      const res = await fetch(`/api/items`);
       if (!res.ok) {
         toastError(await res.text());
       } else {

@@ -17,7 +17,7 @@ export const useSearch = (query: string) => {
 
   useEffect(() => {
     const searchItem = async (q: string) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/items/search`, {
+      const res = await fetch(`/api/search`, {
         method: "POST",
         body: q,
       });

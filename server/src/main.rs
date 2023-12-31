@@ -43,14 +43,14 @@ async fn main() -> Result<(), Error> {
     // build our application with a single route
     let app = Router::new()
         .route("/health", get(check_health))
-        .route("/items", get(read_partial).post(create_item))
-        .route("/items_all", get(read_all))
+        .route("/api/items", get(read_partial).post(create_item))
+        .route("/api/items_all", get(read_all))
         .route(
-            "/items/:file_name",
+            "/api/items/:file_name",
             get(read_item).post(save_item).delete(delete_item),
         )
-        .route("/items/rename", post(rename_item))
-        .route("/items/search", post(search_item))
+        .route("/api/rename", post(rename_item))
+        .route("/api/search", post(search_item))
         .layer(CorsLayer::permissive());
 
     // run our app with hyper, listening globally on port 3000
