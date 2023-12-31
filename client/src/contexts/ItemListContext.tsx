@@ -45,7 +45,7 @@ export const ItemListProvider = ({
   };
 
   const renameItem = async (fileName: string, newFileName: string) =>
-    fetch(`http://localhost:3000/items/rename`, {
+    fetch(`${import.meta.env.VITE_API_URL}/items/rename`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const ItemListProvider = ({
   };
 
   const deleteItem = async (fileName: string) =>
-    fetch(`http://localhost:3000/items/${fileName}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/items/${fileName}`, {
       method: "DELETE",
     });
 

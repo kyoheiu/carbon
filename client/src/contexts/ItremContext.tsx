@@ -38,16 +38,19 @@ export const ItemProvider = ({
   const handleSave = useCallback(() => {
     const saveData = async () => {
       if (!item) return;
-      const res = await fetch(`http://localhost:3000/items/${item.title}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: item.title,
-          content: currentValue,
-        }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/items/${item.title}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: item.title,
+            content: currentValue,
+          }),
+        }
+      );
       if (!res.ok) {
         toastError(await res.text());
       } else {
@@ -115,7 +118,9 @@ export const ItemProvider = ({
   useEffect(() => {
     const fetchItem = async (fileName: string) => {
       setIsLoading(true);
-      const res = await fetch(`http://localhost:3000/items/${fileName}`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/items/${fileName}`
+      );
       if (!res.ok) {
         toastError(await res.text());
       } else {
