@@ -8,9 +8,7 @@ export const ViewItem = ({ isMarkdown }: { isMarkdown: boolean }) => {
 
   return (
     <div className="flex flex-col jusitfy-center">
-      <div className="mt-3 mb-4 text-xl leading-6 break-words">
-        {item.title}
-      </div>
+      <div className="my-3 text-xl leading-6 break-words">{item.title}</div>
       <button
         className="flex self-end px-2 py-1 mb-4 text-sm text-gray-50 bg-gray-600 rounded"
         onClick={() => toggleEditMode()}

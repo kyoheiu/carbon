@@ -14,19 +14,17 @@ export const EditItem = () => {
 
   return (
     <>
-      <div className="mt-3 mb-4 text-xl leading-6 break-words">
-        {item.title}
-      </div>
+      <div className="my-3 text-xl leading-6 break-words">{item.title}</div>
       <div className="flex justify-between mb-4">
         <button
-          className="px-2 py-1 text-sm bg-gray-600 rounded text-gray-50"
+          className="px-2 py-1 text-sm text-gray-50 bg-gray-600 rounded"
           onClick={() => toggleEditMode()}
         >
           <ArrowLeft />
           View
         </button>
         <button
-          className="px-2 py-1 text-sm bg-gray-600 rounded text-gray-50 disabled:bg-gray-300"
+          className="px-2 py-1 text-sm text-gray-50 bg-gray-600 rounded disabled:bg-gray-300"
           onClick={handleSave}
           disabled={currentValue === item.content}
         >
@@ -36,7 +34,7 @@ export const EditItem = () => {
       </div>
       <textarea
         id="textarea"
-        className="p-2 border border-orange-300 rounded"
+        className="p-2 rounded border border-orange-300"
         value={currentValue}
         placeholder="Text here."
         onChange={(e) => setCurrentValue(e.target.value)}
