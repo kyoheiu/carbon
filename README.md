@@ -13,10 +13,9 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 
 - No collaborative editing – it's designed for individual use.
 - No fancy editing feature such as WYSIWYG or image rendering.
-- No tags, categories, or subdirectories to keep things straightforward.
-- Pressing `Ctrl + Enter` on the textarea will save the change.
+- To keep things straightforward, no tags, categories, or subdirectories
+- Press `Ctrl + Enter` in the textarea to save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
-- Keeps scroll position (roughly) between view mode and edit mode.
 - Texts with `.md` extension are converted to html in the view mode.
 - KaTeX supported.
 - Search powered by `fd-find` and `ripgrep` (regex pattern supported).
@@ -25,7 +24,7 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 
 Here, assume that you store text files in `/path/to/data`.
 
-1. If you'd like to use the git feature, `git init && git add -A && git commit -m "Initial commit"` in `data`.
+1. If you'd like to use the git feature, create a git repository in your `data`.
    After that, add `user.name` and `user.email` to `data/.git/config` like this:
 
 ```
@@ -39,58 +38,37 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 2. Use `docker compose up -d` with `docker-compose.yml`. For example:
 
 ```
-version: '3'
+version: "3"
 services:
   carbon:
-    image: docker.io/kyoheiudev/carbon:1.2.0
+    image: docker.io/kyoheiudev/carbon:2.0.0
     container_name: carbon
+    user: "1000:1000" # UID and GID that created git repository.
     volumes:
-      - '/path/to/data:/carbon-client/data:rw'
-    # If you do not want the git feature, omit this!
+      - "./data:/carbon/data:rw"
+      - "/etc/passwd:/etc/passwd:ro"
+      - "/etc/group:/etc/group:ro"
     environment:
-      - CARBON_GIT_SERVER=carbon-git
+      - CARBON_GIT=on # requited to enable the git feature
+      - CARBON_GIT_USER=carbon # default to 'carbon'
+      - CARBON_GIT_EMAIL=git@example.com # default to 'git@example.com'
     ports:
       - 3000:3000
     logging:
       driver: json-file
       options:
         max-size: 1m
-        max-file: '3'
-  # If you don't want the git feature, omit `carbon-git` entirely!
-  carbon-git:
-    image: docker.io/kyoheiudev/carbon-git:1.1.0
-    container_name: carbon-git
-    # UID and GID that created Git repository.
-    user: '1000:1000'
-    volumes:
-      - './data:/carbon-git/data:rw'
-      - '/etc/passwd:/etc/passwd:ro'
-      - '/etc/group:/etc/group:ro'
-    environment:
-      # default to 'carbon'
-      - CARBON_GIT_USER="carbon"
-      # default to 'git@example.com'
-      - CARBON_GIT_EMAIL="git@example.com"
-    logging:
-      driver: json-file
-      options:
-        max-size: 1m
-        max-file: '3'
+        max-file: "3"
 ```
 
 And the app will start listening on port 3000.
 
-### images
-
-- `carbon` is the app itself, offering everything except the git feature.
-- `carbon-git` only serves the git feature.
-
 ## tech stack
 
-- frontend
-  - SvelteKit
-  - tailwind
-- server to support git
+- client side
+  - React, react-router
+  - tailwind, PrimeReact
+- server side
   - Rust(axum)
   - libgit2
 
@@ -104,15 +82,12 @@ If you have an idea for a new feature, please create an issue before making PR.
 
 #### Prerequisites
 
-- `nodejs` for client-side
-- `cargo` to enable the git feature
+- `npm` for the clientside
+- `cargo` for the server side
 
 ```
-git clone https://github.com/kyoheiu/carbon
-npm install
-CARBON_GIT_SERVER=localhost npm run dev # launch carbon, enabling git server by the env
-make git # launch the git server
-make fmt # format both side
+cd client && npm i
+cd .. && make dev
 ```
 
 For details, see `Makefile`.
