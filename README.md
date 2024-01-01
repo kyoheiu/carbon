@@ -9,6 +9,21 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 [demo site](https://carbon-demo.kyoheiu.dev/)
 (Without the git feature; reset every 15 minutes)
 
+## releases
+
+### v2.0.0 (2024-01-01)
+
+- Renew the architecture overall.
+  - Use React and react-router for the client side.
+  - Rust (axum) for the server side.
+  - Just one docker image to launch the app.
+
+If you receive `Permission denied` error when upgrading from v1, please execute the command below.
+
+```
+# chown -R $(id -u):$(id -g) /path/to/data
+```
+
 ## features
 
 - No collaborative editing – it's designed for individual use.
