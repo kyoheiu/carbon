@@ -32,7 +32,6 @@ If you receive `Permission denied` error when upgrading from v1, please execute 
 - Press `Ctrl + Enter` in the textarea to save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
 - Texts with `.md` extension are converted to html in the view mode.
-- KaTeX supported.
 - Search powered by `fd-find` and `ripgrep` (regex pattern supported).
 
 ## deploy

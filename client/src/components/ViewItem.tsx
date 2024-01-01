@@ -1,32 +1,10 @@
 import { useItem } from "../contexts/ItremContext";
 import { marked } from "marked";
 import { ArrowRight } from "./Icons";
-import renderMathInElement from "katex/contrib/auto-render";
-import { useEffect } from "react";
 
 export const ViewItem = ({ isMarkdown }: { isMarkdown: boolean }) => {
   const { item, currentValue, toggleEditMode } = useItem();
   if (!item) return null;
-
-  const renderMath = () => {
-    const el = document.getElementById("content");
-    if (el) {
-      renderMathInElement(el, {
-        delimiters: [
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false },
-          { left: "\\(", right: "\\)", display: false },
-          { left: "\\[", right: "\\]", display: true },
-        ],
-        throwOnError: false,
-      });
-    }
-  };
-
-  useEffect(() => {
-    console.log("render");
-    renderMath();
-  }, [currentValue]);
 
   return (
     <div className="flex flex-col jusitfy-center">
