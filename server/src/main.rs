@@ -170,7 +170,7 @@ async fn rename_item(Json(payload): Json<PayloadRename>) -> Result<impl IntoResp
         std::fs::rename(path, &new_path)?;
         if is_git_supported() {
             let msg = format!("Rename: {} -> {}", &payload.title, &payload.new_title);
-            add_and_commit(&payload.title, Some(&payload.new_title), &msg)?;
+            add_and_commit(&payload.new_title, Some(&payload.title), &msg)?;
         }
         Ok((StatusCode::OK).into_response())
     }
