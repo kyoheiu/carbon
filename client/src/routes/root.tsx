@@ -31,7 +31,7 @@ export const Root = () => {
     <>
       <header className="flex items-center p-2 w-screen sm:w-120 md:w-144">
         <a className="font-extrabold" href="/">
-          carbon
+          <img src="/logo.png" alt="carbon" className="w-5" />
         </a>
         <button
           className="px-2 py-1 ml-2 text-sm text-gray-50 bg-gray-600 rounded"
