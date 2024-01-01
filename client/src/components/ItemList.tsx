@@ -86,6 +86,7 @@ const ItemList = ({
             className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
             required
+            autoFocus
             value={newName}
             onChange={(e) => setNewName(() => e.target.value)}
           />

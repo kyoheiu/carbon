@@ -58,6 +58,7 @@ export const Root = () => {
           <input
             className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
+            autoFocus
             required
             value={newFile}
             placeholder="file name"
