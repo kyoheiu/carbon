@@ -5,6 +5,7 @@ import { ArrowRight } from "./Icons";
 export const ViewItem = ({ isMarkdown }: { isMarkdown: boolean }) => {
   const { item, currentValue, toggleEditMode } = useItem();
   if (!item) return null;
+  if (!currentValue) toggleEditMode();
 
   return (
     <div className="flex flex-col jusitfy-center">
