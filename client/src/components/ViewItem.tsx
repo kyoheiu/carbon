@@ -45,7 +45,7 @@ export const ViewItem = ({ isMarkdown }: { isMarkdown: boolean }) => {
           dangerouslySetInnerHTML={{ __html: marked.parse(currentValue) }}
         />
       ) : (
-        <div id="content" className="break-words">
+        <div id="content" className="whitespace-pre-wrap break-words">
           {currentValue}
         </div>
       )}
