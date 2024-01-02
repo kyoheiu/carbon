@@ -45,6 +45,7 @@ struct ReadResponse {
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt::init();
 
+    let static_dir = ServeDir::new("static");
     let app = Router::new()
         .route("/health", get(check_health))
         .route("/api/items", get(read_partial).post(create_item))
@@ -55,9 +56,9 @@ async fn main() -> Result<(), Error> {
         )
         .route("/api/rename", post(rename_item))
         .route("/api/search", post(search_item))
-        .nest_service("/", ServeDir::new("static"))
-        .nest_service("/items/:file_name", ServeDir::new("static"))
-        .nest_service("/search", ServeDir::new("static"))
+        .nest_service("/", static_dir.clone())
+        .nest_service("/items/:file_name", static_dir.clone())
+        .nest_service("/search", static_dir)
         .layer(CorsLayer::permissive());
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
