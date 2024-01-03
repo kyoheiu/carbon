@@ -9,9 +9,7 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 [demo site](https://carbon-demo.kyoheiu.dev/)
 (Without the git feature; reset every 15 minutes)
 
-## releases
-
-### v2.0.0 (2024-01-01)
+## breaking change on v2.0.0 
 
 - Renew the architecture overall.
   - Use React and react-router for the client side.
