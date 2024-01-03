@@ -80,30 +80,32 @@ export const ItemProvider = ({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === "Enter" && e.ctrlKey) {
-        handleSave();
-      } else if (e.key === "Enter") {
-        const el = document.getElementById("textarea") as HTMLTextAreaElement;
-        if (el) {
-          const cursorPos = el.selectionEnd;
-          for (let i = cursorPos - 1; i >= 0; i--) {
-            const char = currentValue[i];
-            if (char === `\n`) {
-              const line = currentValue.substring(i + 1, cursorPos + 1);
-              const matched = line.match(reg);
-              if (matched !== null) {
-                setListMarker(el, matched[0], cursorPos + 1);
+      if (e.keyCode === 13) {
+        if (e.ctrlKey) {
+          handleSave();
+        } else {
+          const el = document.getElementById("textarea") as HTMLTextAreaElement;
+          if (el) {
+            const cursorPos = el.selectionEnd;
+            for (let i = cursorPos - 1; i >= 0; i--) {
+              const char = currentValue[i];
+              if (char === `\n`) {
+                const line = currentValue.substring(i + 1, cursorPos + 1);
+                const matched = line.match(reg);
+                if (matched !== null) {
+                  setListMarker(el, matched[0], cursorPos + 1);
+                }
+                break;
+              } else if (i === 0) {
+                const line = currentValue.substring(i, cursorPos + 1);
+                const matched = line.match(reg);
+                if (matched !== null) {
+                  setListMarker(el, matched[0], cursorPos + 1);
+                }
+                break;
+              } else {
+                continue;
               }
-              break;
-            } else if (i === 0) {
-              const line = currentValue.substring(i, cursorPos + 1);
-              const matched = line.match(reg);
-              if (matched !== null) {
-                setListMarker(el, matched[0], cursorPos + 1);
-              }
-              break;
-            } else {
-              continue;
             }
           }
         }
