@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { Item } from "../../lib/types";
+import { ListItem } from "../../lib/types";
 import { toastError } from "../../lib/utils";
 
 export const useSearch = (query: string) => {
-  const [items, setItems] = useState<Item[]>();
+  const [items, setItems] = useState<ListItem[]>();
 
   const hideItem = useCallback(
     (title: string) => {

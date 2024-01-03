@@ -17,6 +17,12 @@ use tracing::info;
 use tracing_subscriber;
 
 #[derive(Debug, Serialize, Deserialize)]
+struct ListItem {
+    title: String,
+    modified: u64,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 struct Item {
     title: String,
     content: String,
@@ -37,7 +43,7 @@ struct PayloadRename {
 
 #[derive(Debug, Serialize)]
 struct ReadResponse {
-    result: Vec<Item>,
+    result: Vec<ListItem>,
     more: bool,
 }
 
@@ -72,7 +78,7 @@ async fn check_health() -> String {
 }
 
 #[debug_handler]
-async fn read_all() -> Result<extract::Json<Vec<Item>>, Error> {
+async fn read_all() -> Result<extract::Json<Vec<ListItem>>, Error> {
     let result = read_data()?;
     Ok(Json(result))
 }
@@ -227,7 +233,7 @@ fn get_modified_time(metadata: std::fs::Metadata) -> Result<u64, Error> {
     Ok(metadata.modified()?.duration_since(UNIX_EPOCH)?.as_secs())
 }
 
-fn read_data() -> Result<Vec<Item>, Error> {
+fn read_data() -> Result<Vec<ListItem>, Error> {
     let mut result = Vec::new();
     for entry in std::fs::read_dir("data")? {
         let entry = entry?;
@@ -235,14 +241,13 @@ fn read_data() -> Result<Vec<Item>, Error> {
         if path.is_dir() {
             continue;
         } else {
-            let item = Item {
+            let item = ListItem {
                 title: entry
                     .file_name()
                     .as_os_str()
                     .to_str()
                     .ok_or(Error::ToUtf8)?
                     .to_owned(),
-                content: std::fs::read_to_string(&path)?,
                 modified: get_modified_time(entry.metadata()?)?,
             };
             result.push(item);

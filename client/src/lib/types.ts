@@ -1,11 +1,16 @@
-export type Item = {
+export type ListItem = {
     title: string,
-    content: string,
-    modified: number
+    modified: number,
     hidden: boolean
 }
 
+export type Item = {
+    title: string,
+    content: string,
+    modified: number,
+}
+
 export type ReadResponse = {
-    result: Item[],
+    result: ListItem[],
     more: boolean
 }

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { Item, ReadResponse } from "./lib/types";
+import { ListItem, ReadResponse } from "./lib/types";
 import { toastError } from "./lib/utils";
 
 export const useApp = () => {
-  const [items, setItems] = useState<Item[]>();
+  const [items, setItems] = useState<ListItem[]>();
   const [more, setMore] = useState(false);
 
   const readAll = useCallback(async () => {
@@ -11,7 +11,7 @@ export const useApp = () => {
     if (!res.ok) {
       toastError(await res.text());
     } else {
-      const j: Item[] = await res.json();
+      const j: ListItem[] = await res.json();
       setItems(j);
     }
   }, []);
