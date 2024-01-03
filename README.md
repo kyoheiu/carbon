@@ -55,7 +55,7 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 version: "3"
 services:
   carbon:
-    image: docker.io/kyoheiudev/carbon:2.0.0
+    image: docker.io/kyoheiudev/carbon:2.0.2
     container_name: carbon
     user: "1000:1000" # UID and GID that created git repository.
     volumes:
