@@ -237,8 +237,8 @@ fn read_data() -> Result<Vec<ListItem>, Error> {
     let mut result = Vec::new();
     for entry in std::fs::read_dir("data")? {
         let entry = entry?;
-        let path = entry.path();
-        if path.is_dir() {
+        let metadata = entry.metadata()?;
+        if !metadata.file_type().is_file() {
             continue;
         } else {
             let item = ListItem {
@@ -248,7 +248,7 @@ fn read_data() -> Result<Vec<ListItem>, Error> {
                     .to_str()
                     .ok_or(Error::ToUtf8)?
                     .to_owned(),
-                modified: get_modified_time(entry.metadata()?)?,
+                modified: get_modified_time(metadata)?,
             };
             result.push(item);
         }
