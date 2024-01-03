@@ -3,6 +3,8 @@ dev:
 	cd server && RUST_LOG=debug CARBON_GIT=on cargo run
 
 build:
+	cd client && npm install --package-lock-only
+	cd server && cargo generate-lockfile
 	sudo docker build --tag=kyoheiudev/carbon:$(VER) .
 
 push:
