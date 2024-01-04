@@ -12,7 +12,7 @@ use error::Error;
 use git2::Repository;
 use serde::{Deserialize, Serialize};
 use std::{path::PathBuf, time::UNIX_EPOCH};
-use tower_http::{cors::CorsLayer, services::ServeDir};
+use tower_http::services::ServeDir;
 use tracing::info;
 use tracing_subscriber;
 
@@ -64,8 +64,7 @@ async fn main() -> Result<(), Error> {
         .route("/api/search", post(search_item))
         .nest_service("/", static_dir.clone())
         .nest_service("/items/:file_name", static_dir.clone())
-        .nest_service("/search", static_dir)
-        .layer(CorsLayer::permissive());
+        .nest_service("/search", static_dir);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
     axum::serve(listener, app).await?;
