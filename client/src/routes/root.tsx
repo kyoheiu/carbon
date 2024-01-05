@@ -34,7 +34,7 @@ export const Root = () => {
           <img src="/logo.png" alt="carbon" className="w-5" />
         </a>
         <button
-          className="px-2 py-1 ml-2 text-sm text-gray-50 bg-gray-600 rounded"
+          className="px-2 py-1 ml-4 text-sm text-gray-50 bg-gray-600 rounded"
           onClick={handleClick}
         >
           +New
