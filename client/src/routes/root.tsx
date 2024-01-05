@@ -54,7 +54,7 @@ export const Root = () => {
         visible={showDialog}
         onHide={handleClick}
       >
-        <div className="flex flex-col space-y-2">
+        <form className="flex flex-col space-y-2" onSubmit={handleCreate}>
           <input
             className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
@@ -64,10 +64,10 @@ export const Root = () => {
             placeholder="file name"
             onChange={(e) => setNewFile(() => e.target.value)}
           />
-          <button className="border" onClick={handleCreate}>
+          <button type="submit" className="border">
             Create
           </button>
-        </div>
+        </form>
       </Dialog>
       <div>
         <Outlet />

@@ -81,7 +81,13 @@ const ItemList = ({
         visible={showRenameDialog}
         onHide={toggleRenameDialog}
       >
-        <div className="flex flex-col space-y-2">
+        <form
+          className="flex flex-col space-y-2"
+          onSubmit={() => {
+            handleRename(currentName.current);
+            currentName.current = "";
+          }}
+        >
           <input
             className="px-2 py-1 mt-4 text-gray-800 rounded border"
             type="text"
@@ -90,16 +96,10 @@ const ItemList = ({
             value={newName}
             onChange={(e) => setNewName(() => e.target.value)}
           />
-          <button
-            className="border"
-            onClick={() => {
-              handleRename(currentName.current);
-              currentName.current = "";
-            }}
-          >
+          <button className="border" type="submit">
             Rename
           </button>
-        </div>
+        </form>
       </Dialog>
       <Dialog
         className="p-4 text-gray-100 bg-gray-800 rounded"
