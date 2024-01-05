@@ -37,13 +37,16 @@ const ItemList = ({
                 key={`item-${index}`}
                 className="flex relative items-center p-2 pt-4 border-b"
               >
-                <div className="overflow-hidden text-lg break-all text-ellipsis line-clamp-1">
+                <div className="overflow-hidden w-56 text-lg break-all sm:w-80 md:w-96 text-ellipsis line-clamp-1">
                   <a href={`/items/${encodeURI(item.title)}`}>{item.title}</a>
                 </div>
-                <div className="ml-auto text-sm text-gray-600 break-all">
+                <div className="ml-auto w-20 text-sm text-gray-600 break-all line-clamp-1">
                   {fromNow(item.modified)}
                 </div>
-                <button onClick={() => toggleMenu(`item-${index}`)}>
+                <button
+                  className="w-6"
+                  onClick={() => toggleMenu(`item-${index}`)}
+                >
                   <MoreVertical />
                 </button>
                 {openIndex === `item-${index}` && (
