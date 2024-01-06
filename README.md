@@ -9,7 +9,7 @@ Aims to be alternative to Google Keep, Simplenote, Evernote, and so on.
 [demo site](https://carbon-demo.kyoheiu.dev/)
 (Without the git feature; reset every 15 minutes)
 
-## breaking change on v2.0.0 
+## breaking change on v2
 
 - Renew the architecture overall.
   - Use React and react-router for the client side.
@@ -29,6 +29,7 @@ If you receive `Permission denied` error when upgrading from v1, please execute 
 - To keep things straightforward, no tags, categories, or subdirectories
 - Press `Ctrl + Enter` in the textarea to save the change.
   - Optionally, the change can be automatically added and commited to the Git repository.
+- `Tab` to indent, `Tab + Shift` to unindent.
 - Texts with `.md` extension are converted to html in the view mode.
 - Search powered by `fd-find` and `ripgrep` (regex pattern supported).
 
@@ -53,7 +54,7 @@ If you do not want the git feature, skip this step and go on to the next (and fi
 version: "3"
 services:
   carbon:
-    image: docker.io/kyoheiudev/carbon:2.0.3
+    image: docker.io/kyoheiudev/carbon:2.0.4
     container_name: carbon
     user: "1000:1000" # UID and GID that created git repository.
     volumes:
