@@ -63,31 +63,43 @@ export const ItemProvider = ({
     setIsEditMode((b) => !b);
   }, [setIsEditMode]);
 
-  const setListMarker = (
-    el: HTMLTextAreaElement,
-    cursorPos: number,
-    captured: string
-  ) => {
-    setTimeout(() => {
-      setCurrentValue(
-        (v) => v.slice(0, cursorPos) + captured + v.slice(cursorPos)
-      );
-    }, 5);
-    setTimeout(() => {
-      el.selectionStart = el.selectionEnd = cursorPos + captured.length;
-    }, 10);
-  };
+  const setListMarker = useCallback(
+    (el: HTMLTextAreaElement, cursorPos: number, captured: string) => {
+      setTimeout(() => {
+        setCurrentValue(
+          (v) => v.slice(0, cursorPos) + captured + v.slice(cursorPos)
+        );
+      }, 5);
+      setTimeout(() => {
+        el.selectionStart = el.selectionEnd = cursorPos + captured.length;
+      }, 10);
+    },
+    []
+  );
 
-  const addIndent = (
-    el: HTMLTextAreaElement,
-    cursorPos: number,
-    originalPos: number
-  ) => {
-    setCurrentValue((v) => v.slice(0, cursorPos) + "  " + v.slice(cursorPos));
-    setTimeout(() => {
-      el.selectionStart = el.selectionEnd = originalPos + 2;
-    }, 10);
-  };
+  const indent = useCallback(
+    (el: HTMLTextAreaElement, cursorPos: number, originalPos: number) => {
+      setCurrentValue((v) => v.slice(0, cursorPos) + "  " + v.slice(cursorPos));
+      setTimeout(() => {
+        el.selectionStart = el.selectionEnd = originalPos + 2;
+      }, 5);
+    },
+    []
+  );
+
+  const unIndent = useCallback(
+    (el: HTMLTextAreaElement, cursorPos: number, originalPos: number) => {
+      const v1 = currentValue[cursorPos];
+      const v2 = currentValue[cursorPos + 1];
+      if (v1 === " " && v1 === v2) {
+        setCurrentValue((v) => v.slice(0, cursorPos) + v.slice(cursorPos + 2));
+        setTimeout(() => {
+          el.selectionStart = el.selectionEnd = originalPos - 2;
+        }, 5);
+      }
+    },
+    [currentValue]
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -101,16 +113,17 @@ export const ItemProvider = ({
           if (el) {
             const cursorPos = el.selectionEnd;
             for (let i = cursorPos - 1; i >= 0; i--) {
-              const char = currentValue[i];
-              if (char === `\n`) {
-                const line = currentValue.substring(i + 1, cursorPos + 1);
+              if (i === 0) {
+                const line = currentValue.substring(i, cursorPos + 1);
                 const matched = line.match(reg);
                 if (matched !== null) {
                   setListMarker(el, cursorPos + 1, matched[0]);
                 }
                 break;
-              } else if (i === 0) {
-                const line = currentValue.substring(i, cursorPos + 1);
+              }
+              const char = currentValue[i];
+              if (char === `\n`) {
+                const line = currentValue.substring(i + 1, cursorPos + 1);
                 const matched = line.match(reg);
                 if (matched !== null) {
                   setListMarker(el, cursorPos + 1, matched[0]);
@@ -122,16 +135,40 @@ export const ItemProvider = ({
             }
           }
         }
-      } else if (e.key === "Tab") {
-        //Add indent
+      } else if (e.key === "Tab" && e.shiftKey) {
+        //unIndent
         e.preventDefault();
         const el = document.getElementById("textarea") as HTMLTextAreaElement;
         if (el) {
           const cursorPos = el.selectionEnd;
           for (let i = cursorPos - 1; i >= 0; i--) {
+            if (i === 0) {
+              unIndent(el, i, cursorPos);
+              break;
+            }
             const char = currentValue[i];
-            if (char === `\n` || i === 0) {
-              addIndent(el, i + 1, cursorPos);
+            if (char === `\n`) {
+              unIndent(el, i + 1, cursorPos);
+              break;
+            } else {
+              continue;
+            }
+          }
+        }
+      } else if (e.key === "Tab") {
+        //indent
+        e.preventDefault();
+        const el = document.getElementById("textarea") as HTMLTextAreaElement;
+        if (el) {
+          const cursorPos = el.selectionEnd;
+          for (let i = cursorPos - 1; i >= 0; i--) {
+            if (i === 0) {
+              indent(el, i, cursorPos);
+              break;
+            }
+            const char = currentValue[i];
+            if (char === `\n`) {
+              indent(el, i + 1, cursorPos);
               break;
             } else {
               continue;
