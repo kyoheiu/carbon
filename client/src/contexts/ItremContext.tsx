@@ -10,6 +10,7 @@ import { toastError } from "../lib/utils";
 
 type ctxValue = {
   item: Item | null;
+  fetchError: string | null;
   currentValue: string;
   setCurrentValue: React.Dispatch<React.SetStateAction<string>>;
   handleSave: () => void;
@@ -30,6 +31,7 @@ export const ItemProvider = ({
   fileName: string;
 }) => {
   const [item, setItem] = useState<Item | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -182,7 +184,9 @@ export const ItemProvider = ({
     const fetchItem = async (fileName: string) => {
       const res = await fetch(`/api/items/${fileName}`);
       if (!res.ok) {
-        toastError(await res.text());
+        const msg = await res.text();
+        setFetchError(msg);
+        toastError(msg);
       } else {
         const j = await res.json();
         setItem(j);
@@ -194,6 +198,7 @@ export const ItemProvider = ({
 
   const ctxValue: ctxValue = {
     item,
+    fetchError,
     currentValue,
     setCurrentValue,
     handleSave,

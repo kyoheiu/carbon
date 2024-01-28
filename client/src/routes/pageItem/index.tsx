@@ -7,9 +7,10 @@ import { NotFound } from "../../components/NotFound";
 export const PageItem = () => {
   const { fileName } = useParams();
   const isMarkdown = fileName?.split(".").at(-1) === "md" ? true : false;
-  const { item, isEditMode } = useItem();
+  const { fetchError, isEditMode } = useItem();
 
-  if (!item) return <NotFound fileName={fileName} />;
+  if (fetchError)
+    return <NotFound fileName={fileName} fetchError={fetchError} />;
 
   return (
     <div className="flex flex-col justify-center px-2 w-screen rounded sm:w-120 md:w-160">
