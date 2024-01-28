@@ -9,7 +9,6 @@ import { Item } from "../lib/types";
 import { toastError } from "../lib/utils";
 
 type ctxValue = {
-  isLoading: boolean;
   item: Item | null;
   currentValue: string;
   setCurrentValue: React.Dispatch<React.SetStateAction<string>>;
@@ -30,7 +29,6 @@ export const ItemProvider = ({
   children: React.ReactNode;
   fileName: string;
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [item, setItem] = useState<Item | null>(null);
   const [currentValue, setCurrentValue] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
@@ -182,7 +180,6 @@ export const ItemProvider = ({
 
   useEffect(() => {
     const fetchItem = async (fileName: string) => {
-      setIsLoading(true);
       const res = await fetch(`/api/items/${fileName}`);
       if (!res.ok) {
         toastError(await res.text());
@@ -191,13 +188,11 @@ export const ItemProvider = ({
         setItem(j);
         setCurrentValue(j.content);
       }
-      setIsLoading(false);
     };
     fetchItem(fileName);
   }, []);
 
   const ctxValue: ctxValue = {
-    isLoading,
     item,
     currentValue,
     setCurrentValue,
