@@ -20,7 +20,7 @@ export const PageItem = () => {
       </>
     );
   return (
-    <div className="flex flex-col justify-center px-2 w-screen rounded sm:w-120 md:w-144">
+    <div className="flex flex-col justify-center px-2 w-screen rounded sm:w-120 md:w-160">
       {isEditMode ? <EditItem /> : <ViewItem isMarkdown={isMarkdown} />}
     </div>
   );

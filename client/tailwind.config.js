@@ -2,10 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      "sm": "640px",
+      "md": "800px"
+    },
     extend: {
       spacing: {
         120: "30rem",
-        144: "36rem",
+        160: "40rem",
       },
       typography: {
         DEFAULT: {

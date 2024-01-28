@@ -29,7 +29,7 @@ export const Root = () => {
 
   return (
     <>
-      <header className="flex items-center p-2 w-screen sm:w-120 md:w-144">
+      <header className="flex items-center p-2 w-screen sm:w-120 md:w-160">
         <a className="font-extrabold" href="/">
           <img src="/logo.png" alt="carbon" className="w-5" />
         </a>
