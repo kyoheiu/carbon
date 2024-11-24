@@ -37,6 +37,9 @@ export const EditItem = () => {
         id="textarea"
         autoFocus
         className="p-2 rounded border border-orange-300"
+        style={{
+          tabSize: "2",
+        }}
         value={currentValue}
         placeholder={`Enter text here to enable "View" and "Save" button.`}
         onChange={(e) => setCurrentValue(e.target.value)}

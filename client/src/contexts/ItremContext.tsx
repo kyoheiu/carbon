@@ -79,9 +79,9 @@ export const ItemProvider = ({
 
   const indent = useCallback(
     (el: HTMLTextAreaElement, cursorPos: number, originalPos: number) => {
-      setCurrentValue((v) => v.slice(0, cursorPos) + "  " + v.slice(cursorPos));
+      setCurrentValue((v) => v.slice(0, cursorPos) + "\t" + v.slice(cursorPos));
       setTimeout(() => {
-        el.selectionStart = el.selectionEnd = originalPos + 2;
+        el.selectionStart = el.selectionEnd = originalPos + 1;
       }, 5);
     },
     []
@@ -89,12 +89,11 @@ export const ItemProvider = ({
 
   const unIndent = useCallback(
     (el: HTMLTextAreaElement, cursorPos: number, originalPos: number) => {
-      const v1 = currentValue[cursorPos];
-      const v2 = currentValue[cursorPos + 1];
-      if (v1 === " " && v1 === v2) {
-        setCurrentValue((v) => v.slice(0, cursorPos) + v.slice(cursorPos + 2));
+      const v = currentValue[cursorPos];
+      if (v === "\t") {
+        setCurrentValue((v) => v.slice(0, cursorPos) + v.slice(cursorPos + 1));
         setTimeout(() => {
-          el.selectionStart = el.selectionEnd = originalPos - 2;
+          el.selectionStart = el.selectionEnd = originalPos - 1;
         }, 5);
       }
     },
@@ -103,7 +102,7 @@ export const ItemProvider = ({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.keyCode === 13) {
+      if (e.key === "Enter") {
         if (e.ctrlKey) {
           //save
           handleSave();
