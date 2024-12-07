@@ -1,7 +1,7 @@
 version: "3"
 services:
   carbon:
-    image: docker.io/kyoheiudev/carbon:2.0.0
+    image: docker.io/kyoheiudev/carbon:2.1.1
     container_name: carbon
     user: "1000:1000" # UID and GID that created Git repository.
     volumes:
